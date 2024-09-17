@@ -12,7 +12,7 @@ function App() {
     <div className='app-layout'>
 
     <Sidebar/>
-    <div>asd</div>
+    <div className='main'>asd</div>
     </div>
 
     </>

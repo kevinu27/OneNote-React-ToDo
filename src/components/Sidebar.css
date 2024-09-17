@@ -3,4 +3,40 @@
   flex-direction: column;
   border: 2px solid red;
   min-height: 100%;
+  /* background-color: #efeff6; */
 }
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+  height: 100%;
+  border: 2px solid red;
+}
+
+.sidebar {
+  /* width: 100px; */
+  background-color: #f1f1f1;
+  /* position: fixed; */
+  /* height: 100%; */
+  height: fit-content;
+  z-index: 1;
+  overflow: auto;
+  /* display: flex;
+  flex-direction: column; */
+}
+
+.w3-button {
+  padding: 10px;
+  text-align: left;
+  z-index: 1;
+}
+.button-sidebar{
+  height: fit-content;
+}
+/* .bar{
+  display: flex;
+  flex-direction: column;
+} */

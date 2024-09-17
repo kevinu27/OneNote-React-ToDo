@@ -1,7 +1,9 @@
 
 #root {
-  border: 3px solid green;
+  /* border: 3px solid green; */
   height: 100%;
+  width: 100%;
+
 }
 
 
@@ -11,6 +13,8 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100%;
+  overflow: hidden;
+
 }
 
 h1 {
