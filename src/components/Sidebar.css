@@ -1,7 +1,7 @@
 .lateral-menu {
   display: flex;
-  flex-direction: column;
-  border: 2px solid red;
+  /* flex-direction: column; */
+  /* border: 2px solid red; */
   min-height: 100%;
   /* background-color: #efeff6; */
 }
@@ -12,8 +12,8 @@
 
 .visible {
   display: block;
-  height: 100%;
-  border: 2px solid red;
+  min-height: 100%;
+  /* border: 2px solid blue; */
 }
 
 .sidebar {
@@ -23,7 +23,7 @@
   /* height: 100%; */
   height: fit-content;
   z-index: 1;
-  overflow: auto;
+  overflow: hidden;
   /* display: flex;
   flex-direction: column; */
 }
@@ -35,8 +35,14 @@
 }
 .button-sidebar{
   height: fit-content;
+  background-color: #f1f1f1;
+  border: 1px solid darkgray;
+  padding-left: 4px;
+  padding-right: 4px;
 }
-/* .bar{
-  display: flex;
-  flex-direction: column;
-} */
+
+.menu-item{
+display: flex;
+/* border: 2px solid red; */
+padding: 0.5rem;
+}

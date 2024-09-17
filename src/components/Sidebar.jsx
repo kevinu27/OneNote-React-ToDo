@@ -20,12 +20,11 @@ function Sidebar() {
 <div className='lateral-menu'>
 
   <div className={`sidebar  ${isSidebarOpen ? 'visible' : 'hidden'}`} id="mySidebar">
-    <a href="#" className="w3-bar-item w3-button">Link 1</a>
-    <a href="#" className="w3-bar-item w3-button">Link 2</a>
-    <a href="#" className="w3-bar-item w3-button">Link 3</a>
+    <a href="#" className="menu-item">To Do</a>
+    <a href="#" className="menu-item">One Note</a>
   </div>
 
-<button onClick={openSidebar} className="button-sidebar">{isSidebarOpen ? '<' : '>'}</button>
+<div onClick={openSidebar} className="button-sidebar">{isSidebarOpen ? '<' : '>'}</div>
 
 </div>
     </>
