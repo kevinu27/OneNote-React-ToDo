@@ -1,0 +1,59 @@
+.Main-task{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  /* border: 2px solid green; */
+  min-height: 100%;
+  min-width: 100%;
+  /* background-color: #efeff6; */
+  /* align-items: flex-start; */
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+  min-height: 100%;
+  /* border: 2px solid blue; */
+}
+
+.sidebar {
+  /* width: 100px; */
+  background-color: #f1f1f1;
+  /* position: fixed; */
+  /* height: 100%; */
+  height: fit-content;
+  z-index: 1;
+  overflow: hidden;
+  /* display: flex;
+  flex-direction: column; */
+}
+
+.w3-button {
+  padding: 10px;
+  text-align: left;
+  z-index: 1;
+}
+.button-sidebar{
+  height: fit-content;
+  background-color: #f1f1f1;
+  border: 1px solid darkgray;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.menu-item{
+display: flex;
+/* border: 2px solid red; */
+padding: 0.5rem;
+}
+
+.taskForm-holder {
+  border: 2px solid red;
+  min-width: 100%;
+  display: flex;
+  justify-content: center;
+}
