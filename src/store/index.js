@@ -1,7 +1,11 @@
 import { createSlice, configureStore } from "@reduxjs/toolkit";
 
 const initialToDoState = {
-    tasks: [ {name: 'a', description: 'b'}]
+    tasks: [ 
+        {name: 'a', description: 'b'},
+        {name: 'd', description: 'e'}
+    
+    ]
 }
 
 const todoSlice = createSlice({
@@ -10,7 +14,8 @@ const todoSlice = createSlice({
     reducers: {
         addTask(state, action){
             console.log('en el reducer en el index del store')
-            state.tasks.push(action.task)
+            console.log('action.action', action.payload)
+            state.tasks.push(action.payload)
         }
 
     }

@@ -19,7 +19,6 @@ function TaskForm() {
 
   function clickSaveHandler(e) {
       console.log('click Save')
-      // props.save(name, description)
       dispatch(todoActions.addTask({
         name: name,
         description: description
@@ -42,19 +41,20 @@ return (
     <div className='formBox'>
         <div className='formulario'>
         <button onClick={clickHandler}>+</button>
-{
+
+        {
   formVisbility ?    
-        <div className='formularioInner'>  
+            <div className='formularioInner'>
 
-        <label>Nombre</label>
-        <input  type="text" required value ={name}  onChange={handleChangeName}></input>
+                <label>Nombre</label>
+                <input  type="text" required value ={name}  onChange={handleChangeName}></input>
 
-        <label>Descripcion</label>
-        <textarea  type="text" required value ={description}  onChange={handleChangeDescription}></textarea> 
+                <label>Descripcion</label>
+                <textarea  type="text" required value ={description}  onChange={handleChangeDescription}></textarea> 
 
-        <button className='saveButton' onClick={clickSaveHandler} >guardar tarea</button>
-   </div> : null
-}
+                <button className='saveButton' onClick={clickSaveHandler} >guardar tarea</button>
+            </div> : null
+        }
   
         </div>
     </div>
