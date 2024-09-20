@@ -5,7 +5,7 @@ import './TaskForm.css'
 
 function TaskForm() {
     const dispatch = useDispatch();
-    const tasks = useSelector((state) => state.tasks)
+    const tasks = useSelector((state) => state.todo.tasks)
 
     console.log('tasks en el componente', tasks)
 

@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import './Sidebar.css'
+import { useSelector, useDispatch } from 'react-redux'
+import { menuActions } from '../store/index'
 
 function Sidebar() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);

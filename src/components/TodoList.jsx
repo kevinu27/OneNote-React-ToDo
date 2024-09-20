@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 
 function TodoList() {
   // const dispatch = useDispatch();
-  const tasks = useSelector((state) => state.tasks)
+  const tasks = useSelector((state) => state.todo.tasks)
 
   return (
     <>

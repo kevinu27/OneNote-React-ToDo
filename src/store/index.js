@@ -23,10 +23,33 @@ const todoSlice = createSlice({
 
 })
 
+const initialMenuState = {
+    activeMenu: "main"
+}
+
+const menuSlice = createSlice({
+    name: 'Todo',
+    initialState: initialMenuState,
+    reducers: {
+        selectActiveMenu(state, action){
+            console.log('en el reducer en el index del store en el selectActiveMenu')
+            console.log('action.action', action.payload)
+            state.tasks.push(action.payload)
+        }
+
+    }
+
+
+})
+
 const store = configureStore({
-    reducer: todoSlice.reducer
+    reducer: {
+        todo: todoSlice.reducer, 
+        menu: menuSlice.reducer 
+    }
 })
 
 export const todoActions = todoSlice.actions
+export const menuActions = menuSlice.actions
 
 export default store
