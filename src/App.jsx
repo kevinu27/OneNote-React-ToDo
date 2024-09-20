@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Sidebar from './components/Sidebar'
 import MainTask from './components/MainTask'
+import Canvas from './canvasComponents/Canvas'
 import { useSelector } from 'react-redux'
 
 
@@ -18,7 +19,12 @@ function App() {
 
     <Sidebar/>
     <div className='main'>
-      <MainTask/>
+      {
+        menu == 'todo' ? <MainTask/> : null
+      }
+            {
+        menu == 'canvas' ? <Canvas/> : null
+      }
 
     </div>
     </div>

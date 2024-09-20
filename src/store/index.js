@@ -33,8 +33,8 @@ const menuSlice = createSlice({
     reducers: {
         selectActiveMenu(state, action){
             console.log('en el reducer en el index del store en el selectActiveMenu')
-            console.log('action.action', action.payload)
-            state.tasks.push(action.payload)
+            console.log('action.action menu!!!!!!!!!', action.payload)
+            state.activeMenu = action.payload
         }
 
     }
