@@ -7,7 +7,6 @@ function TaskForm() {
     const dispatch = useDispatch();
     const tasks = useSelector((state) => state.todo.tasks)
 
-    console.log('tasks en el componente', tasks)
 
   const [formVisbility, setFormVisbility] = useState(false)
   const [name, setName] = useState('')
@@ -18,7 +17,6 @@ function TaskForm() {
   }
 
   function clickSaveHandler(e) {
-      console.log('click Save')
       dispatch(todoActions.addTask({
         name: name,
         description: description
@@ -28,12 +26,10 @@ function TaskForm() {
 
   function handleChangeName(event){
       setName(event.target.value)
-      console.log('name', name )
       }
 
   function handleChangeDescription(event){
       setDescription(event.target.value)
-      console.log('description', description )
       }
 
 

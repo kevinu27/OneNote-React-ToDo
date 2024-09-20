@@ -13,8 +13,8 @@ const todoSlice = createSlice({
     initialState: initialToDoState,
     reducers: {
         addTask(state, action){
-            console.log('en el reducer en el index del store')
-            console.log('action.action', action.payload)
+            // console.log('en el reducer en el index del store')
+            // console.log('action.action', action.payload)
             state.tasks.push(action.payload)
         }
 
@@ -32,8 +32,8 @@ const menuSlice = createSlice({
     initialState: initialMenuState,
     reducers: {
         selectActiveMenu(state, action){
-            console.log('en el reducer en el index del store en el selectActiveMenu')
-            console.log('action.action menu!!!!!!!!!', action.payload)
+            // console.log('en el reducer en el index del store en el selectActiveMenu')
+            // console.log('action.action menu!!!!!!!!!', action.payload)
             state.activeMenu = action.payload
         }
 

@@ -2,7 +2,7 @@
 import './TaskCard.css'
 
 function TaskCard( props) {
-console.log('props', props)
+
 
   return (
     <>

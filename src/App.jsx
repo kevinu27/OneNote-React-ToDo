@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux'
 function App() {
   const [count, setCount] = useState(0)
   const menu = useSelector((state) => state.menu.activeMenu)
-  console.log('menu-----', menu)
+  // console.log('menu-----', menu)
 
   return (
     <>

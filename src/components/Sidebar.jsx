@@ -20,7 +20,6 @@ function Sidebar() {
 
   const dispatch = useDispatch();
   const menu = useSelector((state) => state.menu.activeMenu)
-  console.log('Active menu del state:--', menu)
 
   // Function to open the sidebar
   const openSidebar = () => {
