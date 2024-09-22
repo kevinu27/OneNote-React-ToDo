@@ -24,7 +24,7 @@ const todoSlice = createSlice({
 })
 
 const initialMenuState = {
-    activeMenu: "main"
+    activeMenu: "canvas"
 }
 
 const menuSlice = createSlice({

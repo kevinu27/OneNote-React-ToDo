@@ -1,0 +1,11 @@
+canvas {
+    border: 3px solid blue;
+}
+
+.textbox{
+    /* position: 'absolute'; */
+    /* z-index: 1; */
+    background-color: transparent;
+    width: fit-content;
+
+}
