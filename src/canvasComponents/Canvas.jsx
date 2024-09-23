@@ -31,55 +31,41 @@ function Canvas() {
   
     // Handle text change inside a textarea
     const handleTextChange = (id, value) => {
-      // Update the text in both state and ref for a specific textarea
-      const updatedTextBoxes = textBoxes.map((box) => 
-        box.id === id ? { ...box, text: value , cantidadDeCaracteres: value.length } : box
+        // Update the text in both state and ref for a specific textarea
+        const updatedTextBoxes = textBoxes.map((box) =>
+          box.id === id ? { ...box, text: value, cantidadDeCaracteres: value.length } : box
+        );
       
-      );
-      setTextBoxes(updatedTextBoxes);
-      let longestWord = 0
-      let highestNumberLines = 0
-      //pasa por todos los textboxes
-      for(let i=0; i <= updatedTextBoxes.length -1 ; i++ ) {
-        // if (updatedTextBoxes[i].text.includes('\n')) {
-            // console.log('console salto de linea', updatedTextBoxes[i].text)
-            //pasa por el texto de cada textbox
-            for(let j = 0; j <= updatedTextBoxes[i].text.length -1 ; j++){
-                // console.log('updatedTextBoxes[i] antes del if', updatedTextBoxes[i].text[j])
-                const textosSeparados = updatedTextBoxes[i].text.split('\n')
-                highestNumberLines = textosSeparados.length
-                console.log('textosSeparados', textosSeparados)
-                console.log('highestNumberLines', highestNumberLines)
-            
-                for(let k=0; k <= textosSeparados.length - 1; k++){
-                    
-                        if( longestWord < textosSeparados[k].length){
-                            longestWord = textosSeparados[k].length
-                        }
-
-                }
-                    console.log('longestWord', longestWord)
-
-                // if(textosSeparados[j] == '\n'){
-                //     console.log('Aqui hay un salto de linea!!!!!!!!!!!!!!')
-                // }
-                // if(updatedTextBoxes[i].text[j] === '\n' ){
-                //     // console.log('salto de linea en el texto', updatedTextBoxes[i])   
-                //     const textosSeparados = updatedTextBoxes[i].text[j].split('\n')
-                //     console.log('textosSeparados!!!!!!', textosSeparados)
-                //     SaltosCount = SaltosCount + 1
-                //     console.log('SaltosCount--', SaltosCount)
-                // }
-            }
-            console.log('----------', highestNumberLines)
-            updatedTextBoxes[i].cantidadDeLineas = highestNumberLines
-            updatedTextBoxes[i].cantidadDeCaracteres = longestWord
-        //   }
-      }
-      textBoxesRef.current = updatedTextBoxes;
-      console.log('updatedTextBoxes: ', updatedTextBoxes)
-
-    };
+        setTextBoxes(updatedTextBoxes);
+      
+        //pasa por todos los textboxes
+        const updatedTextBoxesWithLines = updatedTextBoxes.map((box) => {
+          const textosSeparados = box.text.split('\n'); // Split text by new lines
+          const highestNumberLines = textosSeparados.length; // Number of lines
+          let longestWord = 0;
+      
+          // Iterate through each line to find the longest word
+          textosSeparados.forEach((line) => {
+            line.split(' ').forEach((word) => {
+              if (word.length > longestWord) {
+                longestWord = word.length;
+              }
+            });
+          });
+      
+          // Return the updated box with the correct cantidadDeLineas and cantidadDeCaracteres
+          return {
+            ...box,
+            cantidadDeLineas: highestNumberLines,
+            cantidadDeCaracteres: longestWord,
+          };
+        });
+      
+        textBoxesRef.current = updatedTextBoxesWithLines;
+        setTextBoxes(updatedTextBoxesWithLines);
+        console.log('updatedTextBoxes: ', updatedTextBoxesWithLines);
+      };
+      
   
     return (
       <div>
@@ -102,7 +88,7 @@ function Canvas() {
               zIndex: 1
             }}
             cols = {box.cantidadDeCaracteres + 3} 
-            rows= {box.cantidadDeLineas + 3}
+            rows= {box.cantidadDeLineas }
             value={box.text}
             onChange={(e) => handleTextChange(box.id, e.target.value)}
           />
