@@ -8,14 +8,16 @@ function Tabs() {
   const tabs = useSelector((state) => state.tabs.tabs)
   const selectedTabIndex = useSelector((state) => state.tabs.selectedTabIndex)
   console.log('tabs------', tabs)
-  console.log('selectedTabIndex------', selectedTabIndex)
   const dispatch = useDispatch();
   
-
   function setActiveTab(tab) {
     console.log('clickedtab', tab)
-    dispatch(tabsActions.addTab(tab))
+    dispatch(tabsActions.setActiveTab(tab))
+  };
 
+  function addTab(tab) {
+    console.log('addTab', tab)
+    dispatch(tabsActions.addTab(tab))
   };
 
   
@@ -24,12 +26,25 @@ function Tabs() {
     <div className='tabs'>
 
     {
-      tabs.map((tab, key) => <p key={tab.tabId} onClick={()=> setActiveTab(tab.tabId)} 
-      className={`base-class ${selectedTabIndex === tab.tabId ? 'active-tab' : ''} another-class`}
-      > {tab.tabName} {tab.tabId} {tab.tabId} </p>)
-   
+        tabs.map((tab, key) => (
+          <input
+            key={tab.tabId}
+            type="text" 
+            onClick={() => setActiveTab(tab.tabId)}
+            className={`base-class ${selectedTabIndex === tab.tabId ? 'active-tab' : ''} another-class`}
+            value={`${tab.tabName} ${tab.tabId}`} // Set input's value
+          />
+        ))
+      }
+    <p  onClick={()=> addTab(
+      
+      {
+        tabId: tabs.length,
+        tabName: "new tab"
     }
-    <p >+</p>
+      
+      
+      )} >+ </p>
     </div>
     </>
   );

@@ -16,6 +16,8 @@ const todoSlice = createSlice({
             // console.log('en el reducer en el index del store')
             // console.log('action.action', action.payload)
             state.tasks.push(action.payload)
+            console.log('state.tasks', state.tasks)
+
         }
 
     }
@@ -60,11 +62,17 @@ const tabsSlice = createSlice({
     name: 'tabs',
     initialState: initialTabsState,
     reducers: {
-        addTab(state, action){
+        setActiveTab(state, action){
             //añadr aqui la tab
             state.selectedTabIndex = action.payload
-        }
+        },
+        addTab(state, action){
+            // console.log('en el reducer en el index del store')
+            // console.log('action.action', action.payload)
+            state.tabs.push(action.payload)
+            console.log(' state.tabs',  state.tabs)
 
+        }
     }
 
 
