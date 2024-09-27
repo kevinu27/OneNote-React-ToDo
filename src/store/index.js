@@ -2,7 +2,7 @@ import { createSlice, configureStore } from "@reduxjs/toolkit";
 
 const initialToDoState = {
     tasks: [ 
-        {name: 'a', description: 'b'},
+        {name: 'menu latera el overmouse', description: 'b'},
         {name: 'd', description: 'e'}
     
     ]
@@ -42,14 +42,44 @@ const menuSlice = createSlice({
 
 })
 
+const initialTabsState = {
+    tabs: [
+            {
+                tabId: 0,
+                tabName: "primera tab"
+            },
+            {
+                tabId: 1,
+                tabName: "segunda tab"
+            }
+    ],
+    selectedTabIndex: null
+}
+
+const tabsSlice = createSlice({
+    name: 'tabs',
+    initialState: initialTabsState,
+    reducers: {
+        addTab(state, action){
+            //añadr aqui la tab
+            state.selectedTabIndex = action.payload
+        }
+
+    }
+
+
+})
+
 const store = configureStore({
     reducer: {
         todo: todoSlice.reducer, 
-        menu: menuSlice.reducer 
+        menu: menuSlice.reducer,
+        tabs: tabsSlice.reducer
     }
 })
 
 export const todoActions = todoSlice.actions
 export const menuActions = menuSlice.actions
+export const tabsActions = tabsSlice.actions
 
 export default store

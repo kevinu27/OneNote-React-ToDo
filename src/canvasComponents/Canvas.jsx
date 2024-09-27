@@ -71,8 +71,8 @@ function Canvas() {
       <div>
         <canvas
           ref={canvasRef}
-          width={500}
-          height={500}
+          width={innerWidth}
+          height={innerHeight}
           style={{ border: '1px solid black' }}
           onClick={handleCanvasClick}
         />

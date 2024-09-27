@@ -5,6 +5,7 @@ import './App.css'
 import Sidebar from './components/Sidebar'
 import MainTask from './components/MainTask'
 import Canvas from './canvasComponents/Canvas'
+import Tabs from './canvasComponents/Tabs'
 import { useSelector } from 'react-redux'
 
 
@@ -16,15 +17,23 @@ function App() {
   return (
     <>
     <div className='app-layout'>
-
+    <div className='side-bar-app'>
     <Sidebar/>
+    </div>
+
     <div className='main'>
       {
         menu == 'todo' ? <MainTask/> : null
       }
+
+      <div className='canvas-layout'>
+                  {
+        menu == 'canvas' ? <Tabs/> : null
+      }
             {
         menu == 'canvas' ? <Canvas/> : null
       }
+      </div>
 
     </div>
     </div>

@@ -19,3 +19,14 @@ html, body {
   
 
 }
+
+.canvas-layout{
+  display: flex;
+  flex-direction: column;
+}
+
+.side-bar-app{
+  position: absolute;
+  height: 100%;
+
+}

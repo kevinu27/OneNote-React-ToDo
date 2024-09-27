@@ -1,0 +1,19 @@
+.tabs{
+    display: flex;
+}
+
+.tabs p{
+    border: 1px solid black;
+    margin:0;
+    margin-top: 2rem;
+    border-top-left-radius: 3px 3px;
+    border-top-right-radius: 3px 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.active-tab{
+    background-color: red;
+}
