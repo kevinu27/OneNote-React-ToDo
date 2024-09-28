@@ -71,7 +71,11 @@ const tabsSlice = createSlice({
             // console.log('action.action', action.payload)
             state.tabs.push(action.payload)
             console.log(' state.tabs',  state.tabs)
+        },
+        updateTabName(state, action){
 
+            console.log(' action------', action.payload)
+            state.tabs= action.payload
         }
     }
 

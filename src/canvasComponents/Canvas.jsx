@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect  } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
 import './Canvas.css'
 
@@ -6,7 +7,7 @@ function Canvas() {
     const canvasRef = useRef(null);
     const textBoxesRef = useRef([]); // Stores all textboxes data
     const [textBoxes, setTextBoxes] = useState([]);
-  
+    const selectedTabIndex = useSelector((state) => state.tabs.selectedTabIndex)
     // Handle canvas click to create a textarea
     const handleCanvasClick = (e) => {
       const canvas = canvasRef.current;
@@ -21,7 +22,8 @@ function Canvas() {
         y,
         text: '',
         cantidadDeCaracteres: 0,
-        cantidadDeLineas: 3
+        cantidadDeLineas: 3,
+        tabIndex: selectedTabIndex
       };
   
       // Update state and ref to add the new textarea
