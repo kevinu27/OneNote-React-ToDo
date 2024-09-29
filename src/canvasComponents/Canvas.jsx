@@ -8,6 +8,7 @@ function Canvas() {
     const textBoxesRef = useRef([]); // Stores all textboxes data
     const [textBoxes, setTextBoxes] = useState([]);
     const selectedTabIndex = useSelector((state) => state.tabs.selectedTabIndex)
+    const tabs = useSelector((state) => state.tabs.tabs)
     // Handle canvas click to create a textarea
     const handleCanvasClick = (e) => {
       const canvas = canvasRef.current;
@@ -25,6 +26,7 @@ function Canvas() {
         cantidadDeLineas: 3,
         tabIndex: selectedTabIndex
       };
+      console.log('textbox', newTextBox)
   
       // Update state and ref to add the new textarea
       setTextBoxes([...textBoxes, newTextBox]);
@@ -67,6 +69,11 @@ function Canvas() {
         setTextBoxes(updatedTextBoxesWithLines);
         console.log('updatedTextBoxes: ', updatedTextBoxesWithLines);
       };
+
+
+
+  
+
       
   
     return (
@@ -79,22 +86,24 @@ function Canvas() {
           onClick={handleCanvasClick}
         />
   
-        {/* Render textareas at specified positions */}
-        {textBoxes.map((box) => (
-          <textarea className='textbox'
-            key={box.id}
-            style={{
-              position: 'absolute',
-              top: box.y,
-              left: box.x,
-              zIndex: 1
-            }}
-            cols = {box.cantidadDeCaracteres + 3} 
-            rows= {box.cantidadDeLineas }
-            value={box.text}
-            onChange={(e) => handleTextChange(box.id, e.target.value)}
-          />
-        ))}
+  {textBoxes.map((box) =>
+      box.tabIndex === selectedTabIndex ? (
+        <textarea
+          className="textbox"
+          key={box.id}
+          style={{
+            position: 'absolute',
+            top: box.y,
+            left: box.x,
+            zIndex: 1,
+          }}
+          cols={box.cantidadDeCaracteres + 3}
+          rows={box.cantidadDeLineas}
+          value={box.text}
+          onChange={(e) => handleTextChange(box.id, e.target.value)}
+        />
+      ) : null // Render null if tabIndex doesn't match
+    )}
       </div>
     );
 }
