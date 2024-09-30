@@ -48,14 +48,17 @@ const initialTabsState = {
     tabs: [
             {
                 tabId: 0,
-                tabName: "primera tab"
+                tabName: "primera tab",
+                tabColor: 'lightblue'
             },
             {
                 tabId: 1,
-                tabName: "segunda tab"
+                tabName: "segunda tab",
+                tabColor: 'lightred'
             }
     ],
-    selectedTabIndex: null
+    selectedTabIndex: null,
+    selectedTabColor: 'lightblue'
 }
 
 const tabsSlice = createSlice({
@@ -64,7 +67,9 @@ const tabsSlice = createSlice({
     reducers: {
         setActiveTab(state, action){
             //añadr aqui la tab
-            state.selectedTabIndex = action.payload
+            console.log('setActiveTabAction------', action.payload)
+            state.selectedTabIndex = action.payload.tabIndex
+            state.selectedTabColor = action.payload.tabColor
         },
         addTab(state, action){
             // console.log('en el reducer en el index del store')

@@ -15,9 +15,13 @@ function Tabs() {
 
 
 
+
   
-  function setActiveTab(tab) {
-    dispatch(tabsActions.setActiveTab(tab))
+  function setActiveTab(tabIndex, tabColor) {
+    dispatch(tabsActions.setActiveTab({
+      tabIndex:tabIndex,
+      tabColor: tabColor
+    }))
   };
 
   function addTab(tab) {
@@ -34,9 +38,20 @@ function Tabs() {
       return tab; // Return the existing tab for all others
     });
     dispatch(tabsActions.updateTabName(updatedTabs))
-
-
   };
+
+  function getRandomLightColor() {
+    // Generate random values for red, green, and blue channels, but keep them in a higher range (180-255) for a light color
+    const r = Math.floor(Math.random() * 76) + 180; // 180 to 255
+    const g = Math.floor(Math.random() * 76) + 180; // 180 to 255
+    const b = Math.floor(Math.random() * 76) + 180; // 180 to 255
+
+    // Convert to a hex string and pad with zeroes if necessary
+    const toHex = (value) => value.toString(16).padStart(2, '0');
+    console.log('-------', `#${toHex(r)}${toHex(g)}${toHex(b)}`)
+
+    return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+}
 
   
   return (
@@ -48,11 +63,12 @@ function Tabs() {
           <input
             key={tab.tabId}
             type="text" 
-            onClick={() => setActiveTab(tab.tabId)}
+            onClick={() => setActiveTab(tab.tabId, tab.tabColor)}
             className={`base-class ${selectedTabIndex === tab.tabId ? 'active-tab' : ''} another-class`}
             placeholder={tab.tabName}
             value={tabsLocal.tabName}
             onChange={(e) => handleInputChange(e, tab.tabId)}
+            style={{ backgroundColor: tab.tabColor }}
           />
         ))
       }
@@ -60,8 +76,9 @@ function Tabs() {
       
       {
         tabId: tabs.length,
-        tabName: `new tab ${tabs.length + 1}`
-    }
+        tabName: `new tab ${tabs.length + 1}`,
+        tabColor: getRandomLightColor() 
+      }
       
       
       )} >+ </p>

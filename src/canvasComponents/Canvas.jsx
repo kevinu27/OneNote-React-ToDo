@@ -8,6 +8,7 @@ function Canvas() {
     const textBoxesRef = useRef([]); // Stores all textboxes data
     const [textBoxes, setTextBoxes] = useState([]);
     const selectedTabIndex = useSelector((state) => state.tabs.selectedTabIndex)
+    const selectedTabColor = useSelector((state) => state.tabs.selectedTabColor)
     const tabs = useSelector((state) => state.tabs.tabs)
     // Handle canvas click to create a textarea
     const handleCanvasClick = (e) => {
@@ -82,7 +83,7 @@ function Canvas() {
           ref={canvasRef}
           width={innerWidth}
           height={innerHeight}
-          style={{ border: '1px solid black' }}
+          style={{ border: '1px solid black', backgroundColor: selectedTabColor}}
           onClick={handleCanvasClick}
         />
   
