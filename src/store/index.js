@@ -87,16 +87,39 @@ const tabsSlice = createSlice({
 
 })
 
+const initialdrawingMenuState = {
+    selectedDrawingMenu: 'null'
+}
+
+const drawingMenuSlice = createSlice({
+    name: 'drawingMenu',
+    initialState: initialdrawingMenuState,
+    reducers: {
+        setSelectedDrawingMenu(state, action){
+            // console.log('en el reducer en el index del store')
+            // console.log('action.action', action.payload)
+            state.tasks.push(action.payload)
+            console.log('state.tasks', state.tasks)
+
+        }
+
+    }
+
+
+})
+
 const store = configureStore({
     reducer: {
         todo: todoSlice.reducer, 
         menu: menuSlice.reducer,
-        tabs: tabsSlice.reducer
+        tabs: tabsSlice.reducer,
+        drawingMenu: drawingMenuSlice.reducer
     }
 })
 
 export const todoActions = todoSlice.actions
 export const menuActions = menuSlice.actions
 export const tabsActions = tabsSlice.actions
+export const drawingMenuActions = drawingMenuSlice.actions
 
 export default store

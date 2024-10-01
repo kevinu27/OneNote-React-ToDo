@@ -6,6 +6,9 @@ import Sidebar from './components/Sidebar'
 import MainTask from './components/MainTask'
 import Canvas from './canvasComponents/Canvas'
 import Tabs from './canvasComponents/Tabs'
+import CanvasMenu from './canvasComponents/CanvasMenu'
+
+
 import { useSelector } from 'react-redux'
 
 
@@ -27,6 +30,10 @@ function App() {
       }
 
       <div className='canvas-layout'>
+      
+      {
+        menu == 'canvas' ? <CanvasMenu/> : null
+      }
                   {
         menu == 'canvas' ? <Tabs/> : null
       }

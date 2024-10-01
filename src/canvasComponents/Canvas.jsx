@@ -8,6 +8,7 @@ function Canvas() {
   const textBoxesRef = useRef([]); // Stores all textboxes data
   const [textBoxes, setTextBoxes] = useState([]);
   const [dragging, setDragging] = useState(false);
+  const [drawing, setDrawing] = useState(false);
   const [draggedBoxId, setDraggedBoxId] = useState(null);
   const [startCoords, setStartCoords] = useState({ x: 0, y: 0 });
   const selectedTabIndex = useSelector((state) => state.tabs.selectedTabIndex);
