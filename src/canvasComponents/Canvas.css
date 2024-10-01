@@ -7,5 +7,15 @@ canvas {
     /* z-index: 1; */
     background-color: transparent;
     width: fit-content;
+    /* border: 5px solid red; */
+    border: 2px solid red;
+    border-radius: 5px; /* Optional: Rounded corners */
+    padding: 5px;       /* Optional: Padding inside the textarea */
+    /* resize: none;       Optional: Disable resizing */
+}
 
+.textAreaHoder{
+background-color: red;
+padding: 5px;
+border: 5px solid green;
 }
