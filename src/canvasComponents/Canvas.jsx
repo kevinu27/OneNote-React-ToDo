@@ -13,6 +13,7 @@ function Canvas() {
   const [startCoords, setStartCoords] = useState({ x: 0, y: 0 });
   const selectedTabIndex = useSelector((state) => state.tabs.selectedTabIndex);
   const selectedTabColor = useSelector((state) => state.tabs.selectedTabColor);
+  const selectedDrawingMenu = useSelector((state) => state.drawingMenu.selectedDrawingMenu);
 
   const handleCanvasClick = (e) => {
     const canvas = canvasRef.current;
@@ -78,6 +79,18 @@ function Canvas() {
     setDragging(false);
     setDraggedBoxId(null);
   };
+  const handleCanvasClickDrawing = (e) => {
+  console.log('----------click Drawing')
+  setDrawing(true)
+  };
+  const stopDrawing = (e) => {
+    console.log('----------stopDrawing Drawing')
+    // setDrawing(true)
+    };
+  const drawLine = (e) => {
+    console.log('----------drawLine Drawing')
+    // setDrawing(true)
+  };
 
   return (
     <div
@@ -89,7 +102,11 @@ function Canvas() {
         width={window.innerWidth}
         height={window.innerHeight}
         style={{ border: '1px solid black', backgroundColor: selectedTabColor }}
-        onClick={handleCanvasClick}
+        onClick={selectedDrawingMenu == null ? handleCanvasClickDrawing : handleCanvasClick }
+        onMouseDown={selectedDrawingMenu == 'null222' ? handleCanvasClickDrawing : null}
+        onMouseUp={stopDrawing}
+        // onMouseMove={drawLine}
+        // onMouseLeave={stopDrawing}
       />
 
       {textBoxes.map((box) =>

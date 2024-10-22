@@ -88,7 +88,8 @@ const tabsSlice = createSlice({
 })
 
 const initialdrawingMenuState = {
-    selectedDrawingMenu: 'null'
+    selectedDrawingMenu: 'null222',
+    isDrawing: false
 }
 
 const drawingMenuSlice = createSlice({
@@ -98,9 +99,14 @@ const drawingMenuSlice = createSlice({
         setSelectedDrawingMenu(state, action){
             // console.log('en el reducer en el index del store')
             // console.log('action.action', action.payload)
-            state.tasks.push(action.payload)
-            console.log('state.tasks', state.tasks)
-
+            // state.tasks.push(action.payload)
+            // console.log('state.tasks', state.tasks)
+        },
+        setIsDrawing(state, action){
+            // console.log('en el reducer en el index del store')
+            // console.log('action.action', action.payload)
+            state.isDrawing = !state.isDrawing;
+            console.log('state.isDrawing', state.isDrawing)
         }
 
     }
