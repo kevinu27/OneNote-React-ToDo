@@ -9,6 +9,8 @@ function CanvasMenu() {
   const dispatch = useDispatch();
   const selectedDrawingMenu = useSelector((state) => state.drawingMenu.selectedDrawingMenu);
   const selectedIsDrawing= useSelector((state) => state.drawingMenu.isDrawing);
+  const IsDrawing= useSelector((state) => state.drawingMenu.isDrawing);
+
 
   console.log('------........', selectedDrawingMenu)
   console.log('------........', selectedIsDrawing)
@@ -26,7 +28,7 @@ function CanvasMenu() {
   return (
     <>
 <h2>canvas menu</h2>
-<button className='drawing-button' onClick={clickDrawingHandler}> drawing</button>
+<button className={`  ${!IsDrawing ? 'drawing-button' : 'drawing-button-active'}`} onClick={clickDrawingHandler}> drawing</button>
     </>
   );
 }

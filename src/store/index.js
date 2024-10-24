@@ -57,7 +57,7 @@ const initialTabsState = {
                 tabColor: 'lightred'
             }
     ],
-    selectedTabIndex: null,
+    selectedTabIndex: 0,
     selectedTabColor: 'lightblue'
 }
 

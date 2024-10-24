@@ -34,5 +34,11 @@
 }
 
 .drawing-button{
-    width: 15%;
+    width: 10%;
+    background-color: rgba(255, 0, 0, 0.8);
+    border-radius: 2px;
+}
+.drawing-button-active{
+    width: 10%;
+    background-color: rgba(0, 255, 0, 0.6);
 }

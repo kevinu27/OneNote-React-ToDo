@@ -8,14 +8,17 @@ function Canvas() {
   const textBoxesRef = useRef([]); // Stores all textboxes data
   const [textBoxes, setTextBoxes] = useState([]);
   const [dragging, setDragging] = useState(false);
-  const [drawing, setDrawing] = useState(false);
+  // const [drawing, setDrawing] = useState(false);
+  const [points, setPoints] = useState([]); // Store points
   const [draggedBoxId, setDraggedBoxId] = useState(null);
   const [startCoords, setStartCoords] = useState({ x: 0, y: 0 });
   const selectedTabIndex = useSelector((state) => state.tabs.selectedTabIndex);
   const selectedTabColor = useSelector((state) => state.tabs.selectedTabColor);
-  const selectedDrawingMenu = useSelector((state) => state.drawingMenu.selectedDrawingMenu);
+  // const selectedDrawingMenu = useSelector((state) => state.drawingMenu.selectedDrawingMenu);
+  const isDrawing= useSelector((state) => state.drawingMenu.isDrawing);
 
   const handleCanvasClick = (e) => {
+    console.log('click not drawing')
     const canvas = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -79,10 +82,44 @@ function Canvas() {
     setDragging(false);
     setDraggedBoxId(null);
   };
+  // ---------------------------------------------------------------------------------
   const handleCanvasClickDrawing = (e) => {
   console.log('----------click Drawing')
-  setDrawing(true)
+  console.log('click Drawing');
+  const canvas = canvasRef.current;
+  const rect = canvas.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  
+  // Add new point to points array
+  const newPoint = { x, y, tabIndex: selectedTabIndex, };
+  setPoints(prevPoints => [...prevPoints, newPoint]);
+  
+  // Draw the point immediately
+  const ctx = canvas.getContext('2d');
+  ctx.beginPath();
+  ctx.arc(x, y, 3, 0, Math.PI * 2);
+  ctx.fillStyle = 'black';
+  ctx.fill();
+  ctx.closePath();
+  console.log('points', points)
   };
+  // const drawPoints = () => {
+  //   const canvas = canvasRef.current;
+  //   const ctx = canvas.getContext('2d');
+    
+  //   // Clear the canvas
+  //   ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+  //   // Draw all points
+  //   points.forEach(point => {
+  //     ctx.beginPath();
+  //     ctx.arc(point.x, point.y, 3, 0, Math.PI * 2); // 3 is the radius of the point
+  //     ctx.fillStyle = 'black'; // Point color
+  //     ctx.fill();
+  //     ctx.closePath();
+  //   });
+  // };
   const stopDrawing = (e) => {
     console.log('----------stopDrawing Drawing')
     // setDrawing(true)
@@ -102,9 +139,9 @@ function Canvas() {
         width={window.innerWidth}
         height={window.innerHeight}
         style={{ border: '1px solid black', backgroundColor: selectedTabColor }}
-        onClick={selectedDrawingMenu == null ? handleCanvasClickDrawing : handleCanvasClick }
-        onMouseDown={selectedDrawingMenu == 'null222' ? handleCanvasClickDrawing : null}
-        onMouseUp={stopDrawing}
+        onClick={isDrawing ? handleCanvasClickDrawing : handleCanvasClick }
+        onMouseDown={isDrawing ? handleCanvasClickDrawing : null}
+        onMouseUp={isDrawing ? stopDrawing : null}
         // onMouseMove={drawLine}
         // onMouseLeave={stopDrawing}
       />
