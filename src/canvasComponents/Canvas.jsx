@@ -8,8 +8,9 @@ function Canvas() {
   const textBoxesRef = useRef([]); // Stores all textboxes data
   const [textBoxes, setTextBoxes] = useState([]);
   const [dragging, setDragging] = useState(false);
-  // const [drawing, setDrawing] = useState(false);
+  const [drawingNow, setDrawingNow] = useState(false);
   const [points, setPoints] = useState([]); // Store points
+  const [oldpoints, setOldPoints] = useState([]); // Store points
   const [draggedBoxId, setDraggedBoxId] = useState(null);
   const [startCoords, setStartCoords] = useState({ x: 0, y: 0 });
   const selectedTabIndex = useSelector((state) => state.tabs.selectedTabIndex);
@@ -84,25 +85,26 @@ function Canvas() {
   };
   // ---------------------------------------------------------------------------------
   const handleCanvasClickDrawing = (e) => {
-  console.log('----------click Drawing')
-  console.log('click Drawing');
-  const canvas = canvasRef.current;
-  const rect = canvas.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-  
-  // Add new point to points array
-  const newPoint = { x, y, tabIndex: selectedTabIndex, };
-  setPoints(prevPoints => [...prevPoints, newPoint]);
-  
-  // Draw the point immediately
-  const ctx = canvas.getContext('2d');
-  ctx.beginPath();
-  ctx.arc(x, y, 3, 0, Math.PI * 2);
-  ctx.fillStyle = 'black';
-  ctx.fill();
-  ctx.closePath();
-  console.log('points', points)
+    setDrawingNow(true)
+    console.log('----------click Drawing')
+    // const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    // Add new point to points array
+    const newPoint = { x, y, tabIndex: selectedTabIndex, };
+    setPoints(prevPoints => [...prevPoints, newPoint]);
+    // Draw the point immediately
+    // const ctx = canvas.getContext('2d');
+    // ctx.beginPath();
+    // // ctx.arc(x, y, 3, 0, Math.PI * 2);
+    // // ctx.fillStyle = 'black';
+    // // ctx.fill();
+    // console.log('points', points)
+    // ctx.moveTo(x, y);
+    // ctx.lineWidth = 5;
+    // ctx.closePath();
   };
   // const drawPoints = () => {
   //   const canvas = canvasRef.current;
@@ -110,7 +112,7 @@ function Canvas() {
     
   //   // Clear the canvas
   //   ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+  
   //   // Draw all points
   //   points.forEach(point => {
   //     ctx.beginPath();
@@ -122,12 +124,36 @@ function Canvas() {
   // };
   const stopDrawing = (e) => {
     console.log('----------stopDrawing Drawing')
-    // setDrawing(true)
-    };
-  const drawLine = (e) => {
-    console.log('----------drawLine Drawing')
+    setDrawingNow(false)
     // setDrawing(true)
   };
+  const drawLine = (e) => {
+    console.log('----------drawLine Drawing')
+    const canvas = canvasRef.current;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    // Add new point to points array
+    const newPoint = { x, y, tabIndex: selectedTabIndex, };
+    
+    setPoints(prevPoints => [...prevPoints, newPoint]);
+    
+    // Draw the point immediately
+    const ctx = canvas.getContext('2d');
+    ctx.beginPath();
+    // ctx.arc(x, y, 3, 0, Math.PI * 2);
+    // ctx.fillStyle = 'black';
+    // ctx.fill();
+    console.log('************** oldpoints', oldpoints)
+    ctx.moveTo(oldpoints.x, oldpoints.y); // Move the pen to (30, 50)
+    ctx.lineTo(x, y); // Draw a line to (150, 100)
+    ctx.stroke(); // Render the path
+    
+    setOldPoints(newPoint)
+    // setDrawing(true)
+  };
+  
 
   return (
     <div
@@ -139,10 +165,10 @@ function Canvas() {
         width={window.innerWidth}
         height={window.innerHeight}
         style={{ border: '1px solid black', backgroundColor: selectedTabColor }}
-        onClick={isDrawing ? handleCanvasClickDrawing : handleCanvasClick }
-        onMouseDown={isDrawing ? handleCanvasClickDrawing : null}
-        onMouseUp={isDrawing ? stopDrawing : null}
-        // onMouseMove={drawLine}
+        onClick={isDrawing ? handleCanvasClick : null }
+        onMouseDown={!isDrawing ? handleCanvasClickDrawing : null}
+        onMouseUp={stopDrawing }
+        onMouseMove={drawingNow ? drawLine : null}
         // onMouseLeave={stopDrawing}
       />
 
