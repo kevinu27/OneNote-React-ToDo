@@ -42,3 +42,8 @@
     width: 10%;
     background-color: rgba(0, 255, 0, 0.6);
 }
+
+.buttons-holder{
+    display: flex;
+    
+}

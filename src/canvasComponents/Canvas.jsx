@@ -17,6 +17,8 @@ function Canvas() {
   const selectedTabColor = useSelector((state) => state.tabs.selectedTabColor);
   // const selectedDrawingMenu = useSelector((state) => state.drawingMenu.selectedDrawingMenu);
   const isDrawing= useSelector((state) => state.drawingMenu.isDrawing);
+  console.log('----isDrawing', isDrawing )
+  const StrokeWidth= useSelector((state) => state.drawingMenu.StrokeWidth);
 
   const handleCanvasClick = (e) => {
     console.log('click not drawing')
@@ -86,15 +88,15 @@ function Canvas() {
   // ---------------------------------------------------------------------------------
   const handleCanvasClickDrawing = (e) => {
     setDrawingNow(true)
-    console.log('----------click Drawing')
-    // const canvas = canvasRef.current;
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    // console.log('----------click Drawing')
+    // // const canvas = canvasRef.current;
+    // const rect = canvas.getBoundingClientRect();
+    // const x = e.clientX - rect.left;
+    // const y = e.clientY - rect.top;
     
-    // Add new point to points array
-    const newPoint = { x, y, tabIndex: selectedTabIndex, };
-    setPoints(prevPoints => [...prevPoints, newPoint]);
+    // // Add new point to points array
+    // const newPoint = { x, y, tabIndex: selectedTabIndex, };
+    // setPoints(prevPoints => [...prevPoints, newPoint]);
     // Draw the point immediately
     // const ctx = canvas.getContext('2d');
     // ctx.beginPath();
@@ -125,33 +127,23 @@ function Canvas() {
   const stopDrawing = (e) => {
     console.log('----------stopDrawing Drawing')
     setDrawingNow(false)
-    // setDrawing(true)
+    setOldPoints([])
   };
+
   const drawLine = (e) => {
-    console.log('----------drawLine Drawing')
     const canvas = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    
-    // Add new point to points array
     const newPoint = { x, y, tabIndex: selectedTabIndex, };
-    
     setPoints(prevPoints => [...prevPoints, newPoint]);
-    
-    // Draw the point immediately
     const ctx = canvas.getContext('2d');
     ctx.beginPath();
-    // ctx.arc(x, y, 3, 0, Math.PI * 2);
-    // ctx.fillStyle = 'black';
-    // ctx.fill();
-    console.log('************** oldpoints', oldpoints)
+    ctx.lineWidth = StrokeWidth
     ctx.moveTo(oldpoints.x, oldpoints.y); // Move the pen to (30, 50)
     ctx.lineTo(x, y); // Draw a line to (150, 100)
     ctx.stroke(); // Render the path
-    
     setOldPoints(newPoint)
-    // setDrawing(true)
   };
   
 

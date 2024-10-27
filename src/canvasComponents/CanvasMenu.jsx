@@ -22,13 +22,22 @@ function CanvasMenu() {
     }))
 
 }
+function onSliderHandler(e) {
+  dispatch(drawingMenuActions.setStrokeWidth(e.target.value))
+}
 
 
   
   return (
     <>
 <h2>canvas menu</h2>
-<button className={`  ${!IsDrawing ? 'drawing-button' : 'drawing-button-active'}`} onClick={clickDrawingHandler}> drawing</button>
+<div className='buttons-holder'>
+  <button className={`  ${!IsDrawing ? 'drawing-button' : 'drawing-button-active'}`} onClick={clickDrawingHandler}> drawing</button>
+  <div> <label >widthSlider </label> <input type="range"  min='1' max='15' defaultValue='5' onChange={(e) => onSliderHandler(e)} /> </div>
+  <button className={`  ${!IsDrawing ? 'drawing-button' : 'drawing-button-active'}`} > borrar</button>
+  <button className={`  ${!IsDrawing ? 'drawing-button' : 'drawing-button-active'}`} > guardar en local</button>
+</div>
+
     </>
   );
 }

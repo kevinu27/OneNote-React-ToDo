@@ -89,7 +89,9 @@ const tabsSlice = createSlice({
 
 const initialdrawingMenuState = {
     selectedDrawingMenu: 'null222',
-    isDrawing: false
+    isDrawing: false,
+    StrokeWidth: 5
+
 }
 
 const drawingMenuSlice = createSlice({
@@ -107,6 +109,13 @@ const drawingMenuSlice = createSlice({
             // console.log('action.action', action.payload)
             state.isDrawing = !state.isDrawing;
             console.log('state.isDrawing', state.isDrawing)
+        },
+        setStrokeWidth(state, action){
+            // console.log('en el reducer en el index del store')
+            // console.log('action.action', action.payload)
+            state.StrokeWidth = action.payload;
+            console.log('state.isDrawing----', state.StrokeWidth)
+            console.log('action.payload---', action.payload)
         }
 
     }
