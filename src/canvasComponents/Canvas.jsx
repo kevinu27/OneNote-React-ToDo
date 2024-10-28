@@ -5,6 +5,7 @@ import './Canvas.css';
 
 function Canvas() {
   const canvasRef = useRef(null);
+  const pointsRef = useRef([]);
   const textBoxesRef = useRef([]); // Stores all textboxes data
   const [textBoxes, setTextBoxes] = useState([]);
   const [dragging, setDragging] = useState(false);
@@ -138,12 +139,23 @@ function Canvas() {
     const newPoint = { x, y, tabIndex: selectedTabIndex, };
     setPoints(prevPoints => [...prevPoints, newPoint]);
     const ctx = canvas.getContext('2d');
+    // ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
     ctx.lineWidth = StrokeWidth
-    ctx.moveTo(oldpoints.x, oldpoints.y); // Move the pen to (30, 50)
-    ctx.lineTo(x, y); // Draw a line to (150, 100)
+
+    if(oldpoints.tabIndex === selectedTabIndex){
+      console.log('-dfdsfsd')
+    }
+    pointsRef.current.push(newPoint)
+    const tabPoints =  pointsRef.current.filter(point => point.tabIndex == selectedTabIndex)
+    console.log('tabPoints', tabPoints)
+    
+    for(let i = 0; i< tabPoints.length; i++){
+      ctx.moveTo(oldpoints.x, oldpoints.y); 
+      ctx.lineTo(x, y); 
+      setOldPoints(newPoint)
+    }
     ctx.stroke(); // Render the path
-    setOldPoints(newPoint)
   };
   
 
