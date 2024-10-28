@@ -90,7 +90,10 @@ const tabsSlice = createSlice({
 const initialdrawingMenuState = {
     selectedDrawingMenu: 'null222',
     isDrawing: false,
-    StrokeWidth: 5
+    StrokeWidth: 5,
+    lines: [],
+    textboxes: [],
+    tabs: []
 
 }
 
@@ -99,25 +102,31 @@ const drawingMenuSlice = createSlice({
     initialState: initialdrawingMenuState,
     reducers: {
         setSelectedDrawingMenu(state, action){
-            // console.log('en el reducer en el index del store')
-            // console.log('action.action', action.payload)
-            // state.tasks.push(action.payload)
-            // console.log('state.tasks', state.tasks)
         },
+
         setIsDrawing(state, action){
-            // console.log('en el reducer en el index del store')
-            // console.log('action.action', action.payload)
+
             state.isDrawing = !state.isDrawing;
             console.log('state.isDrawing', state.isDrawing)
         },
         setStrokeWidth(state, action){
-            // console.log('en el reducer en el index del store')
-            // console.log('action.action', action.payload)
-            state.StrokeWidth = action.payload;
-            console.log('state.isDrawing----', state.StrokeWidth)
-            console.log('action.payload---', action.payload)
-        }
 
+            state.StrokeWidth = action.payload;
+        },
+       setLines(state, action){
+        console.log('lineref con el ref', action.payload)
+
+            state.lines = [...action.payload]
+        },
+
+        setTextboxes(state, action){
+            console.log('setTexboxes con el ref', action.payload)
+            state.textboxes = [...action.payload];
+        },
+
+        setTabs(state, action){
+            state.tabs = action.payload
+        },
     }
 
 

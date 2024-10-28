@@ -1,36 +1,34 @@
 import { useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
-
+import { useSelector, useDispatch } from 'react-redux'
+import { drawingMenuActions } from '../store/index'
 import './Canvas.css';
 
 function Canvas() {
   const canvasRef = useRef(null);
-  const pointsRef = useRef([]);
-  const textBoxesRef = useRef([]); // Stores all textboxes data
+  const linesRef = useRef([]);  ///esto es loque hay que guardar en el local storage
+  const currentLineRef = useRef([]); 
+  const textBoxesRef = useRef([]); ///esto es loque hay que guardar en el local storage
+  //pasar tabs tambien al local storage
   const [textBoxes, setTextBoxes] = useState([]);
   const [dragging, setDragging] = useState(false);
   const [drawingNow, setDrawingNow] = useState(false);
-  const [points, setPoints] = useState([]); // Store points
-  const [oldpoints, setOldPoints] = useState([]); // Store points
   const [draggedBoxId, setDraggedBoxId] = useState(null);
   const [startCoords, setStartCoords] = useState({ x: 0, y: 0 });
   const selectedTabIndex = useSelector((state) => state.tabs.selectedTabIndex);
   const selectedTabColor = useSelector((state) => state.tabs.selectedTabColor);
-  // const selectedDrawingMenu = useSelector((state) => state.drawingMenu.selectedDrawingMenu);
-  const isDrawing= useSelector((state) => state.drawingMenu.isDrawing);
-  console.log('----isDrawing', isDrawing )
-  const StrokeWidth= useSelector((state) => state.drawingMenu.StrokeWidth);
+  const isDrawing = useSelector((state) => state.drawingMenu.isDrawing);
+  const strokeWidth = useSelector((state) => state.drawingMenu.StrokeWidth);
+  const dispatch = useDispatch();
+  
 
   const handleCanvasClick = (e) => {
-    console.log('click not drawing')
     const canvas = canvasRef.current;
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    // Create a new textbox object with position
     const newTextBox = {
-      id: Date.now(), // Unique ID for each textarea
+      id: Date.now(),
       x,
       y,
       text: '',
@@ -41,23 +39,22 @@ function Canvas() {
 
     setTextBoxes([...textBoxes, newTextBox]);
     textBoxesRef.current.push(newTextBox);
+      dispatch(drawingMenuActions.setTextboxes(
+        textBoxesRef.current
+      ))
   };
 
-  // Handle text change inside a textarea
   const handleTextChange = (id, value) => {
     const updatedTextBoxes = textBoxes.map((box) =>
       box.id === id ? { ...box, text: value, cantidadDeCaracteres: value.length } : box
     );
-
     setTextBoxes(updatedTextBoxes);
   };
 
   const handleMouseDown = (e, box) => {
-    // Prevent dragging if clicking inside the resize handle area (bottom right corner)
     const textarea = e.target;
     const rect = textarea.getBoundingClientRect();
-    const isResizing = 
-      e.clientX > rect.right - 10 && e.clientY > rect.bottom - 10;
+    const isResizing = e.clientX > rect.right - 10 && e.clientY > rect.bottom - 10;
 
     if (!isResizing) {
       setDragging(true);
@@ -66,7 +63,34 @@ function Canvas() {
     }
   };
 
-  const handleMouseMove = (e) => {
+  // Drawing functions
+  const handleCanvasMouseDown = (e) => {
+    if (!isDrawing) {
+      setDrawingNow(true);
+      const canvas = canvasRef.current;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      currentLineRef.current = [{ x, y, tabIndex: selectedTabIndex }];
+    }
+  };
+
+  const handleCanvasMouseUp = () => {
+    if (drawingNow) {
+      if (currentLineRef.current.length > 0) {
+        linesRef.current.push([...currentLineRef.current]);
+        dispatch(drawingMenuActions.setLines(
+          linesRef.current
+        ))
+      }
+      currentLineRef.current = [];
+      setDrawingNow(false);
+    }
+    setDragging(false);
+    setDraggedBoxId(null);
+  };
+
+  const handleCanvasMouseMove = (e) => {
     if (dragging) {
       const newTextBoxes = textBoxes.map((box) => {
         if (box.id === draggedBoxId) {
@@ -80,100 +104,68 @@ function Canvas() {
       });
       setTextBoxes(newTextBoxes);
     }
+
+    if (drawingNow) {
+      const canvas = canvasRef.current;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      currentLineRef.current.push({ x, y, tabIndex: selectedTabIndex });
+
+      redrawCanvas();
+    }
   };
 
-  const handleMouseUp = () => {
-    setDragging(false);
-    setDraggedBoxId(null);
-  };
-  // ---------------------------------------------------------------------------------
-  const handleCanvasClickDrawing = (e) => {
-    setDrawingNow(true)
-    // console.log('----------click Drawing')
-    // // const canvas = canvasRef.current;
-    // const rect = canvas.getBoundingClientRect();
-    // const x = e.clientX - rect.left;
-    // const y = e.clientY - rect.top;
-    
-    // // Add new point to points array
-    // const newPoint = { x, y, tabIndex: selectedTabIndex, };
-    // setPoints(prevPoints => [...prevPoints, newPoint]);
-    // Draw the point immediately
-    // const ctx = canvas.getContext('2d');
-    // ctx.beginPath();
-    // // ctx.arc(x, y, 3, 0, Math.PI * 2);
-    // // ctx.fillStyle = 'black';
-    // // ctx.fill();
-    // console.log('points', points)
-    // ctx.moveTo(x, y);
-    // ctx.lineWidth = 5;
-    // ctx.closePath();
-  };
-  // const drawPoints = () => {
-  //   const canvas = canvasRef.current;
-  //   const ctx = canvas.getContext('2d');
-    
-  //   // Clear the canvas
-  //   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  
-  //   // Draw all points
-  //   points.forEach(point => {
-  //     ctx.beginPath();
-  //     ctx.arc(point.x, point.y, 3, 0, Math.PI * 2); // 3 is the radius of the point
-  //     ctx.fillStyle = 'black'; // Point color
-  //     ctx.fill();
-  //     ctx.closePath();
-  //   });
-  // };
-  const stopDrawing = (e) => {
-    console.log('----------stopDrawing Drawing')
-    setDrawingNow(false)
-    setOldPoints([])
-  };
-
-  const drawLine = (e) => {
+  const redrawCanvas = () => {
     const canvas = canvasRef.current;
-    const rect = canvas.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const newPoint = { x, y, tabIndex: selectedTabIndex, };
-    setPoints(prevPoints => [...prevPoints, newPoint]);
     const ctx = canvas.getContext('2d');
-    // ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.beginPath();
-    ctx.lineWidth = StrokeWidth
-
-    if(oldpoints.tabIndex === selectedTabIndex){
-      console.log('-dfdsfsd')
-    }
-    pointsRef.current.push(newPoint)
-    const tabPoints =  pointsRef.current.filter(point => point.tabIndex == selectedTabIndex)
-    console.log('tabPoints', tabPoints)
     
-    for(let i = 0; i< tabPoints.length; i++){
-      ctx.moveTo(oldpoints.x, oldpoints.y); 
-      ctx.lineTo(x, y); 
-      setOldPoints(newPoint)
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.lineWidth = strokeWidth;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    const tabLines = linesRef.current.filter(line => line[0]?.tabIndex === selectedTabIndex);
+    
+    tabLines.forEach(line => {
+      ctx.beginPath();
+      line.forEach((point, index) => {
+        if (index === 0) {
+          ctx.moveTo(point.x, point.y);
+        } else {
+          ctx.lineTo(point.x, point.y);
+        }
+      });
+      ctx.stroke();
+    });
+
+    // Draw current line if it belongs to current tab
+    if (currentLineRef.current.length > 0 && currentLineRef.current[0].tabIndex === selectedTabIndex) {
+      ctx.beginPath();
+      currentLineRef.current.forEach((point, index) => {
+        if (index === 0) {
+          ctx.moveTo(point.x, point.y);
+        } else {
+          ctx.lineTo(point.x, point.y);
+        }
+      });
+      ctx.stroke();
     }
-    ctx.stroke(); // Render the path
   };
-  
 
   return (
-    <div
-      onMouseMove={handleMouseMove} 
-      onMouseUp={handleMouseUp}
+    <div 
+    onMouseMove={handleCanvasMouseMove} 
+    onMouseUp={handleCanvasMouseUp}
     >
       <canvas
         ref={canvasRef}
         width={window.innerWidth}
         height={window.innerHeight}
         style={{ border: '1px solid black', backgroundColor: selectedTabColor }}
-        onClick={isDrawing ? handleCanvasClick : null }
-        onMouseDown={!isDrawing ? handleCanvasClickDrawing : null}
-        onMouseUp={stopDrawing }
-        onMouseMove={drawingNow ? drawLine : null}
-        // onMouseLeave={stopDrawing}
+        onClick={isDrawing ? handleCanvasClick : null}
+        onMouseDown={!isDrawing ? handleCanvasMouseDown : null}
       />
 
       {textBoxes.map((box) =>
@@ -189,7 +181,7 @@ function Canvas() {
               border: '2px solid red',
               borderRadius: '5px',
               padding: '5px',
-              cursor: dragging ? 'grabbing' : 'move', // Show grab cursor while dragging
+              cursor: dragging ? 'grabbing' : 'move',
             }}
             cols={box.cantidadDeCaracteres + 3}
             rows={box.cantidadDeLineas}
