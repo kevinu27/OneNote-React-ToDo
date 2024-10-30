@@ -125,7 +125,14 @@ const drawingMenuSlice = createSlice({
         },
 
         setTabs(state, action){
+
+            console.log('tabs con el ref', action.payload)
             state.tabs = action.payload
+        },
+        saveLocalStorage(state){
+            
+            console.log('saveLocalStorage')
+            
         },
     }
 

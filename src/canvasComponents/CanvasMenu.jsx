@@ -26,7 +26,7 @@ function onSliderHandler(e) {
   dispatch(drawingMenuActions.setStrokeWidth(e.target.value))
 }
 function onLocalSaveHandler(e) {
-  // dispatch(drawingMenuActions.setStrokeWidth(e.target.value))
+  dispatch(drawingMenuActions.saveLocalStorage())
   console.log('local Save')
 }
 

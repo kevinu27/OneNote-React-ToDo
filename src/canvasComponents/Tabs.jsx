@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { tabsActions } from '../store/index'
+import { drawingMenuActions } from '../store/index'
 
 import './Tabs.css'
 
@@ -23,6 +24,9 @@ function Tabs() {
       tabColor: tabColor
     }))
   };
+  dispatch(drawingMenuActions.setTabs(
+    tabs
+  ))
 
   function addTab(tab) {
     dispatch(tabsActions.addTab(tab))

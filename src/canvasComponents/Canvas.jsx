@@ -16,10 +16,12 @@ function Canvas() {
   const [startCoords, setStartCoords] = useState({ x: 0, y: 0 });
   const selectedTabIndex = useSelector((state) => state.tabs.selectedTabIndex);
   const selectedTabColor = useSelector((state) => state.tabs.selectedTabColor);
+  const linesInState = useSelector((state) => state.drawingMenu.lines);
   const isDrawing = useSelector((state) => state.drawingMenu.isDrawing);
   const strokeWidth = useSelector((state) => state.drawingMenu.StrokeWidth);
   const dispatch = useDispatch();
   
+  // console.log('linesInState', linesInState)
 
   const handleCanvasClick = (e) => {
     const canvas = canvasRef.current;
