@@ -131,7 +131,7 @@ const drawingMenuSlice = createSlice({
         },
 
         setTextboxes(state, action){
-            console.log('setTexboxes con el ref', action.payload)
+            console.log('setTexboxes con el ref-------', action.payload)
             state.textboxes = [...action.payload];
         },
 
@@ -168,6 +168,12 @@ const drawingMenuSlice = createSlice({
 
             console.log(' action------', action.payload)
             state.tabs= action.payload
+        },
+        loadLocalStorage(state, action){
+            console.log(' action loadLocalStorage------', action.payload)
+            state.tabs= action.payload.tabs
+            state.lines = action.payload.lines
+            state.textboxes = action.payload.textBoxes
         }
     }
 

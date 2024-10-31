@@ -24,7 +24,29 @@ function Canvas() {
   // console.log('linesInState', linesInState)
 
   useEffect(() => {
+    const dataToLoadJSON = localStorage.getItem("tabsText&Lines");
+    const dataToLoad = JSON.parse(dataToLoadJSON);
+    const LinesFromLocalStorage = dataToLoad.lines
+    const textFromLocalStorage = dataToLoad.textboxes
+    const tabsFromLocalStorage = dataToLoad.tabs
 
+    
+    
+    dispatch(drawingMenuActions.loadLocalStorage(
+      {
+        lines: LinesFromLocalStorage,
+        tabs: tabsFromLocalStorage,
+        textBoxes: textFromLocalStorage
+      }
+    ))
+     .current = LinesFromLocalStorage
+    console.log('  currentLineRef.current', currentLineRef.current)
+    // redrawCanvas();
+    setTextBoxes(textFromLocalStorage);
+    textBoxesRef.current.push(...textFromLocalStorage);
+      dispatch(drawingMenuActions.setTextboxes(
+        textBoxesRef.current
+      ))
 
   }, []); 
 
@@ -52,10 +74,19 @@ function Canvas() {
   };
 
   const handleTextChange = (id, value) => {
+    console.log('id', id) 
+    console.log('value', value) 
+    // const tt = textBoxes.filter(textbox => textbox.id == id)
+    // tt.text = value
     const updatedTextBoxes = textBoxes.map((box) =>
       box.id === id ? { ...box, text: value, cantidadDeCaracteres: value.length } : box
     );
+    console.log('textbox seleccionado', updatedTextBoxes)
     setTextBoxes(updatedTextBoxes);
+    dispatch(drawingMenuActions.setTextboxes(
+      updatedTextBoxes
+    ))
+    textBoxesRef.current=updatedTextBoxes ;
   };
 
   const handleMouseDown = (e, box) => {
