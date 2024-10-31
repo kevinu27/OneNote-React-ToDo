@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect  } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { drawingMenuActions } from '../store/index'
 import './Canvas.css';
@@ -14,14 +14,19 @@ function Canvas() {
   const [drawingNow, setDrawingNow] = useState(false);
   const [draggedBoxId, setDraggedBoxId] = useState(null);
   const [startCoords, setStartCoords] = useState({ x: 0, y: 0 });
-  const selectedTabIndex = useSelector((state) => state.tabs.selectedTabIndex);
-  const selectedTabColor = useSelector((state) => state.tabs.selectedTabColor);
+  const selectedTabIndex = useSelector((state) => state.drawingMenu.selectedTabIndex);
+  const selectedTabColor = useSelector((state) => state.drawingMenu.selectedTabColor);
   const linesInState = useSelector((state) => state.drawingMenu.lines);
   const isDrawing = useSelector((state) => state.drawingMenu.isDrawing);
   const strokeWidth = useSelector((state) => state.drawingMenu.StrokeWidth);
   const dispatch = useDispatch();
   
   // console.log('linesInState', linesInState)
+
+  useEffect(() => {
+
+
+  }, []); 
 
   const handleCanvasClick = (e) => {
     const canvas = canvasRef.current;

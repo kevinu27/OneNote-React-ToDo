@@ -44,48 +44,46 @@ const menuSlice = createSlice({
 
 })
 
-const initialTabsState = {
-    tabs: [
-            {
-                tabId: 0,
-                tabName: "primera tab",
-                tabColor: 'lightblue'
-            },
-            {
-                tabId: 1,
-                tabName: "segunda tab",
-                tabColor: 'lightred'
-            }
-    ],
-    selectedTabIndex: 0,
-    selectedTabColor: 'lightblue'
-}
+// const initialTabsState = {
+//     // tabs: [
+//     //         {
+//     //             tabId: 0,
+//     //             tabName: "primera tab",
+//     //             tabColor: 'lightblue'
+//     //         },
+//     //         {
+//     //             tabId: 1,
+//     //             tabName: "segunda tab",
+//     //             tabColor: 'lightred'
+//     //         }
+//     // ],
+//     // selectedTabIndex: 0,
+//     // selectedTabColor: 'lightblue'
+// }
 
-const tabsSlice = createSlice({
-    name: 'tabs',
-    initialState: initialTabsState,
-    reducers: {
-        setActiveTab(state, action){
-            //añadr aqui la tab
-            console.log('setActiveTabAction------', action.payload)
-            state.selectedTabIndex = action.payload.tabIndex
-            state.selectedTabColor = action.payload.tabColor
-        },
-        addTab(state, action){
-            // console.log('en el reducer en el index del store')
-            // console.log('action.action', action.payload)
-            state.tabs.push(action.payload)
-            console.log(' state.tabs',  state.tabs)
-        },
-        updateTabName(state, action){
+// const tabsSlice = createSlice({
+//     name: 'tabs',
+//     initialState: initialTabsState,
+//     reducers: {
+//         setActiveTab(state, action){
+//             //añadr aqui la tab
+//             console.log('setActiveTabAction------', action.payload)
+//             state.selectedTabIndex = action.payload.tabIndex
+//             state.selectedTabColor = action.payload.tabColor
+//         },
+//         addTab(state, action){
+//             // console.log('en el reducer en el index del store')
+//             // console.log('action.action', action.payload)
+//             state.tabs.push(action.payload)
+//             console.log(' state.tabs',  state.tabs)
+//         },
+//         updateTabName(state, action){
 
-            console.log(' action------', action.payload)
-            state.tabs= action.payload
-        }
-    }
-
-
-})
+//             console.log(' action------', action.payload)
+//             state.tabs= action.payload
+//         }
+//     }
+// })
 
 const initialdrawingMenuState = {
     selectedDrawingMenu: 'null222',
@@ -93,7 +91,20 @@ const initialdrawingMenuState = {
     StrokeWidth: 5,
     lines: [],
     textboxes: [],
-    tabs: []
+    tabs: [
+        {
+            tabId: 0,
+            tabName: "primera tab",
+            tabColor: 'lightblue'
+        },
+        {
+            tabId: 1,
+            tabName: "segunda tab",
+            tabColor: 'lightred'
+        }
+],
+selectedTabIndex: 0,
+selectedTabColor: 'lightblue',
 
 }
 
@@ -132,8 +143,32 @@ const drawingMenuSlice = createSlice({
         saveLocalStorage(state){
             
             console.log('saveLocalStorage')
-            
+            const dataToSave = {
+                tabs: state.tabs,
+                textboxes:  state.textboxes,
+                lines: state.lines
+            }
+            const dataToSaveJSON = JSON.stringify(dataToSave);
+            localStorage.setItem("tabsText&Lines", dataToSaveJSON);
         },
+        ////antiguamente tabs state
+        setActiveTab(state, action){
+            //añadr aqui la tab
+            console.log('setActiveTabAction------', action.payload)
+            state.selectedTabIndex = action.payload.tabIndex
+            state.selectedTabColor = action.payload.tabColor
+        },
+        addTab(state, action){
+            // console.log('en el reducer en el index del store')
+            // console.log('action.action', action.payload)
+            state.tabs.push(action.payload)
+            console.log(' state.tabs',  state.tabs)
+        },
+        updateTabName(state, action){
+
+            console.log(' action------', action.payload)
+            state.tabs= action.payload
+        }
     }
 
 
@@ -143,14 +178,14 @@ const store = configureStore({
     reducer: {
         todo: todoSlice.reducer, 
         menu: menuSlice.reducer,
-        tabs: tabsSlice.reducer,
+        // tabs: tabsSlice.reducer,
         drawingMenu: drawingMenuSlice.reducer
     }
 })
 
 export const todoActions = todoSlice.actions
 export const menuActions = menuSlice.actions
-export const tabsActions = tabsSlice.actions
+// export const tabsActions = tabsSlice.actions
 export const drawingMenuActions = drawingMenuSlice.actions
 
 export default store

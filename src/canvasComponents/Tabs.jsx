@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { tabsActions } from '../store/index'
+// import { tabsActions } from '../store/index'
 import { drawingMenuActions } from '../store/index'
 
 import './Tabs.css'
 
 function Tabs() {
   
-  const tabs = useSelector((state) => state.tabs.tabs)
-  const selectedTabIndex = useSelector((state) => state.tabs.selectedTabIndex)
+  const tabs = useSelector((state) => state.drawingMenu.tabs)
+  const selectedTabIndex = useSelector((state) => state.drawingMenu.selectedTabIndex)
   console.log('tabs------', tabs)
   const dispatch = useDispatch();
   const [tabsLocal, setTabsLocal] = useState(tabs);
@@ -19,7 +19,7 @@ function Tabs() {
 
   
   function setActiveTab(tabIndex, tabColor) {
-    dispatch(tabsActions.setActiveTab({
+    dispatch(drawingMenuActions.setActiveTab({
       tabIndex:tabIndex,
       tabColor: tabColor
     }))
@@ -29,7 +29,7 @@ function Tabs() {
   ))
 
   function addTab(tab) {
-    dispatch(tabsActions.addTab(tab))
+    dispatch(drawingMenuActions.addTab(tab))
   };
 
   const handleInputChange = (event, id) => {
@@ -41,7 +41,7 @@ function Tabs() {
       }
       return tab; // Return the existing tab for all others
     });
-    dispatch(tabsActions.updateTabName(updatedTabs))
+    dispatch(drawingMenuActions.updateTabName(updatedTabs))
   };
 
   function getRandomLightColor() {
