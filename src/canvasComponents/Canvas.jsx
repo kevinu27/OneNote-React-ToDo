@@ -26,9 +26,9 @@ function Canvas() {
   useEffect(() => {
     const dataToLoadJSON = localStorage.getItem("tabsText&Lines");
     const dataToLoad = JSON.parse(dataToLoadJSON);
-    const LinesFromLocalStorage = dataToLoad.lines
-    const textFromLocalStorage = dataToLoad.textboxes
-    const tabsFromLocalStorage = dataToLoad.tabs
+    const LinesFromLocalStorage = dataToLoad?.lines ?? []
+    const textFromLocalStorage = dataToLoad?.textboxes ?? []
+    const tabsFromLocalStorage = dataToLoad?.tabs ?? []
 
     
     

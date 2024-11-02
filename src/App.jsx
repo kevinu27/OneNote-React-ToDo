@@ -7,7 +7,7 @@ import MainTask from './components/MainTask'
 import Canvas from './canvasComponents/Canvas'
 import Tabs from './canvasComponents/Tabs'
 import CanvasMenu from './canvasComponents/CanvasMenu'
-
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { useSelector } from 'react-redux'
 
@@ -16,9 +16,17 @@ function App() {
   const [count, setCount] = useState(0)
   const menu = useSelector((state) => state.menu.activeMenu)
   // console.log('menu-----', menu)
+  // const router = createBrowserRouter(
+  //   [
+  //     { path:'/', element: <MainTask/> },
+  //     { path:'/tasks', element:  <MainTask/> },
+  //   ]
+  // )
 
   return (
     <>
+    {/* <RouterProvider router={router} /> */}
+
     <div className='app-layout'>
     <div className='side-bar-app'>
     <Sidebar/>
