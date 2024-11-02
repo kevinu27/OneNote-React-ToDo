@@ -12,8 +12,8 @@ function CanvasMenu() {
   const IsDrawing= useSelector((state) => state.drawingMenu.isDrawing);
 
 
-  console.log('------........', selectedDrawingMenu)
-  console.log('------........', selectedIsDrawing)
+  // console.log('------........', selectedDrawingMenu)
+  // console.log('------........', selectedIsDrawing)
 
   function clickDrawingHandler(e) {
     dispatch(drawingMenuActions.setIsDrawing({

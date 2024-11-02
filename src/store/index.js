@@ -92,16 +92,16 @@ const initialdrawingMenuState = {
     lines: [],
     textboxes: [],
     tabs: [
-        {
-            tabId: 0,
-            tabName: "primera tab",
-            tabColor: 'lightblue'
-        },
-        {
-            tabId: 1,
-            tabName: "segunda tab",
-            tabColor: 'lightred'
-        }
+        // {
+        //     tabId: 0,
+        //     tabName: "primera tab",
+        //     tabColor: 'lightblue'
+        // },
+        // {
+        //     tabId: 1,
+        //     tabName: "segunda tab",
+        //     tabColor: 'lightred'
+        // }
 ],
 selectedTabIndex: 0,
 selectedTabColor: 'lightblue',
@@ -125,19 +125,19 @@ const drawingMenuSlice = createSlice({
             state.StrokeWidth = action.payload;
         },
        setLines(state, action){
-        console.log('lineref con el ref', action.payload)
+        console.log('lineref con el ref*******', action.payload)
 
             state.lines = [...action.payload]
         },
 
         setTextboxes(state, action){
-            console.log('setTexboxes con el ref-------', action.payload)
+            // console.log('setTexboxes con el ref-------', action.payload)
             state.textboxes = [...action.payload];
         },
 
         setTabs(state, action){
 
-            console.log('tabs con el ref', action.payload)
+            // console.log('tabs con el ref', action.payload)
             state.tabs = action.payload
         },
         saveLocalStorage(state){
@@ -157,6 +157,7 @@ const drawingMenuSlice = createSlice({
             console.log('setActiveTabAction------', action.payload)
             state.selectedTabIndex = action.payload.tabIndex
             state.selectedTabColor = action.payload.tabColor
+            state.lines = [...state.lines]
         },
         addTab(state, action){
             // console.log('en el reducer en el index del store')

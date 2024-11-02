@@ -9,7 +9,7 @@ function Tabs() {
   
   const tabs = useSelector((state) => state.drawingMenu.tabs)
   const selectedTabIndex = useSelector((state) => state.drawingMenu.selectedTabIndex)
-  console.log('tabs------', tabs)
+  // console.log('tabs------', tabs)
   const dispatch = useDispatch();
   const [tabsLocal, setTabsLocal] = useState(tabs);
   // let updatedTabs = tabs

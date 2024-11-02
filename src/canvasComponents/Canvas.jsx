@@ -39,7 +39,8 @@ function Canvas() {
         textBoxes: textFromLocalStorage
       }
     ))
-     .current = LinesFromLocalStorage
+    linesRef.current = LinesFromLocalStorage 
+    currentLineRef.current = LinesFromLocalStorage
     console.log('  currentLineRef.current', currentLineRef.current)
     // redrawCanvas();
     setTextBoxes(textFromLocalStorage);
@@ -150,7 +151,9 @@ function Canvas() {
       const y = e.clientY - rect.top;
       
       currentLineRef.current.push({ x, y, tabIndex: selectedTabIndex });
-
+      dispatch(drawingMenuActions.setLines(
+        linesRef.current
+      ))
       redrawCanvas();
     }
   };
