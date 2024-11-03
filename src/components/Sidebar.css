@@ -8,6 +8,20 @@
 
 .hidden {
   display: none;
+
+}
+.links{
+  display: flex;
+  flex-direction: column;
+}
+.links a{
+  margin: 1rem;
+  text-decoration: none;   /* Remove underline */
+  font-weight: normal; 
+}
+.links a:hover{
+
+  font-weight: bold; 
 }
 
 .visible {
@@ -27,6 +41,7 @@
   /* display: flex;
   flex-direction: column; */
 }
+
 
 .w3-button {
   padding: 10px;
