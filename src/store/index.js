@@ -44,50 +44,10 @@ const menuSlice = createSlice({
 
 })
 
-// const initialTabsState = {
-//     // tabs: [
-//     //         {
-//     //             tabId: 0,
-//     //             tabName: "primera tab",
-//     //             tabColor: 'lightblue'
-//     //         },
-//     //         {
-//     //             tabId: 1,
-//     //             tabName: "segunda tab",
-//     //             tabColor: 'lightred'
-//     //         }
-//     // ],
-//     // selectedTabIndex: 0,
-//     // selectedTabColor: 'lightblue'
-// }
-
-// const tabsSlice = createSlice({
-//     name: 'tabs',
-//     initialState: initialTabsState,
-//     reducers: {
-//         setActiveTab(state, action){
-//             //añadr aqui la tab
-//             console.log('setActiveTabAction------', action.payload)
-//             state.selectedTabIndex = action.payload.tabIndex
-//             state.selectedTabColor = action.payload.tabColor
-//         },
-//         addTab(state, action){
-//             // console.log('en el reducer en el index del store')
-//             // console.log('action.action', action.payload)
-//             state.tabs.push(action.payload)
-//             console.log(' state.tabs',  state.tabs)
-//         },
-//         updateTabName(state, action){
-
-//             console.log(' action------', action.payload)
-//             state.tabs= action.payload
-//         }
-//     }
-// })
 
 const initialdrawingMenuState = {
     selectedDrawingMenu: 'null222',
-    isDrawing: false,
+    isDrawing: true,
     StrokeWidth: 5,
     lines: [],
     textboxes: [],

@@ -36,9 +36,9 @@ function onLocalSaveHandler(e) {
     <>
 <h2>canvas menu</h2>
 <div className='buttons-holder'>
-  <button className={`  ${!IsDrawing ? 'drawing-button' : 'drawing-button-active'}`} onClick={clickDrawingHandler}> drawing</button>
-  <div> <label >widthSlider </label> <input type="range"  min='1' max='15' defaultValue='5' onChange={(e) => onSliderHandler(e)} /> </div>
-  <button className={`  ${!IsDrawing ? 'drawing-button' : 'drawing-button-active'}`} > borrar</button>
+  <button className={`  ${IsDrawing ? 'drawing-button' : 'drawing-button-active'}`} onClick={clickDrawingHandler}> drawing</button>
+ { !IsDrawing ? <> <div> <label >widthSlider </label> <input type="range"  min='1' max='15' defaultValue='5' onChange={(e) => onSliderHandler(e)} /> </div>
+  <button className={`  ${!IsDrawing ? 'drawing-button' : 'drawing-button-active'}`} > borrar</button></> : null}
   <button className={`  ${!IsDrawing ? 'drawing-button' : 'drawing-button-active'}`}  onClick={onLocalSaveHandler} > guardar en local</button>
 </div>
 
