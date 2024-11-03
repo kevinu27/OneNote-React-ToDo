@@ -65,4 +65,17 @@
     background-color: rgb(17, 24, 39);
     color: white;
     padding: 0;
+    font-size: 20px;
+
+}
+
+.seemoreButton{
+    background-color: rgb(17, 24, 39);
+    color: white;
+    padding: 0;
+    max-width: 20%;
+    margin-bottom: 1rem;
+    height: 50px;
+    border-radius: 5px;
+    font-size: 20px;
 }
