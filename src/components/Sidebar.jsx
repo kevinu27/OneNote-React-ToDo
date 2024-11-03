@@ -48,6 +48,7 @@ function Sidebar() {
       to='/'
       className={({isActive}) => (isActive ? 'activeLink' : 'inactiveLink')}
       onClick={()=>clickSelectMenuHandler('canvas')}
+      end
       >One Note</NavLink>
 
       <NavLink

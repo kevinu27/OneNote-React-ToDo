@@ -36,19 +36,17 @@ function TaskForm() {
 return (
     <div className='formBox'>
         <div className='formulario'>
-        <button onClick={clickHandler}>+</button>
+        <button onClick={clickHandler}>{!formVisbility ? '+':'-'}</button>
 
         {
   formVisbility ?    
             <div className='formularioInner'>
 
-                <label>Nombre</label>
-                <input  type="text" required value ={name}  onChange={handleChangeName}></input>
+                <input  type="text" required value ={name} placeholder='Nombre' onChange={handleChangeName}></input>
 
-                <label>Descripcion</label>
-                <textarea  type="text" required value ={description}  onChange={handleChangeDescription}></textarea> 
+                <textarea  type="text" required value ={description} placeholder='Descripción' onChange={handleChangeDescription}></textarea> 
 
-                <button className='saveButton' onClick={clickSaveHandler} >guardar tarea</button>
+                <button className='saveButton' onClick={clickSaveHandler} >+</button>
             </div> : null
         }
   

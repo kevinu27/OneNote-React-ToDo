@@ -12,6 +12,7 @@ import ErrorPage from './pages/ErrorPage'
 import { useSelector } from 'react-redux'
 import RootLayout from './RootLayout'
 import CanvasPage from './pages/CanvasPage'
+import TaskDetail from './pages/TaskDetail'
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
       children: [
         { path: '/', element: <CanvasPage/> },
         { path: '/tasks', element: <MainTask/> },
+        { path: '/task/:id', element: <TaskDetail/> },
       ]
     }
   ])

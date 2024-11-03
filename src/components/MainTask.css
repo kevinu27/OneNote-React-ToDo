@@ -52,7 +52,7 @@ padding: 0.5rem;
 }
 
 .taskForm-holder {
-  border: 2px solid red;
+  /* border: 2px solid red; */
   min-width: 100%;
   display: flex;
   justify-content: center;
