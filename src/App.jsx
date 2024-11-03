@@ -8,26 +8,32 @@ import Canvas from './canvasComponents/Canvas'
 import Tabs from './canvasComponents/Tabs'
 import CanvasMenu from './canvasComponents/CanvasMenu'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-
+import ErrorPage from './pages/ErrorPage'
 import { useSelector } from 'react-redux'
+import RootLayout from './RootLayout'
+import CanvasPage from './pages/CanvasPage'
 
 
 function App() {
-  const [count, setCount] = useState(0)
   const menu = useSelector((state) => state.menu.activeMenu)
   // console.log('menu-----', menu)
-  // const router = createBrowserRouter(
-  //   [
-  //     { path:'/', element: <MainTask/> },
-  //     { path:'/tasks', element:  <MainTask/> },
-  //   ]
-  // )
+  const router = createBrowserRouter([  // Note the array brackets here
+    {
+      path: '/',
+      element: <RootLayout/>,
+      errorElement: <ErrorPage/>,
+      children: [
+        { path: '/', element: <CanvasPage/> },
+        { path: '/tasks', element: <MainTask/> },
+      ]
+    }
+  ])
 
   return (
     <>
-    {/* <RouterProvider router={router} /> */}
+    <RouterProvider router={router} />
 
-    <div className='app-layout'>
+    {/* <div className='app-layout'>
     <div className='side-bar-app'>
     <Sidebar/>
     </div>
@@ -51,7 +57,7 @@ function App() {
       </div>
 
     </div>
-    </div>
+    </div> */}
 
     </>
   )
