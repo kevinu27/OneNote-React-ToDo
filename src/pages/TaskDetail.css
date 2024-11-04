@@ -1,9 +1,172 @@
+.taskDetail{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-direction: column;
+  padding-top: 1rem;
+}
+
 .mainCardDetail{
-  border: 2px solid red;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   display: flex;
   justify-content: center;
   flex-direction: column;
-  align-items: center ;
-  /* width: 100%; */
+  align-items: flex-start ;
+  width: 80%;
   margin-top: 3rem;
+  /* padding: 1rem; */
+  border-radius: 5px 5px 8px 8px;
+
 }
+
+.headerTaskDetail{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* border: 2px solid red; */
+  width: 80%;
+}
+
+.title-go-back{
+  display: flex;
+}
+.edit-button{
+  display: flex;
+  align-items: center;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.taskName{
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  /* border: 2px solid green; */
+}
+.divider-line {
+  border-top: 1px solid #ccc; /* Set the color and thickness */
+  margin: 20px 0; /* Add spacing above and below the line */
+  margin-bottom: 0px;
+  width: 100%; /* Adjust width as needed */
+}
+
+.cardUpper{
+  /* border: 2px solid blue; */
+  padding: 1rem;
+}
+
+.cardLower{
+  padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.taskDescripcion{
+  color: rgba(103, 103, 104, 0.677);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.taskDescripcionValue{
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-size: 15px;
+}
+
+.cardDates{
+  display: flex;
+  border: 2px solid blue;
+  width: 75%;
+  justify-content: space-between;
+}
+
+.createdDate{
+  border: 2px solid red;
+  width: 30%;
+  display: flex;
+}
+
+.createdDue{
+  border: 2px solid red;
+  width: 30%;
+
+}
+
+.divider-line2 {
+  border-top: 1px solid #ccc; /* Set the color and thickness */
+  /* margin: 20px 0;  */
+  margin-bottom: 0px;
+  margin-top: 2rem;
+  width: 100%; /* Adjust width as needed */
+}
+
+.bottom-card input{
+  /* margin-left: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem; */
+  display: flex;
+  }
+
+/* ------------- */
+.bottom-card{
+  background-color: rgb(249, 250, 251);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border-radius: 0 0 8px 8px;
+}
+
+.bottom-card2 textarea{
+  width: 80%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  border: none;
+  resize: none;
+  background: transparent;
+  outline: none;
+  font-size: 1rem;
+  font-weight: 100;
+  overflow: hidden;
+}
+
+.marginDiv{
+  height: 20px;
+  width: 70%;
+  display: flex;
+  justify-content: center;
+}
+
+.bottom-card2{
+  display: flex;
+  width: 80%;
+}
+.comment-icon{
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+.bottom-card2 textarea::placeholder{
+  color: #888;           
+
+  height: 100%; 
+}
+
+.date-icon{
+display: flex;
+align-items: center;
+}
+
+.date-text{
+display: flex;
+flex-direction: column;
+}
+
+.date-text p{
+margin-bottom: 0px;
+margin-left: 1rem;
+  }
