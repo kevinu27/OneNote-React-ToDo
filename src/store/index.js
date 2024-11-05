@@ -51,7 +51,7 @@ const initialdrawingMenuState = {
     selectedDrawingMenu: 'null222',
     isDrawing: true,
     StrokeWidth: 5,
-    lines: [],
+    lines: null,
     textboxes: [],
     tabs: [
         // {

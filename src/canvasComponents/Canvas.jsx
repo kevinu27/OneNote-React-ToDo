@@ -39,14 +39,18 @@ function Canvas() {
         textBoxes: textFromLocalStorage
       }
     ))
-    linesRef.current = LinesFromLocalStorage 
-    currentLineRef.current = LinesFromLocalStorage
-    console.log('  currentLineRef.current', currentLineRef.current)
-    // redrawCanvas();
+    linesRef.current.push(LinesFromLocalStorage)
+    currentLineRef.current.push(LinesFromLocalStorage)
+    // console.log('  currentLineRef.current', currentLineRef.current)
+    redrawCanvas();
     setTextBoxes(textFromLocalStorage);
     textBoxesRef.current.push(...textFromLocalStorage);
       dispatch(drawingMenuActions.setTextboxes(
         textBoxesRef.current
+      ))
+
+      dispatch(drawingMenuActions.setLines(
+        linesRef.current
       ))
 
   }, []); 
