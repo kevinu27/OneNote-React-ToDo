@@ -34,13 +34,21 @@ function onLocalSaveHandler(e) {
   
   return (
     <>
-<div className='buttons-holder'>
-  <button className={`  ${IsDrawing ? 'drawing-button' : 'drawing-button-active'}`} onClick={clickDrawingHandler}> drawing</button>
- { !IsDrawing ? <> <div> <label >widthSlider </label> <input type="range"  min='1' max='15' defaultValue='5' onChange={(e) => onSliderHandler(e)} /> </div>
-  <button className={`  ${!IsDrawing ? 'drawing-button' : 'drawing-button-active'}`} > borrar</button></> : null}
-  <button className={`  ${!IsDrawing ? 'drawing-button' : 'drawing-button-active'}`}  onClick={onLocalSaveHandler} > guardar en local</button>
-</div>
-
+      <div className='buttons-holder'>
+        <button className={`drawing-button  ${IsDrawing ? 'drawing-button-active' : 'drawing-button-inactive'}`} onClick={clickDrawingHandler}> 
+          <div className="drawing-button-icon">
+            <div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit">
+                <path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+            </svg>
+            </div>
+            <div>Drawing</div>
+          </div>
+        </button>
+      { !IsDrawing ? <> <div className='slider-container'> <input type="range"  min='1' max='15' defaultValue='5' onChange={(e) => onSliderHandler(e)} className='slider'/> </div>
+        <button className={`delete-button ${!IsDrawing ? 'delete-button' : 'drawing-button-active'}`} > borrar</button></> : null}
+        <button className={`save-button  ${!IsDrawing ? 'save-button ' : 'drawing-button'}`}  onClick={onLocalSaveHandler} > guardar en local</button>
+      </div>
     </>
   );
 }

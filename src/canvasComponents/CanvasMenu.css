@@ -34,16 +34,99 @@
 }
 
 .drawing-button{
-    width: 10%;
-    background-color: rgba(255, 0, 0, 0.8);
+    /* width: 10%; */
+    height: 40px;
+    background-color: white;
     border-radius: 2px;
+    box-shadow: 0 2px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 );
+    margin-left: 50px;
+    outline: none;
+    border: none;
+    padding-left: 25px;
+    padding-right: 25px;
+    /* margin-right:20px ; */
 }
+
 .drawing-button-active{
-    width: 10%;
-    background-color: rgba(0, 255, 0, 0.6);
+    /* width: 10%; */
+}
+.drawing-button-inactive{
+    /* width: 10%; */
+    margin-right:20px ;
+
 }
 
 .buttons-holder{
     display: flex;
     margin-top: 1.5rem;
 }
+
+.drawing-button-icon{
+    display: flex;
+    /* border: 2px solid red; */
+    align-items: center;
+    color: green;
+    font-weight: 500;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.slider-container{
+    display: flex;
+    align-items: center;
+}
+
+.slider{
+    -webkit-appearance: none; /* Override default CSS styles */
+    width: 100%; /* Full-width */
+    height: 8px; /* Height of the track */
+    background: rgb(17, 24, 39); /* Track color */
+    border-radius: 5px; /* Rounded corners */
+    outline: none; /* Remove outline */
+    display: flex;
+    align-items: ce;
+    
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Remove default styles */
+    appearance: none; /* Remove default styles */
+    width: 20px; /* Thumb width */
+    height: 20px; /* Thumb height */
+    background: white;
+    box-shadow: 0 2px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 );
+border: 1px solid gray;
+    border-radius: 50%; /* Make it round */
+    cursor: pointer; /* Change cursor on hover */
+}
+
+.slider::after {
+
+    background-color: grey;
+  }
+
+  .delete-button{
+    /* border: 2px solid red; */
+    height: 40px;
+    background-color: white;
+    border-radius: 2px;
+    box-shadow: 0 2px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 );
+    margin-left: 20px;
+    outline: none;
+    border: none;
+    padding-left: 25px;
+    padding-right: 25px;
+
+  }
+
+  .save-button{
+    margin: 0px;
+    height: 40px;
+    background-color: white;
+    border-radius: 2px;
+    box-shadow: 0 2px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 );
+    /* margin-left: 50px; */
+    outline: none;
+    border: none;
+    padding-left: 25px;
+    padding-right: 25px;
+  }
