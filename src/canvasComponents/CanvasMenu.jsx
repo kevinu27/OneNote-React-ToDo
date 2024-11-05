@@ -34,7 +34,6 @@ function onLocalSaveHandler(e) {
   
   return (
     <>
-<h2>canvas menu</h2>
 <div className='buttons-holder'>
   <button className={`  ${IsDrawing ? 'drawing-button' : 'drawing-button-active'}`} onClick={clickDrawingHandler}> drawing</button>
  { !IsDrawing ? <> <div> <label >widthSlider </label> <input type="range"  min='1' max='15' defaultValue='5' onChange={(e) => onSliderHandler(e)} /> </div>

@@ -81,6 +81,7 @@
   border: 2px solid blue;
   width: 75%;
   justify-content: space-between;
+  padding-left: 1rem;
 }
 
 .createdDate{
