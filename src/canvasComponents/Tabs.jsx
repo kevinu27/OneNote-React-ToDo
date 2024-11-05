@@ -9,24 +9,18 @@ function Tabs() {
   
   const tabs = useSelector((state) => state.drawingMenu.tabs)
   const selectedTabIndex = useSelector((state) => state.drawingMenu.selectedTabIndex)
-  // console.log('tabs------', tabs)
   const dispatch = useDispatch();
   const [tabsLocal, setTabsLocal] = useState(tabs);
-  // let updatedTabs = tabs
 
-
-
-
-  
   function setActiveTab(tabIndex, tabColor) {
     dispatch(drawingMenuActions.setActiveTab({
       tabIndex:tabIndex,
       tabColor: tabColor
     }))
   };
-  dispatch(drawingMenuActions.setTabs(
-    tabs
-  ))
+  // dispatch(drawingMenuActions.setTabs(
+  //   tabs
+  // ))
 
   function addTab(tab) {
     dispatch(drawingMenuActions.addTab(tab))
