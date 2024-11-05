@@ -46,7 +46,12 @@ function onLocalSaveHandler(e) {
           </div>
         </button>
       { !IsDrawing ? <> <div className='slider-container'> <input type="range"  min='1' max='15' defaultValue='5' onChange={(e) => onSliderHandler(e)} className='slider'/> </div>
-        <button className={`delete-button ${!IsDrawing ? 'delete-button' : 'drawing-button-active'}`} > borrar</button></> : null}
+        <button className={`delete-button ${!IsDrawing ? 'delete-button' : 'drawing-button-active'}`} > 
+            <div className='deleteButton'>
+              <div className='delete-icon'>icon</div> borrar
+            </div>
+          </button>
+          </> : null}
         <button className={`save-button  ${!IsDrawing ? 'save-button ' : 'drawing-button'}`}  onClick={onLocalSaveHandler} > guardar en local</button>
       </div>
     </>
