@@ -35,6 +35,8 @@ function Sidebar() {
   const clickSelectMenuHandler = (icon) => {
     console.log('ICON', icon)
     dispatch(menuActions.selectActiveMenu(icon))
+    setSidebarOpen(false)
+
   };
 
   return (

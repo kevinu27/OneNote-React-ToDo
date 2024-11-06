@@ -21,6 +21,7 @@ function Tabs() {
 
 
   function addTab(tab) {
+    console.log('adding tab', tab)
     dispatch(drawingMenuActions.addTab(tab))
   };
 

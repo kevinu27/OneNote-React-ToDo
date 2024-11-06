@@ -110,7 +110,7 @@ function Canvas() {
     }
   };
 
-  // Drawing functions
+  //////////////////////////////// Drawing functions
   const handleCanvasMouseDown = (e) => {
     if (!isDrawing) {
       setDrawingNow(true);
@@ -203,7 +203,7 @@ function Canvas() {
       ctx.stroke();
     }
   };
-
+/////////////////////////////////////
   return (
     <div 
     onMouseMove={handleCanvasMouseMove} 
