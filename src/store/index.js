@@ -28,6 +28,8 @@ const todoSlice = createSlice({
             console.log('id en el store', action.payload)
             state.tasks = state.tasks.filter(task => task.id !=  action.payload )
             console.log('state.tasks', state.tasks)
+            const dataToSaveJSON = JSON.stringify( state.tasks);
+            localStorage.setItem("Tasks", dataToSaveJSON);
         },        
         loadLocalStorage(state, action){
             console.log(' action menu loadLocalStorage------', action.payload)
