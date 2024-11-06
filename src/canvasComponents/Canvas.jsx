@@ -39,10 +39,14 @@ function Canvas() {
         textBoxes: textFromLocalStorage
       }
     ))
+
     linesRef.current.push(LinesFromLocalStorage)
     currentLineRef.current.push(LinesFromLocalStorage)
-    // console.log('  currentLineRef.current', currentLineRef.current)
-    redrawCanvas();
+    // linesRef.current = LinesFromLocalStorage
+    // currentLineRef.current = LinesFromLocalStorage
+
+    // redrawCanvas();
+
     setTextBoxes(textFromLocalStorage);
     textBoxesRef.current.push(...textFromLocalStorage);
       dispatch(drawingMenuActions.setTextboxes(
@@ -121,7 +125,7 @@ function Canvas() {
   const handleCanvasMouseUp = () => {
     if (drawingNow) {
       if (currentLineRef.current.length > 0) {
-        linesRef.current.push([...currentLineRef.current]);
+        linesRef.current.push(...currentLineRef.current);
         dispatch(drawingMenuActions.setLines(
           linesRef.current
         ))
@@ -155,6 +159,7 @@ function Canvas() {
       const y = e.clientY - rect.top;
       
       currentLineRef.current.push({ x, y, tabIndex: selectedTabIndex });
+      linesRef.current.push(...currentLineRef.current);
       dispatch(drawingMenuActions.setLines(
         linesRef.current
       ))

@@ -46,16 +46,23 @@ function Sidebar() {
     <div className='links'>
       <NavLink
       to='/'
-      className={({isActive}) => (isActive ? 'activeLink' : 'inactiveLink')}
+      className={({isActive}) => (isActive ? 'generalLink activeLink' : 'generalLink inactiveLink')}
       onClick={()=>clickSelectMenuHandler('canvas')}
       end
-      >One Note</NavLink>
+      >
+          <div>icon</div>
+          <div>One Note</div>
+        
+        </NavLink>
 
       <NavLink
       to='/tasks'
-      className={({isActive}) => (isActive ? 'activeLink' : 'inactiveLink')}
+      className={({isActive}) => (isActive ? 'generalLink activeLink' : 'generalLink inactiveLink')}
       onClick={()=>clickSelectMenuHandler('todo')}
-      >To Do</NavLink>
+      >     
+        <div>icon</div>
+        <div>To do</div>
+    </NavLink>
     </div>
  
 

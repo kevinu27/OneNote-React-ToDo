@@ -6,15 +6,24 @@
   /* background-color: #efeff6; */
 }
 .activeLink{
-  color: rgb(57, 50, 50);
-  background-color: #b5b2b2;
+  color: rgb(79, 70, 229);
+  background-color: rgb(224, 231, 255);
   font-weight: bolder; 
 }
 
 .hidden {
   display: none;
+  position: absolute;
 
 }
+
+.visible {
+  display: block;
+  min-height: 100%;
+  /* border: 2px solid blue;
+  background-color: white; */
+}
+
 .links{
   display: flex;
   flex-direction: column;
@@ -31,15 +40,11 @@
   font-weight: bold; 
 }
 
-.visible {
-  display: block;
-  min-height: 100%;
-  /* border: 2px solid blue; */
-}
+
 
 .sidebar {
   /* width: 100px; */
-  background-color: #f1f1f1;
+  background-color: white!important;
   /* position: fixed; */
   /* height: 100%; */
   height: fit-content;
@@ -47,24 +52,60 @@
   overflow: hidden;
   /* display: flex;
   flex-direction: column; */
-}
+  box-shadow: 0 2px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 );
+  /* width: 400px; */
+  /* min-width: fit-content; */
 
+}
 
 .w3-button {
   padding: 10px;
   text-align: left;
   z-index: 1;
 }
+
 .button-sidebar{
-  height: fit-content;
-  background-color: #f1f1f1;
+  height:30px;
+  /* background-color: #f1f1f1; */
   border: 1px solid darkgray;
   padding-left: 4px;
   padding-right: 4px;
+  background-color: rgb(79, 70, 229)!important;
+  color: white;
+  font-weight: 800!important;
+  font-size: 30px;
+  border: none;
+  border-radius: 50%;
+  width:  30px;
+  text-align: center;
+  margin-top: 2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* position: absolute; */
+  /* bottom: -20px;  */
+  /* left: 50%; */
+  transform: translateX(-50%); 
+  /* padding: 10px 20px; */
+  z-index: 900;
 }
 
 .menu-item{
 display: flex;
 /* border: 2px solid red; */
 padding: 0.5rem;
+}
+
+.generalLink{
+  /* border: 2px solid red; */
+  display: flex;
+  justify-content: flex-start;
+  /* box-shadow: 0 2px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 ); */
+  width: 150px;
+  margin-right: 2rem;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  border-radius: 5px;
 }

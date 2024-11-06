@@ -18,9 +18,7 @@ function Tabs() {
       tabColor: tabColor
     }))
   };
-  // dispatch(drawingMenuActions.setTabs(
-  //   tabs
-  // ))
+
 
   function addTab(tab) {
     dispatch(drawingMenuActions.addTab(tab))
