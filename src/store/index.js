@@ -2,8 +2,8 @@ import { createSlice, configureStore } from "@reduxjs/toolkit";
 
 const initialToDoState = {
     tasks: [ 
-        {name: 'Tarea 1', description: 'primera tarea de prueba', id: 0},
-        {name: 'Tarea 2', description: 'segunda tarea de prueba', id: 1}
+        // {name: 'Tarea 1', description: 'primera tarea de prueba', id: 0},
+        // {name: 'Tarea 2', description: 'segunda tarea de prueba', id: 1}
     
     ]
 }
@@ -19,13 +19,23 @@ const todoSlice = createSlice({
             task.id = state.tasks.length
             state.tasks.push(action.payload)
             console.log('state.tasks', state.tasks)
+            // ---
+            const dataToSaveJSON = JSON.stringify( state.tasks);
+            localStorage.setItem("Tasks", dataToSaveJSON);
 
         },
         removeTask(state, action){
             console.log('id en el store', action.payload)
             state.tasks = state.tasks.filter(task => task.id !=  action.payload )
             console.log('state.tasks', state.tasks)
+        },        
+        loadLocalStorage(state, action){
+            console.log(' action menu loadLocalStorage------', action.payload)
+            
+             state.tasks= action.payload
+
         }
+
 
     }
 
@@ -45,7 +55,6 @@ const menuSlice = createSlice({
             // console.log('action.action menu!!!!!!!!!', action.payload)
             state.activeMenu = action.payload
         }
-
     }
 
 
