@@ -1,6 +1,8 @@
 import { useParams } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { useState } from "react"
+import { useNavigate } from 'react-router-dom'
+
 import './TaskDetail.css'
 
 function TaskDetail() {
@@ -9,11 +11,14 @@ function TaskDetail() {
   const tasks = useSelector((state) => state.todo.tasks)
   const task = tasks.filter(task => task.id == param.id)
   const [Task, setTask] = useState(task[0]);
+  const navigate = useNavigate()
   console.log('tasks-----', tasks)
   console.log('task-----', task[0])
 
   function onGoback(e) {
     console.log('goback----')
+    navigate(`/tasks`)
+
   }
 
   return (

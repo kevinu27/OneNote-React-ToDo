@@ -2,8 +2,8 @@ import { createSlice, configureStore } from "@reduxjs/toolkit";
 
 const initialToDoState = {
     tasks: [ 
-        {name: 'menu latera el overmouse', description: 'b', id: 0},
-        {name: 'd', description: 'e', id: 1}
+        {name: 'Tarea 1', description: 'primera tarea de prueba', id: 0},
+        {name: 'Tarea 2', description: 'segunda tarea de prueba', id: 1}
     
     ]
 }
@@ -20,6 +20,11 @@ const todoSlice = createSlice({
             state.tasks.push(action.payload)
             console.log('state.tasks', state.tasks)
 
+        },
+        removeTask(state, action){
+            console.log('id en el store', action.payload)
+            state.tasks = state.tasks.filter(task => task.id !=  action.payload )
+            console.log('state.tasks', state.tasks)
         }
 
     }

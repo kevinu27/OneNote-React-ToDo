@@ -108,4 +108,10 @@ padding: 0.5rem;
   margin-left: 1rem;
   margin-top: 1rem;
   border-radius: 5px;
+  align-items: center;
+}
+
+.icon-sidebar{
+  margin-right: 1rem;
+  
 }
