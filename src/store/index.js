@@ -126,8 +126,27 @@ const drawingMenuSlice = createSlice({
                 textboxes:  state.textboxes,
                 lines: state.lines
             }
+            const TabsToSave = {
+                tabs: state.tabs
+            }
+            const textboxesToSave = {
+                textboxes:  state.textboxes
+            }
+            const linesToSave = {
+                lines: state.lines
+            }
+
             const dataToSaveJSON = JSON.stringify(dataToSave);
             localStorage.setItem("tabsText&Lines", dataToSaveJSON);
+
+            const TabsToSaveJSON = JSON.stringify(TabsToSave);
+            localStorage.setItem("Tabs",TabsToSaveJSON);
+
+            const TextBoxesToSaveJSON = JSON.stringify(textboxesToSave);
+            localStorage.setItem("TextBoxes", TextBoxesToSaveJSON);
+
+            const LinesToSaveJSON = JSON.stringify(linesToSave);
+            localStorage.setItem("Lines", LinesToSaveJSON);
         },
         ////antiguamente tabs state
         setActiveTab(state, action){
