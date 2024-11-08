@@ -60,6 +60,48 @@ function Canvas() {
       dispatch(drawingMenuActions.setLines(
         LinesFromLocalStorage
       ))
+      const handlePaste = async (event) => {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        const items = event.clipboardData.items;
+        console.log('items---', items)
+  
+        for (let item of items) {
+          // Process only image files
+        console.log('items.type---', item.type)
+
+          if (item.type.startsWith('image')) {
+            const file = item.getAsFile();
+            const image = new Image();
+            const url = URL.createObjectURL(file);
+            image.src = url;
+  
+            image.onload = () => {
+              // Clear canvas (optional)
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+              // Scale and center the image on the canvas
+              const scale = Math.min(canvas.width / image.width, canvas.height / image.height);
+              const x = (canvas.width / 2) - (image.width / 2) * scale;
+              const y = (canvas.height / 2) - (image.height / 2) * scale;
+              ctx.drawImage(image, x, y, image.width * scale, image.height * scale);
+  
+              // Release memory for the image object URL
+              URL.revokeObjectURL(url);
+            };
+  
+            break; // Stop after the first image item is handled
+          }
+        }
+      };
+  
+      // Attach the 'paste' event listener to the window
+      window.addEventListener('paste', handlePaste);
+  
+      // Cleanup the event listener on component unmount
+      return () => {
+        window.removeEventListener('paste', handlePaste);
+      };
 
   }, []); 
 
