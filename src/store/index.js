@@ -118,11 +118,11 @@ const drawingMenuSlice = createSlice({
             state.tabs = action.payload
         },
         saveLocalStorage(state){
-            
+            const textboxesNoEmpties = state.textboxes.filter(textbox => textbox.text.length > 0)
             console.log('saveLocalStorage')
             const dataToSave = {
                 tabs: state.tabs,
-                textboxes:  state.textboxes,
+                textboxes:  textboxesNoEmpties,
                 lines: state.lines
             }
             const TabsToSave = {
