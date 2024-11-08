@@ -13,10 +13,11 @@ canvas {
     padding: 5px;       /* Optional: Padding inside the textarea */
     /* resize: none;       Optional: Disable resizing */
     overflow: hidden;
+    
 }
 
 .textbox:hover{
-    border: 1px solid green!important;
+    box-shadow: 3px 3px 3px 3px rgb(0 0 0 / 0.1), 3px 3px 3px 3px rgb(0 0 0 )!important;
 
 }
 
