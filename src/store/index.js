@@ -115,7 +115,6 @@ const drawingMenuSlice = createSlice({
 
         setTabs(state, action){
 
-            // console.log('tabs con el ref', action.payload)
             state.tabs = action.payload
         },
         saveLocalStorage(state){
@@ -138,6 +137,7 @@ const drawingMenuSlice = createSlice({
 
             const dataToSaveJSON = JSON.stringify(dataToSave);
             localStorage.setItem("tabsText&Lines", dataToSaveJSON);
+            console.log('dataToSaveJSON en el index**********', dataToSaveJSON)
 
             const TabsToSaveJSON = JSON.stringify(TabsToSave);
             localStorage.setItem("Tabs",TabsToSaveJSON);
@@ -154,7 +154,7 @@ const drawingMenuSlice = createSlice({
             console.log('setActiveTabAction------', action.payload)
             state.selectedTabIndex = action.payload.tabIndex
             state.selectedTabColor = action.payload.tabColor
-            state.lines = [...state.lines]
+            // state.lines = [...state.lines]
         },
         addTab(state, action){
             // console.log('en el reducer en el index del store')
@@ -172,6 +172,7 @@ const drawingMenuSlice = createSlice({
             state.tabs= action.payload.tabs
             state.lines = action.payload.lines
             state.textboxes = action.payload.textBoxes
+            
         }
     }
 

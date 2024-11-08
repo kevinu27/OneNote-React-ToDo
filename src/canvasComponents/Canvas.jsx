@@ -29,7 +29,11 @@ function Canvas() {
     const LinesFromLocalStorage = dataToLoad?.lines ?? []
     const textFromLocalStorage = dataToLoad?.textboxes ?? []
     const tabsFromLocalStorage = dataToLoad?.tabs ?? []
+    // for(let i=0; i<LinesFromLocalStorage.length; i++){
+    //   console.log('puntos', i , LinesFromLocalStorage[i])
+    // }
 
+    // console.log('--------------!!!!!!!!!!!LinesFromLocalStorage',  LinesFromLocalStorage)
     
     
     dispatch(drawingMenuActions.loadLocalStorage(
@@ -40,10 +44,11 @@ function Canvas() {
       }
     ))
 
-    linesRef.current.push(LinesFromLocalStorage)
-    currentLineRef.current.push(LinesFromLocalStorage)
-    // linesRef.current = LinesFromLocalStorage
-    // currentLineRef.current = LinesFromLocalStorage
+    // linesRef.current.push(LinesFromLocalStorage)
+    // currentLineRef.current.push(LinesFromLocalStorage)
+    linesRef.current = LinesFromLocalStorage
+    currentLineRef.current = LinesFromLocalStorage
+    // console.log('-------------- currentLineRef.current',   currentLineRef.current)
 
     // redrawCanvas();
 
@@ -54,10 +59,11 @@ function Canvas() {
       ))
 
       dispatch(drawingMenuActions.setLines(
-        linesRef.current
+        LinesFromLocalStorage
       ))
 
   }, []); 
+
 
   const handleCanvasClick = (e) => {
     const canvas = canvasRef.current;
@@ -91,7 +97,33 @@ function Canvas() {
       box.id === id ? { ...box, text: value, cantidadDeCaracteres: value.length } : box
     );
     console.log('textbox seleccionado', updatedTextBoxes)
-    setTextBoxes(updatedTextBoxes);
+    // setTextBoxes(updatedTextBoxes);
+    const updatedTextBoxesWithLines = updatedTextBoxes.map((box) => {
+      const textosSeparados = box.text.split('\n'); // Split text by new lines
+      const highestNumberLines = textosSeparados.length; // Number of lines
+      let longestWord = 0;
+  
+      // Iterate through each line to find the longest word
+      textosSeparados.forEach((line) => {
+        line.split(' ').forEach((word) => {
+          if (word.length > longestWord) {
+            longestWord = word.length;
+          }
+        });
+      });
+  
+      // Return the updated box with the correct cantidadDeLineas and cantidadDeCaracteres
+      return {
+        ...box,
+        cantidadDeLineas: highestNumberLines,
+        cantidadDeCaracteres: longestWord,
+      };
+    });
+  
+    textBoxesRef.current = updatedTextBoxesWithLines;
+    setTextBoxes(updatedTextBoxesWithLines);
+    console.log('updatedTextBoxes: ', updatedTextBoxesWithLines);
+
     dispatch(drawingMenuActions.setTextboxes(
       updatedTextBoxes
     ))
@@ -119,6 +151,7 @@ function Canvas() {
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       currentLineRef.current = [{ x, y, tabIndex: selectedTabIndex }];
+      console.log('handleCanvasMouseDown ----- currentLineRef.current',   currentLineRef.current)
     }
   };
 
@@ -138,7 +171,7 @@ function Canvas() {
   };
 
   const handleCanvasMouseMove = (e) => {
-    if (dragging) {
+    if (dragging ) {
       const newTextBoxes = textBoxes.map((box) => {
         if (box.id === draggedBoxId) {
           return {
@@ -159,7 +192,12 @@ function Canvas() {
       const y = e.clientY - rect.top;
       
       currentLineRef.current.push({ x, y, tabIndex: selectedTabIndex });
-      linesRef.current.push(...currentLineRef.current);
+      // console.log('currentLineRef.current', currentLineRef.current)
+          // for(let i=0; i<  currentLineRef.current.length; i++){
+          //   console.log('puntos', i ,  linesRef.current[i])
+          // }
+          linesRef.current = Array.from([...linesRef.current, ...currentLineRef.current]);///aqui está el problema
+      console.log(' linesRef.currentoooooooooooo',  linesRef.current)
       dispatch(drawingMenuActions.setLines(
         linesRef.current
       ))
@@ -176,17 +214,38 @@ function Canvas() {
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
 
-    const tabLines = linesRef.current.filter(line => line[0]?.tabIndex === selectedTabIndex);
+    const tabLines = linesRef.current.filter(line => line.tabIndex === selectedTabIndex);
+    console.log('-------tabLines--------', tabLines);
     
     tabLines.forEach(line => {
+      console.log('line structure:', line); // Let's see what a single line looks like
+      
       ctx.beginPath();
-      line.forEach((point, index) => {
-        if (index === 0) {
-          ctx.moveTo(point.x, point.y);
-        } else {
-          ctx.lineTo(point.x, point.y);
-        }
-      });
+      
+      // Check if line has points property
+      if (line.points) {
+        line.points.forEach((point, index) => {
+          if (index === 0) {
+            ctx.moveTo(point.x, point.y);
+          } else {
+            ctx.lineTo(point.x, point.y);
+          }
+        });
+      } else if (Array.isArray(line)) {
+        // If line itself is an array
+        line.forEach((point, index) => {
+          if (index === 0) {
+            ctx.moveTo(point.x, point.y);
+          } else {
+            ctx.lineTo(point.x, point.y);
+          }
+        });
+      } else {
+        // If line is a single point
+        ctx.moveTo(line.x, line.y);
+        ctx.lineTo(line.x, line.y);
+      }
+      
       ctx.stroke();
     });
 
@@ -204,6 +263,7 @@ function Canvas() {
     }
   };
 /////////////////////////////////////
+
   return (
     <div 
     onMouseMove={handleCanvasMouseMove} 
@@ -228,13 +288,11 @@ function Canvas() {
               top: box.y,
               left: box.x,
               zIndex: 1,
-              border: '2px solid red',
-              borderRadius: '5px',
               padding: '5px',
               cursor: dragging ? 'grabbing' : 'move',
             }}
             cols={box.cantidadDeCaracteres + 3}
-            rows={box.cantidadDeLineas}
+            rows={box.cantidadDeLineas + 2}
             value={box.text}
             onChange={(e) => handleTextChange(box.id, e.target.value)}
             onMouseDown={(e) => handleMouseDown(e, box)}

@@ -7,15 +7,16 @@ canvas {
     /* z-index: 1; */
     background-color: transparent;
     width: fit-content;
-    /* border: 5px solid red; */
-    border: 2px solid red;
-    border-radius: 5px; /* Optional: Rounded corners */
+    border: none;
+    /* border: 2px solid green!important; */
+    border-radius: 2px; /* Optional: Rounded corners */
     padding: 5px;       /* Optional: Padding inside the textarea */
     /* resize: none;       Optional: Disable resizing */
+    overflow: hidden;
 }
 
-.textAreaHoder{
-background-color: red;
-padding: 5px;
-border: 5px solid green;
+.textbox:hover{
+    border: 1px solid green!important;
+
 }
+

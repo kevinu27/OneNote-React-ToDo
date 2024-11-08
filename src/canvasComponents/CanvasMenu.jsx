@@ -27,7 +27,6 @@ function onSliderHandler(e) {
 }
 function onLocalSaveHandler(e) {
   dispatch(drawingMenuActions.saveLocalStorage())
-  console.log('local Save')
 }
 
 
