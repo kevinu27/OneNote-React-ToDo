@@ -21,3 +21,18 @@ canvas {
 
 }
 
+.picture{
+    border: 2px solid red;
+    background-color: red;
+    padding: 40px;
+}
+.picture:hover{
+    cursor: pointer;
+}
+
+.images{
+    border: 2px solid green;
+}
+.images:hover{
+    cursor: pointer;
+}

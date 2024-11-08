@@ -6,6 +6,8 @@ import './Canvas.css';
 function Canvas() {
   const canvasRef = useRef(null);
   const linesRef = useRef([]);  ///esto es loque hay que guardar en el local storage
+  const currentImagesRef = useRef([]);  ///esto es loque hay que guardar en el local storage
+  const imagesRef = useRef();  ///esto es loque hay que guardar en el local storage
   const currentLineRef = useRef([]); 
   const textBoxesRef = useRef([]); ///esto es loque hay que guardar en el local storage
   //pasar tabs tambien al local storage
@@ -19,6 +21,8 @@ function Canvas() {
   const isDrawing = useSelector((state) => state.drawingMenu.isDrawing);
   const strokeWidth = useSelector((state) => state.drawingMenu.StrokeWidth);
   const dispatch = useDispatch();
+  const [pictures, setPictures] = useState([]);
+
   
   // console.log('linesInState', linesInState)
 
@@ -60,6 +64,7 @@ function Canvas() {
       dispatch(drawingMenuActions.setLines(
         LinesFromLocalStorage
       ))
+
       const handlePaste = async (event) => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
@@ -67,7 +72,6 @@ function Canvas() {
         console.log('items---', items)
   
         for (let item of items) {
-          // Process only image files
         console.log('items.type---', item.type)
 
           if (item.type.startsWith('image')) {
@@ -75,20 +79,49 @@ function Canvas() {
             const image = new Image();
             const url = URL.createObjectURL(file);
             image.src = url;
+            image.classList = 'picture'
+
+            const imagesDiv = document.querySelector('.images');
+
+            const img = document.createElement('img');
+            console.log('imagesDiv¡¡¡¡¡', imagesDiv);
+            console.log('img¡¡¡¡¡', img);
+
+
+            img.src = url  
+            img.alt = 'Description of the image';
+            img.PosX = 0
+            img.PosY = 0
+
+            img.width = 300; // Example width in pixels
+            img.height = 200; // Example height in pixels
+            imagesRef.current = img
+            currentImagesRef.current.push(imagesRef.current)
+
+            console.log('imagesRef.current', imagesRef.current)
+            console.log('currentImagesRef.current', currentImagesRef.current)
+            // setPictures(img)
+
+            // Append the <img> to the <div> with the class "images"
+            if (imagesDiv) {  // Check if the div exists
+                imagesDiv.appendChild(img);
+            } else {
+                console.error('No element with the class "images" was found.');
+            }
+
+        
+
   
-            image.onload = () => {
-              // Clear canvas (optional)
-              ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // image.onload = () => {
+            //   ctx.clearRect(0, 0, canvas.width, canvas.height);
   
-              // Scale and center the image on the canvas
-              const scale = Math.min(canvas.width / image.width, canvas.height / image.height);
-              const x = (canvas.width / 2) - (image.width / 2) * scale;
-              const y = (canvas.height / 2) - (image.height / 2) * scale;
-              ctx.drawImage(image, x, y, image.width * scale, image.height * scale);
+            //   const scale = Math.min(canvas.width / image.width, canvas.height / image.height);
+            //   const x = (canvas.width / 2) - (image.width / 2) * scale;
+            //   const y = (canvas.height / 2) - (image.height / 2) * scale;
+            //   ctx.drawImage(image, x, y, image.width * scale, image.height * scale);
   
-              // Release memory for the image object URL
-              URL.revokeObjectURL(url);
-            };
+            //   URL.revokeObjectURL(url);
+            // };
   
             break; // Stop after the first image item is handled
           }
@@ -300,7 +333,7 @@ function Canvas() {
       });
       ctx.stroke();
     }
-  };
+  }
 /////////////////////////////////////
 
   return (
@@ -316,9 +349,18 @@ function Canvas() {
         onClick={isDrawing ? handleCanvasClick : null}
         onMouseDown={!isDrawing ? handleCanvasMouseDown : null}
       />
+      <div className='images'   style={{
+              position: 'absolute',
+              top: 2,
+              left: 2,
+              zIndex: 1,
+              padding: '5px',
+
+            }} ></div>
 
       {textBoxes.map((box) =>
         box.tabIndex === selectedTabIndex ? (
+          <>
           <textarea
             className="textbox"
             key={box.id}
@@ -336,8 +378,12 @@ function Canvas() {
             onChange={(e) => handleTextChange(box.id, e.target.value)}
             onMouseDown={(e) => handleMouseDown(e, box)}
           />
+        
+        
+        </>
         ) : null
       )}
+
     </div>
   );
 }
