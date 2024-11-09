@@ -302,8 +302,8 @@ function Canvas() {
             style={{
               key: index,
               position: 'absolute',
-              top:PosY,
-              left: PosX,
+              top: 0,
+              left: 0,
               zIndex: 1,
               padding: '5px',
             }} 
