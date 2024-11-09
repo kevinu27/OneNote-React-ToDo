@@ -6,8 +6,8 @@ import './Canvas.css';
 function Canvas() {
   const canvasRef = useRef(null);
   const linesRef = useRef([]);  ///esto es loque hay que guardar en el local storage
-  const currentImagesRef = useRef([]);  ///esto es loque hay que guardar en el local storage
-  const imagesRef = useRef();  ///esto es loque hay que guardar en el local storage
+  const currentImagesRef = useRef();  ///esto es loque hay que guardar en el local storage
+  const imagesRef = useRef([]);  ///esto es loque hay que guardar en el local storage
   const currentLineRef = useRef([]); 
   const textBoxesRef = useRef([]); ///esto es loque hay que guardar en el local storage
   //pasar tabs tambien al local storage
@@ -22,6 +22,7 @@ function Canvas() {
   const strokeWidth = useSelector((state) => state.drawingMenu.StrokeWidth);
   const dispatch = useDispatch();
   const [pictures, setPictures] = useState([]);
+  const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y:0 });
 
   
   // console.log('linesInState', linesInState)
@@ -66,13 +67,14 @@ function Canvas() {
       ))
 
       const handlePaste = async (event) => {
+        console.log('------event------', event)
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
         const items = event.clipboardData.items;
-        console.log('items---', items)
+        // console.log('items---', items)
   
         for (let item of items) {
-        console.log('items.type---', item.type)
+        // console.log('items.type---', item.type)
 
           if (item.type.startsWith('image')) {
             const file = item.getAsFile();
@@ -84,19 +86,21 @@ function Canvas() {
             const imagesDiv = document.querySelector('.images');
 
             const img = document.createElement('img');
-            console.log('imagesDiv¡¡¡¡¡', imagesDiv);
-            console.log('img¡¡¡¡¡', img);
+            // console.log('imagesDiv¡¡¡¡¡', imagesDiv);
+            // console.log('img¡¡¡¡¡', img);
 
 
             img.src = url  
             img.alt = 'Description of the image';
-            img.PosX = 0
-            img.PosY = 0
+            img.PosX = lastMousePosition.x
+            img.PosY = lastMousePosition.y
 
             img.width = 300; // Example width in pixels
             img.height = 200; // Example height in pixels
-            imagesRef.current = img
-            currentImagesRef.current.push(imagesRef.current)
+            imagesRef.current.push(img)
+            currentImagesRef.current = imagesRef.current
+            setPictures(imagesRef.current)
+            console.log('pictures', pictures)
 
             console.log('imagesRef.current', imagesRef.current)
             console.log('currentImagesRef.current', currentImagesRef.current)
@@ -106,7 +110,7 @@ function Canvas() {
             if (imagesDiv) {  // Check if the div exists
                 imagesDiv.appendChild(img);
             } else {
-                console.error('No element with the class "images" was found.');
+                console.log('No element with the class "images" was found.');
             }
 
         
@@ -161,8 +165,8 @@ function Canvas() {
   };
 
   const handleTextChange = (id, value) => {
-    console.log('id', id) 
-    console.log('value', value) 
+    // console.log('id', id) 
+    // console.log('value', value) 
     // const tt = textBoxes.filter(textbox => textbox.id == id)
     // tt.text = value
     const updatedTextBoxes = textBoxes.map((box) =>
@@ -223,7 +227,7 @@ function Canvas() {
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       currentLineRef.current = [{ x, y, tabIndex: selectedTabIndex }];
-      console.log('handleCanvasMouseDown ----- currentLineRef.current',   currentLineRef.current)
+      // console.log('handleCanvasMouseDown ----- currentLineRef.current',   currentLineRef.current)
     }
   };
 
@@ -243,6 +247,9 @@ function Canvas() {
   };
 
   const handleCanvasMouseMove = (e) => {
+    
+    setLastMousePosition({ x: e.clientX , y: e.clientY })
+
     if (dragging ) {
       const newTextBoxes = textBoxes.map((box) => {
         if (box.id === draggedBoxId) {
@@ -269,7 +276,7 @@ function Canvas() {
           //   console.log('puntos', i ,  linesRef.current[i])
           // }
           linesRef.current = Array.from([...linesRef.current, ...currentLineRef.current]);///aqui está el problema
-      console.log(' linesRef.currentoooooooooooo',  linesRef.current)
+      // console.log(' linesRef.currentoooooooooooo',  linesRef.current)
       dispatch(drawingMenuActions.setLines(
         linesRef.current
       ))
@@ -287,7 +294,7 @@ function Canvas() {
     ctx.lineJoin = 'round';
 
     const tabLines = linesRef.current.filter(line => line.tabIndex === selectedTabIndex);
-    console.log('-------tabLines--------', tabLines);
+    // console.log('-------tabLines--------', tabLines);
     
     tabLines.forEach(line => {
       console.log('line structure:', line); // Let's see what a single line looks like
@@ -349,14 +356,23 @@ function Canvas() {
         onClick={isDrawing ? handleCanvasClick : null}
         onMouseDown={!isDrawing ? handleCanvasMouseDown : null}
       />
-      <div className='images'   style={{
+{/* <p>{imagesRef.current}</p> */}
+      {
+        pictures ?
+        pictures.map((image, index) => 
+        <div className='images'   
+            style={{
+              key: index,
               position: 'absolute',
-              top: 2,
-              left: 2,
+              top: image.x,
+              left: image.y,
               zIndex: 1,
               padding: '5px',
+            }} 
+            ></div> )
+           :null }
 
-            }} ></div>
+    
 
       {textBoxes.map((box) =>
         box.tabIndex === selectedTabIndex ? (
