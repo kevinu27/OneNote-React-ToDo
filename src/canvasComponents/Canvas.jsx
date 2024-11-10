@@ -30,6 +30,7 @@ function Canvas() {
 
 
   useEffect(() => {
+    console.log('usedEffect--------------')
     const dataToLoadJSON = localStorage.getItem("tabsText&Lines");
     const dataToLoad = JSON.parse(dataToLoadJSON);
     const LinesFromLocalStorage = dataToLoad?.lines ?? []
@@ -48,8 +49,8 @@ function Canvas() {
       }
     ))
     console.log('picturesFromLocalStorage', picturesFromLocalStorage)
-    imagesRef.current = picturesFromLocalStorage
-    setPictures(picturesFromLocalStorage)
+        imagesRef.current = picturesFromLocalStorage
+    setPictures(picturesFromLocalStorage) // este hace cargue las imagenes en el onload
     // linesRef.current.push(LinesFromLocalStorage)
     // currentLineRef.current.push(LinesFromLocalStorage)
     linesRef.current = LinesFromLocalStorage
@@ -99,7 +100,8 @@ function Canvas() {
             imageElement.classList = 'picture';
       
             // Add the image to imagesRef and currentImagesRef
-            imagesRef.current.push({ src: url, x: 100, y: 100, srcPic: base64Image });
+            imagesRef.current = [...imagesRef.current, { src: url, x: 100, y: 100, srcPic: base64Image }];
+            // imagesRef.current.push({ src: url, x: 100, y: 100, srcPic: base64Image });
             currentImagesRef.current = { src: url, x: 100, y: 100, srcPic: base64Image };
             
             console.log('imagesRef.current', imagesRef.current);
