@@ -146,7 +146,7 @@ const drawingMenuSlice = createSlice({
 
             const dataToSaveJSON = JSON.stringify(dataToSave);
             localStorage.setItem("tabsText&Lines", dataToSaveJSON);
-            console.log('dataToSaveJSON en el index**********', dataToSaveJSON)
+            // console.log('dataToSaveJSON en el index**********', dataToSaveJSON)
 
             const TabsToSaveJSON = JSON.stringify(TabsToSave);
             localStorage.setItem("Tabs",TabsToSaveJSON);
@@ -180,7 +180,7 @@ const drawingMenuSlice = createSlice({
             state.tabs= action.payload
         },
         loadLocalStorage(state, action){
-            console.log(' action loadLocalStorage------', action.payload)
+            // console.log(' action loadLocalStorage------', action.payload)
             state.tabs= action.payload.tabs
             state.lines = action.payload.lines
             state.textboxes = action.payload.textBoxes

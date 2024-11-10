@@ -18,7 +18,6 @@ function Canvas() {
   const selectedTabIndex = useSelector((state) => state.drawingMenu.selectedTabIndex);
   const selectedTabColor = useSelector((state) => state.drawingMenu.selectedTabColor);
   const isDrawing = useSelector((state) => state.drawingMenu.isDrawing);
-  const strokeWidth = useSelector((state) => state.drawingMenu.StrokeWidth);
   const dispatch = useDispatch();
   const [pictures, setPictures] = useState([]);
   const [isclickedOnPicture, setIsclickedOnPicture] = useState([]);
@@ -37,9 +36,6 @@ function Canvas() {
     const textFromLocalStorage = dataToLoad?.textboxes ?? []
     const tabsFromLocalStorage = dataToLoad?.tabs ?? []
     const picturesFromLocalStorage = dataToLoad?.pictures ?? []
-    // for(let i=0; i<LinesFromLocalStorage.length; i++){
-    //   console.log('puntos', i , LinesFromLocalStorage[i])
-    // }
     dispatch(drawingMenuActions.loadLocalStorage(
       {
         lines: LinesFromLocalStorage,
@@ -48,7 +44,7 @@ function Canvas() {
         pictures: picturesFromLocalStorage
       }
     ))
-    console.log('picturesFromLocalStorage', picturesFromLocalStorage)
+    // console.log('picturesFromLocalStorage', picturesFromLocalStorage)
         imagesRef.current = picturesFromLocalStorage
     setPictures(picturesFromLocalStorage) // este hace cargue las imagenes en el onload
     // linesRef.current.push(LinesFromLocalStorage)
@@ -89,8 +85,8 @@ function Canvas() {
             base64Image = await readFileAsBase64(file);
       
             // Now `base64Image` is defined outside onload, so you can use it here
-            console.log('pictures------', pictures);
-            console.log('base64Image fuera del onload', base64Image);
+            // console.log('pictures------', pictures);
+            // console.log('base64Image fuera del onload', base64Image);
       
             // Use the base64 string as the src for the pasted image
             setSrcPic(base64Image);
@@ -100,17 +96,18 @@ function Canvas() {
             imageElement.classList = 'picture';
       
             // Add the image to imagesRef and currentImagesRef
-            imagesRef.current = [...imagesRef.current, { src: url, x: 100, y: 100, srcPic: base64Image }];
+            imagesRef.current = [...imagesRef.current, { src: url, x: 100, y: 100, srcPic: base64Image, tab: selectedTabIndex }];
             // imagesRef.current.push({ src: url, x: 100, y: 100, srcPic: base64Image });
-            currentImagesRef.current = { src: url, x: 100, y: 100, srcPic: base64Image };
+            currentImagesRef.current = { src: url, x: 100, y: 100, srcPic: base64Image, tab: selectedTabIndex };
             
             console.log('imagesRef.current', imagesRef.current);
             console.log('currentImagesRef.current', currentImagesRef.current);
+            console.log('selectedTabIndex', selectedTabIndex);
       
             // Update the pictures state
             setPictures((prevPictures) => [
               ...prevPictures,
-              { src: url, x: lastMousePosition.x, y: lastMousePosition.y, srcPic: base64Image },
+              { src: url, x: lastMousePosition.x, y: lastMousePosition.y, srcPic: base64Image, tab: selectedTabIndex },
             ]);
       
             break; // Stop after handling the first image item
@@ -154,7 +151,6 @@ function Canvas() {
     const updatedTextBoxes = textBoxes.map((box) =>
       box.id === id ? { ...box, text: value, cantidadDeCaracteres: value.length } : box
     );
-    console.log('textbox seleccionado', updatedTextBoxes)
     // setTextBoxes(updatedTextBoxes);
     const updatedTextBoxesWithLines = updatedTextBoxes.map((box) => {
       const textosSeparados = box.text.split('\n'); // Split text by new lines
@@ -180,7 +176,6 @@ function Canvas() {
   
     textBoxesRef.current = updatedTextBoxesWithLines;
     setTextBoxes(updatedTextBoxesWithLines);
-    console.log('updatedTextBoxes: ', updatedTextBoxesWithLines);
     dispatch(drawingMenuActions.setTextboxes(
       updatedTextBoxes
     ))
@@ -188,7 +183,6 @@ function Canvas() {
   };
 
   const handleMouseDown = (e, box) => {
-    console.log('handleMouseDown')
 
     const textarea = e.target;
     const rect = textarea.getBoundingClientRect();
@@ -203,7 +197,6 @@ function Canvas() {
   };
 
   const handleMouseDownPic = (e, index) => {
-    console.log('handleMouseDownPic')
     setClickedPictureIndex(index);
     setisDraggingPic(true);
     setLastMousePosition({ x: e.clientX, y: e.clientY });
