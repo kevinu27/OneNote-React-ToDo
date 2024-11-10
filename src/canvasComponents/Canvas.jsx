@@ -26,6 +26,8 @@ function Canvas() {
   const [clickedPictureIndex, setClickedPictureIndex] = useState(null);
   const [isDraggingPic, setisDraggingPic] = useState(false);
   const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 });
+  const [srcPic, setSrcPic] = useState();
+
 
   useEffect(() => {
     const dataToLoadJSON = localStorage.getItem("tabsText&Lines");
@@ -67,14 +69,33 @@ function Canvas() {
           if (item.type.startsWith('image')) {
             const file = item.getAsFile();
             const url = URL.createObjectURL(file);
-  
+            const reader = new FileReader();
+            let base64Image
+            console.log('pictures------', pictures  )
+            reader.onload = () => {
+               base64Image = reader.result // This is the Base64 string
+              // Store the base64 string in localStorage with a unique identifier
+              // const imageId = `image_${Date.now()}`;
+              // localStorage.setItem(imageId, base64Image);
+              console.log('base64Image----------', base64Image)
+              setSrcPic(base64Image)
+              // Use the base64 string as the src for the pasted image
+              const imageElement = new Image();
+              imageElement.src = base64Image;
+              imageElement.classList = 'picture';
+              
+              // Add the imageElement to your images array (imagesRef.current)
+              imagesRef.current.push({ src: url, x: 100, y: 100, srcPic: base64Image });  // Set initial x and y as needed
+              currentImagesRef.current={ src: url, x: 100, y: 100, srcPic: base64Image }
+              console.log(' imagesRef.current',  imagesRef.current)
+            }
+            console.log(' base64Image fuera del onload',  base64Image)
             setPictures((prevPictures) => [
               ...prevPictures,
-              { src: url, x: lastMousePosition.x, y: lastMousePosition.y },
-            ]);
-            console.log('pictures------', pictures  )
-
-  
+              { src: url, x: lastMousePosition.x, y: lastMousePosition.y, srcPic: srcPic },
+            ])
+            
+            reader.readAsDataURL(file)
             break; // Stop after the first image item is handled
           }
         }
@@ -216,18 +237,15 @@ function Canvas() {
   const handleCanvasMouseMove = (e) => {
 
     if(isDraggingPic){
-      console.log('mouse move pic--------')
       const dx = e.clientX - lastMousePosition.x;
       const dy = e.clientY - lastMousePosition.y;
-  
-      setPictures((prevPictures) =>
+        setPictures((prevPictures) =>
         prevPictures.map((pic, index) =>
           index === clickedPictureIndex
-            ? { ...pic, x: pic.x + dx, y: pic.y + dy }
+            ? { ...pic, x: pic.x + dx, y: pic.y + dy}
             : pic
         )
-      );
-      console.log('pictures-----',pictures)
+      )
       dispatch(drawingMenuActions.setPictures(
         pictures
       ))
