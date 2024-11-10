@@ -119,7 +119,7 @@ const drawingMenuSlice = createSlice({
             state.tabs = action.payload
         },
         setPictures(state, action){
-            console.log('action.payload picture----', action.payload)
+            // console.log('action.payload picture----', action.payload)
             state.pictures = action.payload
         },
         saveLocalStorage(state){

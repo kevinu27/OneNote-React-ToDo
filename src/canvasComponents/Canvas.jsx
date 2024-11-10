@@ -30,12 +30,16 @@ function Canvas() {
 
   useEffect(() => {
     console.log('usedEffect--------------')
+    console.log('selectedTabIndex--------------', selectedTabIndex)
+
+
     const dataToLoadJSON = localStorage.getItem("tabsText&Lines");
     const dataToLoad = JSON.parse(dataToLoadJSON);
     const LinesFromLocalStorage = dataToLoad?.lines ?? []
     const textFromLocalStorage = dataToLoad?.textboxes ?? []
     const tabsFromLocalStorage = dataToLoad?.tabs ?? []
     const picturesFromLocalStorage = dataToLoad?.pictures ?? []
+
     dispatch(drawingMenuActions.loadLocalStorage(
       {
         lines: LinesFromLocalStorage,
@@ -95,14 +99,13 @@ function Canvas() {
             imageElement.src = base64Image;
             imageElement.classList = 'picture';
       
-            // Add the image to imagesRef and currentImagesRef
             imagesRef.current = [...imagesRef.current, { src: url, x: 100, y: 100, srcPic: base64Image, tab: selectedTabIndex }];
             // imagesRef.current.push({ src: url, x: 100, y: 100, srcPic: base64Image });
             currentImagesRef.current = { src: url, x: 100, y: 100, srcPic: base64Image, tab: selectedTabIndex };
             
             console.log('imagesRef.current', imagesRef.current);
             console.log('currentImagesRef.current', currentImagesRef.current);
-            console.log('selectedTabIndex', selectedTabIndex);
+            console.log('selectedTabIndex000000000000--------', selectedTabIndex);
       
             // Update the pictures state
             setPictures((prevPictures) => [
@@ -120,7 +123,7 @@ function Canvas() {
         window.removeEventListener('paste', handlePaste);
       };
 
-  }, []); 
+  }, [selectedTabIndex]); 
 
 
   const handleCanvasClick = (e) => {
