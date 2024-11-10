@@ -87,6 +87,8 @@ function Canvas() {
 
 
   const handleCanvasClick = (e) => {
+    console.log('e.clientX', e.clientX)
+    console.log('e.clientY', e.clientY)
     const x = e.clientX;
     const y = e.clientY ;
 
@@ -229,7 +231,6 @@ function Canvas() {
     setLastMousePosition({ x: e.clientX , y: e.clientY })
 
     if (dragging ) {
-      console.log('e.clientX - startCoords.x', e.clientX - startCoords.x)
       const newTextBoxes = textBoxes.map((box) => {
         if (box.id === draggedBoxId) {
           return {
@@ -303,7 +304,7 @@ function Canvas() {
     <div 
     onMouseMove={handleCanvasMouseMove} 
     onMouseUp={handleCanvasMouseUp}
-    style={{ position: 'relative' }}
+    // style={{ position: 'relative' }}
     >
       <canvas
         ref={canvasRef}

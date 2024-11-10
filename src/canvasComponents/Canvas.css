@@ -36,3 +36,6 @@ canvas {
 }
 
 
+body{
+    overflow-x: hidden;
+}
