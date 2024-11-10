@@ -48,6 +48,8 @@ function Canvas() {
       }
     ))
     console.log('picturesFromLocalStorage', picturesFromLocalStorage)
+    imagesRef.current = picturesFromLocalStorage
+    setPictures(picturesFromLocalStorage)
     // linesRef.current.push(LinesFromLocalStorage)
     // currentLineRef.current.push(LinesFromLocalStorage)
     linesRef.current = LinesFromLocalStorage
@@ -354,7 +356,7 @@ function Canvas() {
       { pictures.map((image, index) => (
         <img
           key={index}
-          src={image.src}
+          src={image.srcPic}
           alt="pasted"
           style={{
             position: 'absolute',
