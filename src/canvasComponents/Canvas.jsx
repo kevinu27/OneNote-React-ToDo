@@ -352,7 +352,7 @@ function Canvas() {
       />
 
       { pictures.map((image, index) => (
-        <img
+    image.tab  === selectedTabIndex ? ( <img
           key={index}
           src={image.srcPic}
           alt="pasted"
@@ -365,7 +365,7 @@ function Canvas() {
             cursor: isDraggingPic ? 'grabbing' : 'grab',
           }}
           onMouseDown={(e) => handleMouseDownPic(e, index)}
-        />
+        />) : null
       ))}
 
     
