@@ -168,14 +168,28 @@ function Canvas() {
   };
   //////////////////////////////// Drawing functions
   const handleCanvasMouseDown = (e) => {
-    if (!isDrawing) {
-      setDrawingNow(true);
-      const canvas = canvasRef.current;
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      currentLineRef.current = [{ x, y, tabIndex: selectedTabIndex }];
+    // if (!isDrawing) {
+    //   setDrawingNow(true);
+    //   const canvas = canvasRef.current;
+    //   const rect = canvas.getBoundingClientRect();
+    //   const x = e.clientX - rect.left;
+    //   const y = e.clientY - rect.top;
+    //   currentLineRef.current = [{ x, y, tabIndex: selectedTabIndex }];
+    // }
+    if (dragging ) {
+      const newTextBoxes = textBoxes.map((box) => {
+        if (box.id === draggedBoxId) {
+          return {
+            ...box,
+            x: e.clientX - startCoords.x,
+            y: e.clientY - startCoords.y,
+          };
+        }
+        return box;
+      });
+      setTextBoxes(newTextBoxes);
     }
+    
   };
 
   const handleCanvasMouseUp = () => {
@@ -215,12 +229,13 @@ function Canvas() {
     setLastMousePosition({ x: e.clientX , y: e.clientY })
 
     if (dragging ) {
+      console.log('e.clientX - startCoords.x', e.clientX - startCoords.x)
       const newTextBoxes = textBoxes.map((box) => {
         if (box.id === draggedBoxId) {
           return {
             ...box,
-            x: e.clientX - startCoords.x,
-            y: e.clientY - startCoords.y,
+            x: e.clientX ,
+            y: e.clientY ,
           };
         }
         return box;
