@@ -23,7 +23,9 @@ function Canvas() {
   const [pictures, setPictures] = useState([]);
   const [isclickedOnPicture, setIsclickedOnPicture] = useState([]);
   const [clickedPicture, setclickedPicture] = useState();
-  const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y:0 });
+  const [clickedPictureIndex, setClickedPictureIndex] = useState(null);
+  const [isDraggingPic, setisDraggingPic] = useState(false);
+  const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const dataToLoadJSON = localStorage.getItem("tabsText&Lines");
@@ -53,56 +55,30 @@ function Canvas() {
         textBoxesRef.current
       ))
 
-      dispatch(drawingMenuActions.setLines(
-        LinesFromLocalStorage
-      ))
+      // dispatch(drawingMenuActions.setLines(
+      //   LinesFromLocalStorage
+      // ))
 
       const handlePaste = async (event) => {
         console.log('------event------', event)
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d');
         const items = event.clipboardData.items;
-  
         for (let item of items) {
-
           if (item.type.startsWith('image')) {
             const file = item.getAsFile();
-            const image = new Image();
             const url = URL.createObjectURL(file);
-            image.src = url;
-            image.classList = 'picture'
-            const imagesDiv = document.querySelector('.images');
-            const img = document.createElement('img');
-            
-            console.log('lastMousePosition.x', lastMousePosition.x);
-            img.src = url  
-            img.alt = 'Description of the image';
-            img.PosX = lastMousePosition.x
-            img.PosY = lastMousePosition.y
-            img.index = imagesRef.current.length
-            img.width = 300; // Example width in pixels
-            img.height = 200; // Example height in pixels
-            img.classList = 'picture'
-            imagesRef.current.push(img)
-            currentImagesRef.current = imagesRef.current
-            // console.log('lastMousePosition.x', lastMousePosition.x)
-            // console.log('imagesRef.current', imagesRef.current)
-            // console.log('currentImagesRef.current', currentImagesRef.current)
-
-            if (imagesDiv) {  // Check if the div exists
-                imagesDiv.appendChild(img);
-            } else {
-                console.log('No element with the class "images" was found.');
-            }
+  
+            // Add image to state with initial coordinates
+            setPictures((prevPictures) => [
+              ...prevPictures,
+              { src: url, x: lastMousePosition.x, y: lastMousePosition.y },
+            ]);
+  
             break; // Stop after the first image item is handled
           }
         }
       };
   
-      // Attach the 'paste' event listener to the window
       window.addEventListener('paste', handlePaste);
-  
-      // Cleanup the event listener on component unmount
       return () => {
         window.removeEventListener('paste', handlePaste);
       };
@@ -170,6 +146,8 @@ function Canvas() {
   };
 
   const handleMouseDown = (e, box) => {
+    console.log('handleMouseDown')
+
     const textarea = e.target;
     const rect = textarea.getBoundingClientRect();
     const isResizing = e.clientX > rect.right - 10 && e.clientY > rect.bottom - 10;
@@ -177,10 +155,17 @@ function Canvas() {
     if (!isResizing) {
       setDragging(true);
       setDraggedBoxId(box.id);
-      setStartCoords({ x: e.clientX - box.x, y: e.clientY - box.y });
+      setStartCoords({ x: e.clientX , y: e.clientY });
     }
+ 
   };
 
+  const handleMouseDownPic = (e, index) => {
+    console.log('handleMouseDownPic')
+    setClickedPictureIndex(index);
+    setisDraggingPic(true);
+    setLastMousePosition({ x: e.clientX, y: e.clientY });
+  };
   //////////////////////////////// Drawing functions
   const handleCanvasMouseDown = (e) => {
     if (!isDrawing) {
@@ -194,22 +179,41 @@ function Canvas() {
   };
 
   const handleCanvasMouseUp = () => {
-    if (drawingNow) {
-      if (currentLineRef.current.length > 0) {
-        linesRef.current.push(...currentLineRef.current);
-        dispatch(drawingMenuActions.setLines(
-          linesRef.current
-        ))
-      }
-      currentLineRef.current = [];
-      setDrawingNow(false);
-    }
+    // if (drawingNow) {
+    //   if (currentLineRef.current.length > 0) {
+    //     linesRef.current.push(...currentLineRef.current);
+    //     dispatch(drawingMenuActions.setLines(
+    //       linesRef.current
+    //     ))
+    //   }
+    //   currentLineRef.current = [];
+    //   setDrawingNow(false);
+    // }
     setDragging(false);
     setDraggedBoxId(null);
+    setisDraggingPic(false);
+    setClickedPictureIndex(null);
   };
 
   const handleCanvasMouseMove = (e) => {
+
+    if(isDraggingPic){
+      console.log('mouse move pic--------')
+      const dx = e.clientX - lastMousePosition.x;
+      const dy = e.clientY - lastMousePosition.y;
+  
+      setPictures((prevPictures) =>
+        prevPictures.map((pic, index) =>
+          index === clickedPictureIndex
+            ? { ...pic, x: pic.x + dx, y: pic.y + dy }
+            : pic
+        )
+      );
+    }
+
+
     setLastMousePosition({ x: e.clientX , y: e.clientY })
+
     if (dragging ) {
       const newTextBoxes = textBoxes.map((box) => {
         if (box.id === draggedBoxId) {
@@ -224,23 +228,23 @@ function Canvas() {
       setTextBoxes(newTextBoxes);
     }
 
-    if (drawingNow) {
-      const canvas = canvasRef.current;
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+    // if (drawingNow) {
+    //   const canvas = canvasRef.current;
+    //   const rect = canvas.getBoundingClientRect();
+    //   const x = e.clientX - rect.left;
+    //   const y = e.clientY - rect.top;
       
-      currentLineRef.current.push({ x, y, tabIndex: selectedTabIndex });
-      // console.log('currentLineRef.current', currentLineRef.current)
-          // for(let i=0; i<  currentLineRef.current.length; i++){
-          //   console.log('puntos', i ,  linesRef.current[i])
-          // }
-          linesRef.current = Array.from([...linesRef.current, ...currentLineRef.current]);///aqui está el problema
-      // console.log(' linesRef.currentoooooooooooo',  linesRef.current)
-      dispatch(drawingMenuActions.setLines(
-        linesRef.current
-      ))
-    }
+    //   currentLineRef.current.push({ x, y, tabIndex: selectedTabIndex });
+    //   // console.log('currentLineRef.current', currentLineRef.current)
+    //       // for(let i=0; i<  currentLineRef.current.length; i++){
+    //       //   console.log('puntos', i ,  linesRef.current[i])
+    //       // }
+    //       // linesRef.current = Array.from([...linesRef.current, ...currentLineRef.current]);///aqui está el problema
+    //   // console.log(' linesRef.currentoooooooooooo',  linesRef.current)
+    //   // dispatch(drawingMenuActions.setLines(
+    //   //   linesRef.current
+    //   // ))
+    // }
   };
 
   const handleCanvasMouseDownPicture = (e) => {
@@ -284,36 +288,33 @@ function Canvas() {
     <div 
     onMouseMove={handleCanvasMouseMove} 
     onMouseUp={handleCanvasMouseUp}
+    style={{ position: 'relative' }}
     >
       <canvas
         ref={canvasRef}
         width={window.innerWidth}
-        height={window.innerHeight}
+        height={"5000px"}
         style={{ border: '1px solid black', backgroundColor: selectedTabColor }}
         onClick={isDrawing ? handleCanvasClick : null}
         onMouseDown={!isDrawing ? handleCanvasMouseDown : null}
       />
 
-      {
-        pictures ?
-        imagesRef.current.map((image, index) => 
-          <>
-           <div className='images'   
-            style={{
-              key: index,
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              zIndex: 1,
-              padding: '5px',
-            }} 
-            onMouseDown={(e) => handleCanvasMouseDownPicture(e)}
-            onMouseMove = {isclickedOnPicture  ? onMouseMovepicture : null}
-            ></div> 
-            {/* <p>{image.PosX }</p> */}
-          </>
-       )
-           :null }
+      { pictures.map((image, index) => (
+        <img
+          key={index}
+          src={image.src}
+          alt="pasted"
+          style={{
+            position: 'absolute',
+            top: image.y,
+            left: image.x,
+            width: 300,
+            height: 200,
+            cursor: isDraggingPic ? 'grabbing' : 'grab',
+          }}
+          onMouseDown={(e) => handleMouseDownPic(e, index)}
+        />
+      ))}
 
     
 
