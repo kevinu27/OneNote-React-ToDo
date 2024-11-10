@@ -65,38 +65,51 @@ function Canvas() {
 
       const handlePaste = async (event) => {
         const items = event.clipboardData.items;
+        let base64Image;
+      
+        // Helper function to read file as base64 using a Promise
+        function readFileAsBase64(file) {
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
+            reader.readAsDataURL(file);
+          });
+        }
+      
         for (let item of items) {
           if (item.type.startsWith('image')) {
             const file = item.getAsFile();
             const url = URL.createObjectURL(file);
-            const reader = new FileReader();
-            let base64Image
-            console.log('pictures------', pictures  )
-            reader.onload = () => {
-               base64Image = reader.result // This is the Base64 string
-              // Store the base64 string in localStorage with a unique identifier
-              // const imageId = `image_${Date.now()}`;
-              // localStorage.setItem(imageId, base64Image);
-              console.log('base64Image----------', base64Image)
-              setSrcPic(base64Image)
-              // Use the base64 string as the src for the pasted image
-              const imageElement = new Image();
-              imageElement.src = base64Image;
-              imageElement.classList = 'picture';
-              
-              // Add the imageElement to your images array (imagesRef.current)
-              imagesRef.current.push({ src: url, x: 100, y: 100, srcPic: base64Image });  // Set initial x and y as needed
-              currentImagesRef.current={ src: url, x: 100, y: 100, srcPic: base64Image }
-              console.log(' imagesRef.current',  imagesRef.current)
-            }
-            console.log(' base64Image fuera del onload',  base64Image)
+      
+            // Await the base64 conversion here
+            base64Image = await readFileAsBase64(file);
+      
+            // Now `base64Image` is defined outside onload, so you can use it here
+            console.log('pictures------', pictures);
+            console.log('base64Image fuera del onload', base64Image);
+      
+            // Use the base64 string as the src for the pasted image
+            setSrcPic(base64Image);
+            
+            const imageElement = new Image();
+            imageElement.src = base64Image;
+            imageElement.classList = 'picture';
+      
+            // Add the image to imagesRef and currentImagesRef
+            imagesRef.current.push({ src: url, x: 100, y: 100, srcPic: base64Image });
+            currentImagesRef.current = { src: url, x: 100, y: 100, srcPic: base64Image };
+            
+            console.log('imagesRef.current', imagesRef.current);
+            console.log('currentImagesRef.current', currentImagesRef.current);
+      
+            // Update the pictures state
             setPictures((prevPictures) => [
               ...prevPictures,
-              { src: url, x: lastMousePosition.x, y: lastMousePosition.y, srcPic: srcPic },
-            ])
-            
-            reader.readAsDataURL(file)
-            break; // Stop after the first image item is handled
+              { src: url, x: lastMousePosition.x, y: lastMousePosition.y, srcPic: base64Image },
+            ]);
+      
+            break; // Stop after handling the first image item
           }
         }
       };
