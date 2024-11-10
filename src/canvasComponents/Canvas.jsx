@@ -33,6 +33,7 @@ function Canvas() {
     const LinesFromLocalStorage = dataToLoad?.lines ?? []
     const textFromLocalStorage = dataToLoad?.textboxes ?? []
     const tabsFromLocalStorage = dataToLoad?.tabs ?? []
+    const picturesFromLocalStorage = dataToLoad?.pictures ?? []
     // for(let i=0; i<LinesFromLocalStorage.length; i++){
     //   console.log('puntos', i , LinesFromLocalStorage[i])
     // }
@@ -40,10 +41,11 @@ function Canvas() {
       {
         lines: LinesFromLocalStorage,
         tabs: tabsFromLocalStorage,
-        textBoxes: textFromLocalStorage
+        textBoxes: textFromLocalStorage,
+        pictures: picturesFromLocalStorage
       }
     ))
-
+    console.log('picturesFromLocalStorage', picturesFromLocalStorage)
     // linesRef.current.push(LinesFromLocalStorage)
     // currentLineRef.current.push(LinesFromLocalStorage)
     linesRef.current = LinesFromLocalStorage
@@ -60,18 +62,18 @@ function Canvas() {
       // ))
 
       const handlePaste = async (event) => {
-        console.log('------event------', event)
         const items = event.clipboardData.items;
         for (let item of items) {
           if (item.type.startsWith('image')) {
             const file = item.getAsFile();
             const url = URL.createObjectURL(file);
   
-            // Add image to state with initial coordinates
             setPictures((prevPictures) => [
               ...prevPictures,
               { src: url, x: lastMousePosition.x, y: lastMousePosition.y },
             ]);
+            console.log('pictures------', pictures  )
+
   
             break; // Stop after the first image item is handled
           }
@@ -225,6 +227,10 @@ function Canvas() {
             : pic
         )
       );
+      console.log('pictures-----',pictures)
+      dispatch(drawingMenuActions.setPictures(
+        pictures
+      ))
     }
 
 
@@ -304,7 +310,6 @@ function Canvas() {
     <div 
     onMouseMove={handleCanvasMouseMove} 
     onMouseUp={handleCanvasMouseUp}
-    // style={{ position: 'relative' }}
     >
       <canvas
         ref={canvasRef}

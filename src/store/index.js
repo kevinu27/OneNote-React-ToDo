@@ -81,6 +81,7 @@ const initialdrawingMenuState = {
         //     tabColor: 'lightred'
         // }
 ],
+pictures: [],
 selectedTabIndex: 0,
 selectedTabColor: 'lightblue',
 
@@ -117,13 +118,18 @@ const drawingMenuSlice = createSlice({
 
             state.tabs = action.payload
         },
+        setPictures(state, action){
+            console.log('action.payload picture----', action.payload)
+            state.pictures = action.payload
+        },
         saveLocalStorage(state){
             const textboxesNoEmpties = state.textboxes.filter(textbox => textbox.text.length > 0)
             console.log('saveLocalStorage')
             const dataToSave = {
                 tabs: state.tabs,
                 textboxes:  textboxesNoEmpties,
-                lines: state.lines
+                lines: state.lines,
+                pictures: state.pictures
             }
             const TabsToSave = {
                 tabs: state.tabs
@@ -133,6 +139,9 @@ const drawingMenuSlice = createSlice({
             }
             const linesToSave = {
                 lines: state.lines
+            }
+            const picturesToSave = {
+                pictures: state.pictures
             }
 
             const dataToSaveJSON = JSON.stringify(dataToSave);
@@ -147,6 +156,9 @@ const drawingMenuSlice = createSlice({
 
             const LinesToSaveJSON = JSON.stringify(linesToSave);
             localStorage.setItem("Lines", LinesToSaveJSON);
+
+            const picturesToSaveJSON = JSON.stringify(picturesToSave);
+            localStorage.setItem("Pictures", picturesToSaveJSON);
         },
         ////antiguamente tabs state
         setActiveTab(state, action){
@@ -172,6 +184,7 @@ const drawingMenuSlice = createSlice({
             state.tabs= action.payload.tabs
             state.lines = action.payload.lines
             state.textboxes = action.payload.textBoxes
+            state.pictures = action.payload.pictures
             
         }
     }
