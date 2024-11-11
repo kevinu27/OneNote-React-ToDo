@@ -21,22 +21,19 @@ canvas {
 }
 
 .picture{
-    border: 5px solid red;
-    margin: 1rem;
+    border: 1px solid red;
+    /* margin: 1rem; */
 }
 
 .picture:hover{
     cursor: pointer;
 }
 
-.images{
-    border: 2px solid green;
-    margin-right: 3rem;
-    margin-left: 3rem;
-}
-
-
 body{
     overflow-x: hidden;
 }
 
+.pictureHolder{
+    border: 2px solid blue;
+    background-color: black;
+}

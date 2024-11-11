@@ -26,6 +26,8 @@ function Canvas() {
   const [isDraggingPic, setisDraggingPic] = useState(false);
   const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 });
   const [srcPic, setSrcPic] = useState();
+  const [isResizing, setisResizing] = useState(false);
+  
 
 
   useEffect(() => {
@@ -99,18 +101,18 @@ function Canvas() {
             imageElement.src = base64Image;
             imageElement.classList = 'picture';
       
-            imagesRef.current = [...imagesRef.current, { src: url, x: 100, y: 100, srcPic: base64Image, tab: selectedTabIndex }];
+            imagesRef.current = [...imagesRef.current, { src: url, x: 100, y: 100, srcPic: base64Image, tab: selectedTabIndex, width:300 , height: 200 , index: imagesRef.current.length-1}];
             // imagesRef.current.push({ src: url, x: 100, y: 100, srcPic: base64Image });
-            currentImagesRef.current = { src: url, x: 100, y: 100, srcPic: base64Image, tab: selectedTabIndex };
+            currentImagesRef.current = { src: url, x: 100, y: 100, srcPic: base64Image, tab: selectedTabIndex,  width:300 , height: 200, index: imagesRef.current.length-1 };
             
             console.log('imagesRef.current', imagesRef.current);
-            console.log('currentImagesRef.current', currentImagesRef.current);
-            console.log('selectedTabIndex000000000000--------', selectedTabIndex);
+            console.log('currentImagesRef.current', currentImagesRef.current)
+            console.log('selectedTabIndex000000000000--------', selectedTabIndex)
       
             // Update the pictures state
             setPictures((prevPictures) => [
               ...prevPictures,
-              { src: url, x: lastMousePosition.x, y: lastMousePosition.y, srcPic: base64Image, tab: selectedTabIndex },
+              { src: url, x: lastMousePosition.x, y: lastMousePosition.y, srcPic: base64Image, tab: selectedTabIndex, width:300 , height: 200, index: imagesRef.current.length -1 },
             ]);
       
             break; // Stop after handling the first image item
@@ -204,6 +206,34 @@ function Canvas() {
     setisDraggingPic(true);
     setLastMousePosition({ x: e.clientX, y: e.clientY });
   };
+
+  const handleMouseDownPicHolder = (e, index) => {
+
+    console.log('handleMouseDownPicHolder----')
+    setisResizing(true)
+    setisResizing(true);
+    setTimeout(() =>  0); // This should log 'true'
+  };
+
+  const handleMouseMovePicHolder = (e, index) => {
+    // setClickedPictureIndex(index);
+    // setisDraggingPic(true);
+    // setLastMousePosition({ x: e.clientX, y: e.clientY });
+    console.log('handleMouseMovePicHolder-------')
+    console.log('index-------', index)
+
+    if(isResizing){
+    console.log('isResizing-------', isResizing)
+
+      const updatedPictures = pictures.map(picture => 
+        picture.index === index ? { ...picture, width: (e.clientX - picture.width) } : picture  // Return a new object with the updated width
+      );
+      setPictures(updatedPictures)
+      // console.log('widthValue----', widthValue[index].x- e.clientX)
+      console.log('pictures----', pictures)
+    }
+
+  };
   //////////////////////////////// Drawing functions
   const handleCanvasMouseDown = (e) => {
     // if (!isDrawing) {
@@ -245,6 +275,7 @@ function Canvas() {
     setDraggedBoxId(null);
     setisDraggingPic(false);
     setClickedPictureIndex(null);
+    setisResizing(false)
   };
 
   const handleCanvasMouseMove = (e) => {
@@ -354,6 +385,23 @@ function Canvas() {
       { pictures.map((image, index) => (
            image.tab  === selectedTabIndex ? ( 
 
+            <div
+            key={index}
+            src={image.srcPic}
+            alt="pasted"
+            className="pictureHolder"
+            style={{
+              position: 'absolute',
+              top: image.y,
+              left: image.x,
+              width: 305,
+              height: 205,
+              cursor: isDraggingPic ? 'help' : 'help',
+            }}
+            onMouseDown={(e) => handleMouseDownPicHolder(e, index)}
+            onMouseMove={(e) => handleMouseMovePicHolder(e, index) } 
+          >
+
               <img
               key={index}
               src={image.srcPic}
@@ -361,15 +409,14 @@ function Canvas() {
               className="picture"
               style={{
                 position: 'absolute',
-                top: image.y,
-                left: image.x,
+
                 width: 300,
                 height: 200,
                 cursor: isDraggingPic ? 'grabbing' : 'grab',
               }}
               onMouseDown={(e) => handleMouseDownPic(e, index)}
             />
-          
+            </div>
 
       ) : null
       ))}

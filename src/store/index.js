@@ -16,9 +16,8 @@ const todoSlice = createSlice({
             console.log('action.action', action.payload)
             const task = action.payload
             if (!state.tasks) {
-                state.tasks = [];
+                state.tasks = []
             }
-            // !state.tasks ? []: state.task
   
             task.id = state.tasks.length
             state.tasks.push(action.payload)
