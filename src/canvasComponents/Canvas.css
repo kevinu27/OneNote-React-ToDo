@@ -18,13 +18,13 @@ canvas {
 
 .textbox:hover{
     box-shadow: 3px 3px 3px 3px rgb(0 0 0 / 0.1), 3px 3px 3px 3px rgb(0 0 0 )!important;
-
 }
 
 .picture{
-    border: 2px solid red;
-
+    border: 5px solid red;
+    margin: 1rem;
 }
+
 .picture:hover{
     cursor: pointer;
 }
@@ -39,3 +39,4 @@ canvas {
 body{
     overflow-x: hidden;
 }
+

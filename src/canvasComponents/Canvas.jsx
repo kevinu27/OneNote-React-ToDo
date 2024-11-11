@@ -352,20 +352,26 @@ function Canvas() {
       />
 
       { pictures.map((image, index) => (
-    image.tab  === selectedTabIndex ? ( <img
-          key={index}
-          src={image.srcPic}
-          alt="pasted"
-          style={{
-            position: 'absolute',
-            top: image.y,
-            left: image.x,
-            width: 300,
-            height: 200,
-            cursor: isDraggingPic ? 'grabbing' : 'grab',
-          }}
-          onMouseDown={(e) => handleMouseDownPic(e, index)}
-        />) : null
+           image.tab  === selectedTabIndex ? ( 
+
+              <img
+              key={index}
+              src={image.srcPic}
+              alt="pasted"
+              className="picture"
+              style={{
+                position: 'absolute',
+                top: image.y,
+                left: image.x,
+                width: 300,
+                height: 200,
+                cursor: isDraggingPic ? 'grabbing' : 'grab',
+              }}
+              onMouseDown={(e) => handleMouseDownPic(e, index)}
+            />
+          
+
+      ) : null
       ))}
 
     

@@ -2,8 +2,7 @@ import { createSlice, configureStore } from "@reduxjs/toolkit";
 
 const initialToDoState = {
     tasks: [ 
-        // {name: 'Tarea 1', description: 'primera tarea de prueba', id: 0},
-        // {name: 'Tarea 2', description: 'segunda tarea de prueba', id: 1}
+
     
     ]
 }
@@ -16,6 +15,11 @@ const todoSlice = createSlice({
             // console.log('en el reducer en el index del store')
             console.log('action.action', action.payload)
             const task = action.payload
+            if (!state.tasks) {
+                state.tasks = [];
+            }
+            // !state.tasks ? []: state.task
+  
             task.id = state.tasks.length
             state.tasks.push(action.payload)
             console.log('state.tasks', state.tasks)

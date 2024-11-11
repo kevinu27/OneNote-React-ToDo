@@ -29,7 +29,7 @@ function TodoList() {
   return (
     <>
     <div className='todolist-holder'>
-    {tasks.map((task, index) => (
+    {tasks && tasks.map((task, index) => (
 
           <TaskCard key={index} task={task}  /> 
 
