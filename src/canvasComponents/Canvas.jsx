@@ -27,6 +27,7 @@ function Canvas() {
   const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 });
   const [srcPic, setSrcPic] = useState();
   const [isResizing, setisResizing] = useState(false);
+  const [picToResize, setpicToResize] = useState();
   
 
 
@@ -209,11 +210,12 @@ function Canvas() {
 
   const handleMouseDownPicHolder = (e, index) => {
 
-    console.log('handleMouseDownPicHolder----')
+    console.log('handleMouseDownPic----')
     setisResizing(true)
-    setisResizing(true);
-    setTimeout(() =>  0); // This should log 'true'
-  };
+    setpicToResize(index)
+    setTimeout(() =>  0)
+
+  }
 
   const handleMouseMovePicHolder = (e, index) => {
     // setClickedPictureIndex(index);
@@ -294,7 +296,6 @@ function Canvas() {
       ))
     }
 
-
     setLastMousePosition({ x: e.clientX , y: e.clientY })
 
     if (dragging ) {
@@ -310,36 +311,20 @@ function Canvas() {
       });
       setTextBoxes(newTextBoxes);
     }
+    console.log('picToResize++++++++++', picToResize)
 
-          if(isResizing){
-
+        if(isResizing && !dragging){
           const updatedPictures = pictures.map(picture => 
-          picture.index === index ? { ...picture, width: (e.clientX - picture.width) } : picture )
-        setPictures(updatedPictures)
-    console.log('isresizing-----------ººººººººº')
-    console.log('pictures', pictures)
-      }
+          picture.index === picToResize ? { ...picture, width: (e.clientX - picture.width) } : picture )
+          setPictures(updatedPictures) 
+          imagesRef.current = updatedPictures
+          console.log('isresizing-----------ººººººººº')
+          console.log('pictures', pictures)
+          console.log('e++++++++++', e)
 
+        }
 
-
-    // if (drawingNow) {
-    //   const canvas = canvasRef.current;
-    //   const rect = canvas.getBoundingClientRect();
-    //   const x = e.clientX - rect.left;
-    //   const y = e.clientY - rect.top;
-      
-    //   currentLineRef.current.push({ x, y, tabIndex: selectedTabIndex });
-    //   // console.log('currentLineRef.current', currentLineRef.current)
-    //       // for(let i=0; i<  currentLineRef.current.length; i++){
-    //       //   console.log('puntos', i ,  linesRef.current[i])
-    //       // }
-    //       // linesRef.current = Array.from([...linesRef.current, ...currentLineRef.current]);///aqui está el problema
-    //   // console.log(' linesRef.currentoooooooooooo',  linesRef.current)
-    //   // dispatch(drawingMenuActions.setLines(
-    //   //   linesRef.current
-    //   // ))
-    // }
-  };
+  }
 
   const handleCanvasMouseDownPicture = (e) => {
     console.log('handleCanvasMouseDownPicture5555555555555', e.target.index)
@@ -404,12 +389,12 @@ function Canvas() {
               position: 'absolute',
               top: image.y,
               left: image.x,
-              width: 305,
+              width: image.width + 5,
               height: 205,
               cursor: isDraggingPic ? 'nwse-resize' : 'nwse-resize',
             }}
-            onMouseDown={(e) => handleMouseDownPicHolder(e, index)}
-            onMouseMove={(e) => handleMouseMovePicHolder(e, index) } 
+            onMouseDown={ dragging ? (e) => handleMouseDownPicHolder(e, index) :null}
+            onMouseMove={dragging ?  (e) => handleMouseMovePicHolder(e, index):null } 
           >
 
               <img
@@ -420,7 +405,7 @@ function Canvas() {
               style={{
                 position: 'absolute',
 
-                width: 300,
+                width: image.width,
                 height: 200,
                 cursor: isDraggingPic ? 'grabbing' : 'grab',
               }}
