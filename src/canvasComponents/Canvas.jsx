@@ -220,18 +220,18 @@ function Canvas() {
     // setisDraggingPic(true);
     // setLastMousePosition({ x: e.clientX, y: e.clientY });
     console.log('handleMouseMovePicHolder-------')
-    console.log('index-------', index)
+    // console.log('index-------', index)
 
-    if(isResizing){
-    console.log('isResizing-------', isResizing)
+    // if(isResizing){
+    // console.log('isResizing-------', isResizing)
 
-      const updatedPictures = pictures.map(picture => 
-        picture.index === index ? { ...picture, width: (e.clientX - picture.width) } : picture  // Return a new object with the updated width
-      );
-      setPictures(updatedPictures)
+    //   const updatedPictures = pictures.map(picture => 
+    //     picture.index === index ? { ...picture, width: (e.clientX - picture.width) } : picture  // Return a new object with the updated width
+    //   );
+    //   setPictures(updatedPictures)
       // console.log('widthValue----', widthValue[index].x- e.clientX)
       console.log('pictures----', pictures)
-    }
+    // }
 
   };
   //////////////////////////////// Drawing functions
@@ -279,7 +279,6 @@ function Canvas() {
   };
 
   const handleCanvasMouseMove = (e) => {
-
     if(isDraggingPic){
       const dx = e.clientX - lastMousePosition.x;
       const dy = e.clientY - lastMousePosition.y;
@@ -311,6 +310,17 @@ function Canvas() {
       });
       setTextBoxes(newTextBoxes);
     }
+
+          if(isResizing){
+
+          const updatedPictures = pictures.map(picture => 
+          picture.index === index ? { ...picture, width: (e.clientX - picture.width) } : picture )
+        setPictures(updatedPictures)
+    console.log('isresizing-----------ººººººººº')
+    console.log('pictures', pictures)
+      }
+
+
 
     // if (drawingNow) {
     //   const canvas = canvasRef.current;
@@ -396,7 +406,7 @@ function Canvas() {
               left: image.x,
               width: 305,
               height: 205,
-              cursor: isDraggingPic ? 'help' : 'help',
+              cursor: isDraggingPic ? 'nwse-resize' : 'nwse-resize',
             }}
             onMouseDown={(e) => handleMouseDownPicHolder(e, index)}
             onMouseMove={(e) => handleMouseMovePicHolder(e, index) } 
@@ -414,7 +424,8 @@ function Canvas() {
                 height: 200,
                 cursor: isDraggingPic ? 'grabbing' : 'grab',
               }}
-              onMouseDown={(e) => handleMouseDownPic(e, index)}
+              onMouseDown={(e) => handleMouseDownPic(e, index) }
+              onMouseMove={(e) => e.stopPropagation()}
             />
             </div>
 
