@@ -203,6 +203,8 @@ function Canvas() {
   };
 
   const handleMouseDownPic = (e, index) => {
+    console.log('handleMouseDownPic----')
+
     setClickedPictureIndex(index);
     setisDraggingPic(true);
     setLastMousePosition({ x: e.clientX, y: e.clientY });
@@ -210,7 +212,8 @@ function Canvas() {
 
   const handleMouseDownPicHolder = (e, index) => {
 
-    console.log('handleMouseDownPic----')
+    console.log('handleMouseDownPicHolder----')
+    console.log('index----!!!!!!!!!!!!', index)
     setisResizing(true)
     setpicToResize(index)
     setTimeout(() =>  0)
@@ -326,41 +329,7 @@ function Canvas() {
 
   }
 
-  const handleCanvasMouseDownPicture = (e) => {
-    console.log('handleCanvasMouseDownPicture5555555555555', e.target.index)
-    console.log('imagesRef.current---444444', imagesRef.current)
 
-    setclickedPicture(e.target.index)
-    setIsclickedOnPicture(true)
-    };
-    const onMouseMovepicture = (e) => {
-      console.log('onMouseMovepictureclickedPicture---11111', clickedPicture)
-      console.log('imagesRef.current---2222POSX', imagesRef.current[0].PosX)
-
-      if(isclickedOnPicture){
-
-        console.log('en el if-------------', imagesRef.current[clickedPicture])
-        console.log('en el if-------------clickedPicture', clickedPicture)
-        imagesRef.current[clickedPicture].PosX = 500
-        // const updatedProperties = {
-        //   PosX: 100,
-        //   PosY: 100
-        // };
-        
-        // Update the matching item
-        // imagesRef.current =  imagesRef.current.map(picture => {
-        //   if (picture.index === clickedPicture) {
-        //     return { ...picture,     PosX: 100,
-        //       PosY: 100 }; // Spread in updated properties
-        //   }
-        // });
-
-      }
-    
-
-
-      
-      };
 
 
   return (
@@ -393,8 +362,8 @@ function Canvas() {
               height: 205,
               cursor: isDraggingPic ? 'nwse-resize' : 'nwse-resize',
             }}
-            onMouseDown={ dragging ? (e) => handleMouseDownPicHolder(e, index) :null}
-            onMouseMove={dragging ?  (e) => handleMouseMovePicHolder(e, index):null } 
+            onMouseDown={ !isDraggingPic ? (e) => handleMouseDownPicHolder(e, index) :null}
+            onMouseMove={!isDraggingPic ?  (e) => handleMouseMovePicHolder(e, index):null } 
           >
 
               <img
