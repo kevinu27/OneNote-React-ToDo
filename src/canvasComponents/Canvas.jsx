@@ -321,12 +321,14 @@ function Canvas() {
 
         if(isResizing && !dragging){
           const updatedPictures = pictures.map(picture => 
-          picture.index === picToResize ? { ...picture, width: (e.clientX - picture.width) } : picture )
+          picture.index === picToResize ? { ...picture, width: (e.clientX - picture.width), height: (e.clientY - picture.height) } : picture )
           setPictures(updatedPictures) 
           imagesRef.current = updatedPictures
-          console.log('isResizing && !dragging-----------ººººººººº')
+          dispatch(drawingMenuActions.setPictures(
+            pictures
+          ))
+          // console.log('isResizing && !dragging-----------ººººººººº')
           console.log('pictures', pictures)
-          console.log('e++++++++++', e)
 
         }
 
@@ -362,7 +364,7 @@ function Canvas() {
               top: image.y,
               left: image.x,
               width: image.width + 5,
-              height: 205,
+              height: image.height + 5,
               cursor: isDraggingPic ? 'nwse-resize' : 'nwse-resize',
             }}
             onMouseDown={ !isDraggingPic ? (e) => handleMouseDownPicHolder(e, index) : null}
@@ -376,7 +378,7 @@ function Canvas() {
               style={{
                 position: 'absolute',
                 width: image.width,
-                height: 200,
+                height: image.height,
                 cursor: isDraggingPic ? 'grabbing' : 'grab',
               }}
               onMouseMove={(e) => e.stopPropagation()}
