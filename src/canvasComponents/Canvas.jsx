@@ -33,7 +33,7 @@ function Canvas() {
 
   useEffect(() => {
     console.log('usedEffect--------------')
-    console.log('selectedTabIndex--------------', selectedTabIndex)
+    // console.log('selectedTabIndex--------------', selectedTabIndex)
 
 
     const dataToLoadJSON = localStorage.getItem("tabsText&Lines");
@@ -130,8 +130,8 @@ function Canvas() {
 
 
   const handleCanvasClick = (e) => {
-    console.log('e.clientX', e.clientX)
-    console.log('e.clientY', e.clientY)
+    // console.log('e.clientX', e.clientX)
+    // console.log('e.clientY', e.clientY)
     const x = e.clientX;
     const y = e.clientY ;
 
@@ -213,8 +213,7 @@ function Canvas() {
 
   const handleMouseDownPicHolder = (e, index) => {
 
-    console.log('handleMouseDownPicHolder----')
-    // console.log('index----!!!!!!!!!!!!', index)
+    // console.log('handleMouseDownPicHolder----')
     setisResizing(true)
     setpicToResize(index)
     setTimeout(() =>  0)
@@ -321,7 +320,7 @@ function Canvas() {
 
         if(isResizing && !dragging){
           const updatedPictures = pictures.map(picture => 
-          picture.index === picToResize ? { ...picture, width: (e.clientX - picture.width), height: (e.clientY - picture.height) } : picture )
+          picture.index === picToResize ? { ...picture, width: (e.clientX - picture.x), height: (e.clientY - picture.y) } : picture )
           setPictures(updatedPictures) 
           imagesRef.current = updatedPictures
           dispatch(drawingMenuActions.setPictures(
@@ -368,7 +367,6 @@ function Canvas() {
               cursor: isDraggingPic ? 'nwse-resize' : 'nwse-resize',
             }}
             onMouseDown={ !isDraggingPic ? (e) => handleMouseDownPicHolder(e, index) : null}
-            onMouseMove={!isDraggingPic ?  (e) => handleMouseMovePicHolder(e, index) : null } 
           >
               <img
               key={index}
