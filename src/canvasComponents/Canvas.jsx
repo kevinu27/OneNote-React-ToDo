@@ -33,9 +33,6 @@ function Canvas() {
 
   useEffect(() => {
     console.log('usedEffect--------------')
-    // console.log('selectedTabIndex--------------', selectedTabIndex)
-
-
     const dataToLoadJSON = localStorage.getItem("tabsText&Lines");
     const dataToLoad = JSON.parse(dataToLoadJSON);
     const LinesFromLocalStorage = dataToLoad?.lines ?? []
@@ -51,11 +48,9 @@ function Canvas() {
         pictures: picturesFromLocalStorage
       }
     ))
-    // console.log('picturesFromLocalStorage', picturesFromLocalStorage)
         imagesRef.current = picturesFromLocalStorage
     setPictures(picturesFromLocalStorage) // este hace cargue las imagenes en el onload
-    // linesRef.current.push(LinesFromLocalStorage)
-    // currentLineRef.current.push(LinesFromLocalStorage)
+
     linesRef.current = LinesFromLocalStorage
     currentLineRef.current = LinesFromLocalStorage
 
@@ -65,15 +60,9 @@ function Canvas() {
         textBoxesRef.current
       ))
 
-      // dispatch(drawingMenuActions.setLines(
-      //   LinesFromLocalStorage
-      // ))
-
       const handlePaste = async (event) => {
         const items = event.clipboardData.items;
         let base64Image;
-      
-        // Helper function to read file as base64 using a Promise
         function readFileAsBase64(file) {
           return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -90,7 +79,6 @@ function Canvas() {
       
             // Await the base64 conversion here
             base64Image = await readFileAsBase64(file);
-      
             // Now `base64Image` is defined outside onload, so you can use it here
             // console.log('pictures------', pictures);
             // console.log('base64Image fuera del onload', base64Image);
@@ -130,8 +118,6 @@ function Canvas() {
 
 
   const handleCanvasClick = (e) => {
-    // console.log('e.clientX', e.clientX)
-    // console.log('e.clientY', e.clientY)
     const x = e.clientX;
     const y = e.clientY ;
 
@@ -163,7 +149,6 @@ function Canvas() {
       const highestNumberLines = textosSeparados.length; // Number of lines
       let longestWord = 0;
   
-      // Iterate through each line to find the longest word
       textosSeparados.forEach((line) => {
         line.split(' ').forEach((word) => {
           if (word.length > longestWord) {
@@ -203,7 +188,6 @@ function Canvas() {
   };
 
   const handleMouseDownPic = (e, index) => {
-    console.log('handleMouseDownPic----')
     e.stopPropagation()
     setClickedPictureIndex(index);
     setisDraggingPic(true);
@@ -212,43 +196,13 @@ function Canvas() {
   };
 
   const handleMouseDownPicHolder = (e, index) => {
-
-    // console.log('handleMouseDownPicHolder----')
     setisResizing(true)
     setpicToResize(index)
     setTimeout(() =>  0)
-
   }
 
-  const handleMouseMovePicHolder = (e, index) => {
-    // setClickedPictureIndex(index);
-    // setisDraggingPic(true);
-    // setLastMousePosition({ x: e.clientX, y: e.clientY });
-    console.log('handleMouseMovePicHolder-------')
-    // console.log('index-------', index)
-
-    // if(isResizing){
-    // console.log('isResizing-------', isResizing)
-
-    //   const updatedPictures = pictures.map(picture => 
-    //     picture.index === index ? { ...picture, width: (e.clientX - picture.width) } : picture  // Return a new object with the updated width
-    //   );
-    //   setPictures(updatedPictures)
-      // console.log('widthValue----', widthValue[index].x- e.clientX)
-      // console.log('pictures----', pictures)
-    // }
-
-  };
-  //////////////////////////////// Drawing functions
   const handleCanvasMouseDown = (e) => {
-    // if (!isDrawing) {
-    //   setDrawingNow(true);
-    //   const canvas = canvasRef.current;
-    //   const rect = canvas.getBoundingClientRect();
-    //   const x = e.clientX - rect.left;
-    //   const y = e.clientY - rect.top;
-    //   currentLineRef.current = [{ x, y, tabIndex: selectedTabIndex }];
-    // }
+
     if (dragging ) {
       const newTextBoxes = textBoxes.map((box) => {
         if (box.id === draggedBoxId) {
@@ -262,20 +216,9 @@ function Canvas() {
       });
       setTextBoxes(newTextBoxes);
     }
-    
   };
 
   const handleCanvasMouseUp = () => {
-    // if (drawingNow) {
-    //   if (currentLineRef.current.length > 0) {
-    //     linesRef.current.push(...currentLineRef.current);
-    //     dispatch(drawingMenuActions.setLines(
-    //       linesRef.current
-    //     ))
-    //   }
-    //   currentLineRef.current = [];
-    //   setDrawingNow(false);
-    // }
     setDragging(false);
     setDraggedBoxId(null);
     setisDraggingPic(false);
@@ -316,8 +259,6 @@ function Canvas() {
       });
       setTextBoxes(newTextBoxes);
     }
-    console.log('picToResize++++++++++', picToResize)
-
         if(isResizing && !dragging){
           const updatedPictures = pictures.map(picture => 
           picture.index === picToResize ? { ...picture, width: (e.clientX - picture.x), height: (e.clientY - picture.y) } : picture )
@@ -326,15 +267,8 @@ function Canvas() {
           dispatch(drawingMenuActions.setPictures(
             pictures
           ))
-          // console.log('isResizing && !dragging-----------ººººººººº')
-          console.log('pictures', pictures)
-
         }
-
   }
-
-
-
 
   return (
     <div 
@@ -387,8 +321,6 @@ function Canvas() {
       ) : null
       ))}
 
-    
-
       {textBoxes.map((box) =>
         box.tabIndex === selectedTabIndex ? (
           <>
@@ -409,8 +341,6 @@ function Canvas() {
             onChange={(e) => handleTextChange(box.id, e.target.value)}
             onMouseDown={(e) => handleMouseDown(e, box)}
           />
-        
-        
         </>
         ) : null
       )}
