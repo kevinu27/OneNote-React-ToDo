@@ -131,18 +131,19 @@ function Canvas() {
   const handleTextChange = (id, value) => {
     ///////////////////
     // console.log('value111111111111', value)
-    // let longestWord = 0
+    let longestWord = 0
   
-    // textosSeparados.forEach((line) => {
-    //   line.split(' ').forEach((word) => {
-    //     if (word.length > longestWord) {
-    //       longestWord = word.length;
-    //     }
-    //   })
-    // })
+  
+      value.split('\n').forEach((word) => {
+        if (word.length > longestWord) {
+          longestWord = word.length;
+        }
+      })
+      console.log('longestWord------', longestWord)
+   
 
     const updatedTextBoxes = textBoxes.map((box) =>
-      box.id === id ? { ...box, text: value, cantidadDeCaracteres: value.length } : box
+      box.id === id ? { ...box, text: value, cantidadDeCaracteres: longestWord } : box
     );
     // setTextBoxes(updatedTextBoxes);
     const updatedTextBoxesWithLines = updatedTextBoxes.map((box) => {
@@ -157,12 +158,12 @@ function Canvas() {
           }
         });
       });
-  
+      // console.log('longestWord', longestWord)
       // Return the updated box with the correct cantidadDeLineas and cantidadDeCaracteres
       return {
         ...box,
         cantidadDeLineas: highestNumberLines,
-        cantidadDeCaracteres: longestWord,
+        cantidadDeCaracteres: longestWord, 
       };
     });
   
