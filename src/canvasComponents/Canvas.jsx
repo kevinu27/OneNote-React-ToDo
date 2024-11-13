@@ -130,7 +130,7 @@ function Canvas() {
 
   const handleTextChange = (id, value) => {
     ///////////////////
-    // console.log('value111111111111', value)
+
     let longestWord = 0
   
   
@@ -139,13 +139,10 @@ function Canvas() {
           longestWord = word.length;
         }
       })
-      console.log('longestWord------', longestWord)
    
-
     const updatedTextBoxes = textBoxes.map((box) =>
       box.id === id ? { ...box, text: value, cantidadDeCaracteres: longestWord } : box
     );
-    // setTextBoxes(updatedTextBoxes);
     const updatedTextBoxesWithLines = updatedTextBoxes.map((box) => {
       const textosSeparados = box.text.split('\n'); // Split text by new lines
       const highestNumberLines = textosSeparados.length; // Number of lines
@@ -158,8 +155,7 @@ function Canvas() {
           }
         });
       });
-      // console.log('longestWord', longestWord)
-      // Return the updated box with the correct cantidadDeLineas and cantidadDeCaracteres
+
       return {
         ...box,
         cantidadDeLineas: highestNumberLines,

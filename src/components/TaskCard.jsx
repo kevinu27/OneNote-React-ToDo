@@ -24,10 +24,10 @@ function TaskCard( props) {
       <div>
         <div className='card' onClick={()=>onNavigate(props.task.id)}>
             <p>
-            Nombre: {props.task.name }
+          {props.task.name }
             </p> 
             <p className='description'>
-            Descripcion: {props.task.description }
+           {props.task.description }
             </p> 
             </div>
         </div>
