@@ -5,35 +5,29 @@ import './Canvas.css';
 
 function Canvas() {
   const canvasRef = useRef(null);
-  const linesRef = useRef([]);  ///esto es loque hay que guardar en el local storage
-  const currentImagesRef = useRef();  ///esto es loque hay que guardar en el local storage
-  const imagesRef = useRef([]);  ///esto es loque hay que guardar en el local storage
-  const currentLineRef = useRef([]); 
-  const textBoxesRef = useRef([]); ///esto es loque hay que guardar en el local storage
-  const [textBoxes, setTextBoxes] = useState([]);
-  const [dragging, setDragging] = useState(false);
-  const [drawingNow, setDrawingNow] = useState(false);
-  const [draggedBoxId, setDraggedBoxId] = useState(null);
-  const [startCoords, setStartCoords] = useState({ x: 0, y: 0 });
-  const selectedTabIndex = useSelector((state) => state.drawingMenu.selectedTabIndex);
-  const selectedTabColor = useSelector((state) => state.drawingMenu.selectedTabColor);
-  const isDrawing = useSelector((state) => state.drawingMenu.isDrawing);
-  const dispatch = useDispatch();
-  const [pictures, setPictures] = useState([]);
-  const [isclickedOnPicture, setIsclickedOnPicture] = useState([]);
-  const [clickedPicture, setclickedPicture] = useState();
-  const [clickedPictureIndex, setClickedPictureIndex] = useState(null);
-  const [isDraggingPic, setisDraggingPic] = useState(false);
-  const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 });
-  const [srcPic, setSrcPic] = useState();
-  const [isResizing, setisResizing] = useState(false);
-  const [picToResize, setpicToResize] = useState();
+  const currentImagesRef = useRef()
+  const imagesRef = useRef([])
+  const textBoxesRef = useRef([])
+  const [textBoxes, setTextBoxes] = useState([])
+  const [dragging, setDragging] = useState(false)
+  const [draggedBoxId, setDraggedBoxId] = useState(null)
+  const [startCoords, setStartCoords] = useState({ x: 0, y: 0 })
+  const selectedTabIndex = useSelector((state) => state.drawingMenu.selectedTabIndex)
+  const selectedTabColor = useSelector((state) => state.drawingMenu.selectedTabColor)
+  const isDrawing = useSelector((state) => state.drawingMenu.isDrawing)
+  const dispatch = useDispatch()
+  const [pictures, setPictures] = useState([])
+  const [clickedPictureIndex, setClickedPictureIndex] = useState(null)
+  const [isDraggingPic, setisDraggingPic] = useState(false)
+  const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 })
+  const [isResizing, setisResizing] = useState(false)
+  const [picToResize, setpicToResize] = useState()
   
 
 
   useEffect(() => {
     console.log('usedEffect--------------')
-    const dataToLoadJSON = localStorage.getItem("tabsText&Lines");
+    const dataToLoadJSON = localStorage.getItem("tabsText&Lines")
     const dataToLoad = JSON.parse(dataToLoadJSON);
     const LinesFromLocalStorage = dataToLoad?.lines ?? []
     const textFromLocalStorage = dataToLoad?.textboxes ?? []
@@ -48,26 +42,25 @@ function Canvas() {
         pictures: picturesFromLocalStorage
       }
     ))
-        imagesRef.current = picturesFromLocalStorage
+    imagesRef.current = picturesFromLocalStorage
     setPictures(picturesFromLocalStorage) // este hace cargue las imagenes en el onload
 
-    linesRef.current = LinesFromLocalStorage
-    currentLineRef.current = LinesFromLocalStorage
 
     setTextBoxes(textFromLocalStorage);
-    textBoxesRef.current.push(...textFromLocalStorage);
+    textBoxesRef.current.push(...textFromLocalStorage)
       dispatch(drawingMenuActions.setTextboxes(
         textBoxesRef.current
       ))
+      console.log('textBoxesRef.current', textBoxesRef.current)
 
       const handlePaste = async (event) => {
-        const items = event.clipboardData.items;
+        const items = event.clipboardData.items
         let base64Image;
         function readFileAsBase64(file) {
           return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = (error) => reject(error);
+            const reader = new FileReader()
+            reader.onload = () => resolve(reader.result)
+            reader.onerror = (error) => reject(error)
             reader.readAsDataURL(file);
           });
         }
@@ -75,26 +68,23 @@ function Canvas() {
         for (let item of items) {
           if (item.type.startsWith('image')) {
             const file = item.getAsFile();
-            const url = URL.createObjectURL(file);
+            const url = URL.createObjectURL(file)
       
             // Await the base64 conversion here
-            base64Image = await readFileAsBase64(file);
+            base64Image = await readFileAsBase64(file)
             // Now `base64Image` is defined outside onload, so you can use it here
             // console.log('pictures------', pictures);
             // console.log('base64Image fuera del onload', base64Image);
       
             // Use the base64 string as the src for the pasted image
-            setSrcPic(base64Image);
-            
-            const imageElement = new Image();
-            imageElement.src = base64Image;
-            imageElement.classList = 'picture';
+            const imageElement = new Image()
+            imageElement.src = base64Image
+            imageElement.classList = 'picture'
       
-            imagesRef.current = [...imagesRef.current, { src: url, x: 100, y: 100, srcPic: base64Image, tab: selectedTabIndex, width:300 , height: 200 , index: imagesRef.current.length-1}];
-            // imagesRef.current.push({ src: url, x: 100, y: 100, srcPic: base64Image });
-            currentImagesRef.current = { src: url, x: 100, y: 100, srcPic: base64Image, tab: selectedTabIndex,  width:300 , height: 200, index: imagesRef.current.length-1 };
+            imagesRef.current = [...imagesRef.current, { src: url, x: 100, y: 100, srcPic: base64Image, tab: selectedTabIndex, width:300 , height: 200 , index: imagesRef.current.length-1}]
+            currentImagesRef.current = { src: url, x: 100, y: 100, srcPic: base64Image, tab: selectedTabIndex,  width:300 , height: 200, index: imagesRef.current.length-1 }
             
-            console.log('imagesRef.current', imagesRef.current);
+            console.log('imagesRef.current', imagesRef.current)
             console.log('currentImagesRef.current', currentImagesRef.current)
             console.log('selectedTabIndex000000000000--------', selectedTabIndex)
       
@@ -109,12 +99,12 @@ function Canvas() {
         }
       };
   
-      window.addEventListener('paste', handlePaste);
+      window.addEventListener('paste', handlePaste)
       return () => {
-        window.removeEventListener('paste', handlePaste);
+        window.removeEventListener('paste', handlePaste)
       };
 
-  }, [selectedTabIndex]); 
+  }, [selectedTabIndex])
 
 
   const handleCanvasClick = (e) => {
@@ -131,14 +121,25 @@ function Canvas() {
       tabIndex: selectedTabIndex,
     };
 
-    setTextBoxes([...textBoxes, newTextBox]);
-    textBoxesRef.current.push(newTextBox);
+    setTextBoxes([...textBoxes, newTextBox])
+    textBoxesRef.current.push(newTextBox)
       dispatch(drawingMenuActions.setTextboxes(
         textBoxesRef.current
       ))
-  };
+  }
 
   const handleTextChange = (id, value) => {
+    ///////////////////
+    // console.log('value111111111111', value)
+    // let longestWord = 0
+  
+    // textosSeparados.forEach((line) => {
+    //   line.split(' ').forEach((word) => {
+    //     if (word.length > longestWord) {
+    //       longestWord = word.length;
+    //     }
+    //   })
+    // })
 
     const updatedTextBoxes = textBoxes.map((box) =>
       box.id === id ? { ...box, text: value, cantidadDeCaracteres: value.length } : box
@@ -147,7 +148,7 @@ function Canvas() {
     const updatedTextBoxesWithLines = updatedTextBoxes.map((box) => {
       const textosSeparados = box.text.split('\n'); // Split text by new lines
       const highestNumberLines = textosSeparados.length; // Number of lines
-      let longestWord = 0;
+      let longestWord = 0
   
       textosSeparados.forEach((line) => {
         line.split(' ').forEach((word) => {
@@ -170,29 +171,30 @@ function Canvas() {
     dispatch(drawingMenuActions.setTextboxes(
       updatedTextBoxes
     ))
-    textBoxesRef.current=updatedTextBoxes ;
-  };
+    textBoxesRef.current=updatedTextBoxes 
+    console.log('textBoxesRef.current', textBoxesRef.current)
+  }
 
   const handleMouseDown = (e, box) => {
 
-    const textarea = e.target;
-    const rect = textarea.getBoundingClientRect();
-    const isResizing = e.clientX > rect.right - 10 && e.clientY > rect.bottom - 10;
+    const textarea = e.target
+    const rect = textarea.getBoundingClientRect()
+    const isResizing = e.clientX > rect.right - 10 && e.clientY > rect.bottom - 10
 
     if (!isResizing) {
-      setDragging(true);
-      setDraggedBoxId(box.id);
-      setStartCoords({ x: e.clientX , y: e.clientY });
+      setDragging(true)
+      setDraggedBoxId(box.id)
+      setStartCoords({ x: e.clientX , y: e.clientY })
     }
  
   };
 
   const handleMouseDownPic = (e, index) => {
     e.stopPropagation()
-    setClickedPictureIndex(index);
-    setisDraggingPic(true);
+    setClickedPictureIndex(index)
+    setisDraggingPic(true)
     setTimeout(() =>  0)
-    setLastMousePosition({ x: e.clientX, y: e.clientY });
+    setLastMousePosition({ x: e.clientX, y: e.clientY })
   };
 
   const handleMouseDownPicHolder = (e, index) => {
@@ -214,7 +216,7 @@ function Canvas() {
         }
         return box;
       });
-      setTextBoxes(newTextBoxes);
+      setTextBoxes(newTextBoxes)
     }
   };
 
@@ -229,8 +231,8 @@ function Canvas() {
 
   const handleCanvasMouseMove = (e) => {
     if(isDraggingPic){
-      const dx = e.clientX - lastMousePosition.x;
-      const dy = e.clientY - lastMousePosition.y;
+      const dx = e.clientX - lastMousePosition.x
+      const dy = e.clientY - lastMousePosition.y
         setPictures((prevPictures) =>
         prevPictures.map((pic, index) =>
           index === clickedPictureIndex
@@ -257,7 +259,7 @@ function Canvas() {
         }
         return box;
       });
-      setTextBoxes(newTextBoxes);
+      setTextBoxes(newTextBoxes)
     }
         if(isResizing && !dragging){
           const updatedPictures = pictures.map(picture => 
