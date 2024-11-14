@@ -170,7 +170,6 @@ function Canvas() {
     ))
     textBoxesRef.current=updatedTextBoxes 
     console.log('textBoxesRef.current', textBoxesRef.current)
-
     dispatch(drawingMenuActions.saveLocalStorage())
   }
 
@@ -186,7 +185,7 @@ function Canvas() {
       setStartCoords({ x: e.clientX , y: e.clientY })
     }
  
-  }
+  };
 
   const handleMouseDownPic = (e, index) => {
     e.stopPropagation()
@@ -298,23 +297,11 @@ function Canvas() {
               top: image.y,
               left: image.x,
               width: image.width + 5,
-              height: image.height + 15,
+              height: image.height + 5,
               cursor: isDraggingPic ? 'nwse-resize' : 'nwse-resize',
             }}
             onMouseDown={ !isDraggingPic ? (e) => handleMouseDownPicHolder(e, index) : null}
           >
-            <p
-              style={{
-                backgroundColor: 'red',
-                margin: 0,
-                height: '10px',
-                fontSize: '10px'
-              }}
-
-              onMouseMove={(e) => e.stopPropagation()}
-              onClick={(e) => e.stopPropagation()}
-
-            >X</p>
               <img
               key={index}
               src={image.srcPic}
