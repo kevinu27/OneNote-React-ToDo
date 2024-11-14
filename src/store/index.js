@@ -177,6 +177,11 @@ const drawingMenuSlice = createSlice({
             state.tabs.push(action.payload)
             console.log(' state.tabs',  state.tabs)
         },
+        removeTab(state, action){
+            console.log('action.payload removeTab', action.payload)
+            const tabsUpdated = state.tabs.filter(tab => tab.tabId != action.payload)
+            state.tabs = tabsUpdated
+        },
         updateTabName(state, action){
 
             console.log(' action------', action.payload)

@@ -50,6 +50,13 @@ function Tabs() {
     return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 }
 
+const removingTab = (e, id) => {
+  console.log('e en el removing', id)
+  dispatch(drawingMenuActions.removeTab(id))
+
+}
+
+
   
   return (
     <>
@@ -57,7 +64,8 @@ function Tabs() {
 
     {
         tabs.map((tab, key) => (
-          <div className='tabContainer'>
+          <div className='tabContainer'
+          style={{ backgroundColor: tab.tabColor }}>
           <input
             key={tab.tabId}
             type="text" 
@@ -70,6 +78,8 @@ function Tabs() {
           />
           <div className='closingTabX'
           style={{ backgroundColor: tab.tabColor }}
+          onClick={(e)=>removingTab(e,  tab.tabId)}
+
           > 
           <p> +</p>
           
