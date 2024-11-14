@@ -170,6 +170,8 @@ function Canvas() {
     ))
     textBoxesRef.current=updatedTextBoxes 
     console.log('textBoxesRef.current', textBoxesRef.current)
+
+    dispatch(drawingMenuActions.saveLocalStorage())
   }
 
   const handleMouseDown = (e, box) => {
@@ -184,7 +186,7 @@ function Canvas() {
       setStartCoords({ x: e.clientX , y: e.clientY })
     }
  
-  };
+  }
 
   const handleMouseDownPic = (e, index) => {
     e.stopPropagation()
@@ -278,7 +280,7 @@ function Canvas() {
         ref={canvasRef}
         width={window.innerWidth}
         height={"5000px"}
-        style={{ border: '1px solid black', backgroundColor: selectedTabColor }}
+        style={{ border: '1px solid black', backgroundColor: 'rgb(250, 250, 250)' }}
         onClick={isDrawing ? handleCanvasClick : null}
         onMouseDown={!isDrawing ? handleCanvasMouseDown : null}
       />
@@ -296,11 +298,23 @@ function Canvas() {
               top: image.y,
               left: image.x,
               width: image.width + 5,
-              height: image.height + 5,
+              height: image.height + 15,
               cursor: isDraggingPic ? 'nwse-resize' : 'nwse-resize',
             }}
             onMouseDown={ !isDraggingPic ? (e) => handleMouseDownPicHolder(e, index) : null}
           >
+            <p
+              style={{
+                backgroundColor: 'red',
+                margin: 0,
+                height: '10px',
+                fontSize: '10px'
+              }}
+
+              onMouseMove={(e) => e.stopPropagation()}
+              onClick={(e) => e.stopPropagation()}
+
+            >X</p>
               <img
               key={index}
               src={image.srcPic}
