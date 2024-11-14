@@ -6,15 +6,30 @@
 .tabs input{
     border: 0px solid black;
     margin:0;
-    margin-top: 2rem;
+    margin-top: 0!important;
     border-top-left-radius: 3px 3px;
     border-top-right-radius: 3px 3px;
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
+    border: none!important;
+    outline: none!important;
 }
 .tabs p{
+
+}
+
+.active-tab{
+    /* border: 3px solid black!important; */
+    background-color: red;
+}
+
+.addtab {
+    width: fit-content;
+}
+
+.addtabButton{
     border: 1px solid black;
     margin:0;
     margin-top: 2rem;
@@ -26,12 +41,26 @@
     padding-bottom: 5px;
 }
 
-.active-tab{
-    border: 3px solid black!important;
-    background-color: red;
+.tabContainer{
+display: flex;
+border: 3px solid black!important;
+margin-top: 2rem;
+border-top-left-radius: 3px 3px;
+border-top-right-radius: 3px 3px;
+
 }
 
-.addtab {
-    width: fit-content;
+.closingTabX{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 5px;
+    cursor: pointer;
+    padding-right: 3px;
 }
 
+.closingTabX p{
+    margin: 0;
+    padding: 0;
+    transform: rotate(45deg);
+}

@@ -57,6 +57,7 @@ function Tabs() {
 
     {
         tabs.map((tab, key) => (
+          <div className='tabContainer'>
           <input
             key={tab.tabId}
             type="text" 
@@ -67,6 +68,13 @@ function Tabs() {
             onChange={(e) => handleInputChange(e, tab.tabId)}
             style={{ backgroundColor: tab.tabColor }}
           />
+          <div className='closingTabX'
+          style={{ backgroundColor: tab.tabColor }}
+          > 
+          <p> +</p>
+          
+          </div>
+          </div>
         ))
       }
     <p  onClick={()=> addTab(
@@ -78,7 +86,8 @@ function Tabs() {
       }
       
       
-      )} >+ </p>
+      )}
+      className='addtabButton' >+ </p>
     </div>
     </>
   );
