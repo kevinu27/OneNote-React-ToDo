@@ -83,10 +83,11 @@ const initialdrawingMenuState = {
         //     tabName: "segunda tab",
         //     tabColor: 'lightred'
         // }
-],
-pictures: [],
-selectedTabIndex: 0,
-selectedTabColor: 'lightblue',
+        ],
+    pictures: [],
+    selectedTabIndex: 0,
+    selectedTabColor: 'lightblue',
+    modalVisible: false
 
 }
 
@@ -193,6 +194,13 @@ const drawingMenuSlice = createSlice({
             state.textboxes = action.payload.textBoxes
             state.pictures = action.payload.pictures
             
+        },
+        showModal(state){
+            state.modalVisible = true
+        },
+        closeModal(state){
+            state.modalVisible = false
+
         }
     }
 

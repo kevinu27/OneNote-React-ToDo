@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect  } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { drawingMenuActions } from '../store/index'
+import Modal from '../components/Modal'
 import './Canvas.css';
 
 function Canvas() {
@@ -22,6 +23,9 @@ function Canvas() {
   const [lastMousePosition, setLastMousePosition] = useState({ x: 0, y: 0 })
   const [isResizing, setisResizing] = useState(false)
   const [picToResize, setpicToResize] = useState()
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const modalVisible = useSelector((state) => state.drawingMenu.modalVisible)
+
   
 
 
@@ -284,21 +288,27 @@ function Canvas() {
   const removingPic = (e, id) => {
     console.log('e en el removing PIC', id)
     // dispatch(drawingMenuActions.removeTab(id))
-    const updatedPics = pictures.map(pic =>  pic.index === id ? pic.isVisible = false : pic)
-    console.log('updatedPics', updatedPics)
-    setPictures(updatedPics)
-    imagesRef.current = updatedPics
+    // const updatedPics = pictures.map(pic =>  pic.index === id ? pic.isVisible = false : pic)
+    // console.log('updatedPics', updatedPics)
+    // setPictures(updatedPics)
+    // imagesRef.current = updatedPics
 
+    dispatch(drawingMenuActions.showModal(
+      true
+    ))
+    
     ///poner aqui una propiedad que sea foto visible no visible para que se vea no se vea al darle al click a la x y si se le da a guardar desaparezca
     //porque con el setpic se ejecuta de nuevo el componente
     ///quizas mejor no usar el imagesref.current en el map si se puede de alguna manera
   }
+
 
   return (
     <div 
     onMouseMove={handleCanvasMouseMove} 
     onMouseUp={handleCanvasMouseUp}
     >
+       { modalVisible ? <Modal/> : null }
       <canvas
         ref={canvasRef}
         width={window.innerWidth}
