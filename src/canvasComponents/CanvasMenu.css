@@ -45,6 +45,7 @@
     padding-left: 25px;
     padding-right: 25px;
     /* margin-right:20px ; */
+    margin-top: 0;
     cursor: pointer;
 }
 
@@ -95,7 +96,7 @@
     height: 20px; /* Thumb height */
     background: white;
     box-shadow: 0 2px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 );
-border: 1px solid gray;
+    border: 1px solid gray;
     border-radius: 50%; /* Make it round */
     cursor: pointer; /* Change cursor on hover */
 }
@@ -120,6 +121,7 @@ border: 1px solid gray;
     font-weight: 500;
     border-radius: 5px;
     margin-right: 20px;
+    margin-top: 0;
     cursor: pointer;
   }
 
