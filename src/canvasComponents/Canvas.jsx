@@ -81,8 +81,20 @@ function Canvas() {
             imageElement.src = base64Image
             imageElement.classList = 'picture'
       
-            imagesRef.current = [...imagesRef.current, { src: url, x: 100, y: 100, srcPic: base64Image, tab: selectedTabIndex, width:300 , height: 200 , index: imagesRef.current.length-1}]
-            currentImagesRef.current = { src: url, x: 100, y: 100, srcPic: base64Image, tab: selectedTabIndex,  width:300 , height: 200, index: imagesRef.current.length-1 }
+            imagesRef.current = [...imagesRef.current, { src: url, x: 100, y: 100, srcPic: base64Image, tab: selectedTabIndex, width:300 , height: 200 , index: imagesRef.current.length-1, isVisible: true}]
+            
+            currentImagesRef.current = { 
+              src: url, 
+              x: 100, 
+              y: 100, 
+              srcPic: base64Image, 
+              tab: selectedTabIndex,  
+              width:300, 
+              height: 200, 
+              index: imagesRef.current.length-1,
+              isVisible: true
+            
+            }
             
             console.log('imagesRef.current', imagesRef.current)
             console.log('currentImagesRef.current', currentImagesRef.current)
@@ -269,6 +281,18 @@ function Canvas() {
           ))
         }
   }
+  const removingPic = (e, id) => {
+    console.log('e en el removing PIC', id)
+    // dispatch(drawingMenuActions.removeTab(id))
+    const updatedPics = pictures.map(pic =>  pic.index === id ? pic.isVisible = false : pic)
+    console.log('updatedPics', updatedPics)
+    setPictures(updatedPics)
+    imagesRef.current = updatedPics
+
+    ///poner aqui una propiedad que sea foto visible no visible para que se vea no se vea al darle al click a la x y si se le da a guardar desaparezca
+    //porque con el setpic se ejecuta de nuevo el componente
+    ///quizas mejor no usar el imagesref.current en el map si se puede de alguna manera
+  }
 
   return (
     <div 
@@ -286,40 +310,40 @@ function Canvas() {
 
       { pictures.map((image, index) => (
            image.tab  === selectedTabIndex ? ( 
+            <div 
+                style={{
+                  position: 'absolute',
+                  top: image.y,
+                  left: image.x,
+                  width: image.width + 10,
+                  height: image.height + 25,
+                  cursor: isDraggingPic ? 'nwse-resize' : 'nwse-resize',
+                }}
+    
+            > 
+              <p className='closingPicture'
+              onClick={(e)=>removingPic(e,  image.index)}
+                  >X</p>
+                
+                <div>
+                  <img
+                  key={index}
+                  src={image.srcPic}
+                  alt="pasted"
+                  className="picture"
+                  style={{
+                    position: 'absolute',
+                    width: image.width,
+                    height: image.height,
+                    cursor: isDraggingPic ? 'grabbing' : 'grab',
+                  }}
+                  onMouseMove={(e) => e.stopPropagation()}
+                  onMouseDown={(e) => handleMouseDownPic(e, index) }
+                />
+                </div>
 
-            <div
-            key={index}
-            src={image.srcPic}
-            alt="pasted"
-            className="pictureHolder"
-            style={{
-              position: 'absolute',
-              top: image.y,
-              left: image.x,
-              width: image.width + 5,
-              height: image.height + 5,
-              cursor: isDraggingPic ? 'nwse-resize' : 'nwse-resize',
-            }}
-            onMouseDown={ !isDraggingPic ? (e) => handleMouseDownPicHolder(e, index) : null}
-          >
-              <img
-              key={index}
-              src={image.srcPic}
-              alt="pasted"
-              className="picture"
-              style={{
-                position: 'absolute',
-                width: image.width,
-                height: image.height,
-                cursor: isDraggingPic ? 'grabbing' : 'grab',
-              }}
-              onMouseMove={(e) => e.stopPropagation()}
-              onMouseDown={(e) => handleMouseDownPic(e, index) }
-            />
-            </div>
-
-      ) : null
-      ))}
+                </div>) : null
+          ))}
 
       {textBoxes.map((box) =>
         box.tabIndex === selectedTabIndex ? (

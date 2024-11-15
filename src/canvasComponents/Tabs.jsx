@@ -65,6 +65,7 @@ const removingTab = (e, id) => {
     {
         tabs.map((tab, key) => (
           <div className='tabContainer'
+          key={tab.tabId}
           style={{ backgroundColor: tab.tabColor }}>
           <input
             key={tab.tabId}

@@ -34,7 +34,15 @@ body{
 }
 
 .pictureHolder{
-    border: 2px solid blue;
+    /* border: 2px solid blue; */
     background-color: black;
+    
 }
 
+.closingPicture{
+    margin: 0;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
+    cursor: pointer;
+}
