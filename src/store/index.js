@@ -201,7 +201,41 @@ const drawingMenuSlice = createSlice({
         closeModal(state){
             state.modalVisible = false
 
-        }
+        },
+        removePicture(state, action){
+            console.log('removePicture-------action', action.payload)
+            console.log('removePicture-------action', state.pictures)
+
+            const dataToLoadJSON = localStorage.getItem("tabsText&Lines")
+            const dataToLoad = JSON.parse(dataToLoadJSON);
+            const picturesFromLocalStorage = dataToLoad?.pictures ?? []
+            const updatedPictures = picturesFromLocalStorage.filter(pic => pic.index != action.payload )
+            console.log('updatedPictures---11111----2222', updatedPictures)
+            state.pictures = updatedPictures
+            const dataToSave = {
+                tabs: state.tabs,
+                textboxes:  state.textboxes,
+                lines: state.lines,
+                pictures: state.pictures
+            }
+            const TabsToSave = {
+                tabs: state.tabs
+            }
+            const textboxesToSave = {
+                textboxes:  state.textboxes
+            }
+            const linesToSave = {
+                lines: state.lines
+            }
+            const picturesToSave = {
+                pictures: updatedPictures
+            }
+
+            const dataToSaveJSON = JSON.stringify(dataToSave);
+            localStorage.setItem("tabsText&Lines", dataToSaveJSON);
+
+        },
+        
     }
 
 

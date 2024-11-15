@@ -51,7 +51,7 @@ function Canvas() {
 
 
     setTextBoxes(textFromLocalStorage);
-    textBoxesRef.current.push(...textFromLocalStorage)
+    textBoxesRef.current = textFromLocalStorage
       dispatch(drawingMenuActions.setTextboxes(
         textBoxesRef.current
       ))
@@ -285,22 +285,22 @@ function Canvas() {
           ))
         }
   }
-  const removingPic = (e, id) => {
-    console.log('e en el removing PIC', id)
-    // dispatch(drawingMenuActions.removeTab(id))
-    // const updatedPics = pictures.map(pic =>  pic.index === id ? pic.isVisible = false : pic)
-    // console.log('updatedPics', updatedPics)
-    // setPictures(updatedPics)
-    // imagesRef.current = updatedPics
-
+  const closingPic = (e, id) => {
+    console.log('e en el closingPic PIC', id)
     dispatch(drawingMenuActions.showModal(
-      true
     ))
-    
     ///poner aqui una propiedad que sea foto visible no visible para que se vea no se vea al darle al click a la x y si se le da a guardar desaparezca
     //porque con el setpic se ejecuta de nuevo el componente
     ///quizas mejor no usar el imagesref.current en el map si se puede de alguna manera
   }
+
+  const removingPic = (id) => {
+    console.log('e en el removing PIC12132132', id)
+    dispatch(drawingMenuActions.removePicture(
+      id
+    ))
+  }
+
 
 
   return (
@@ -308,7 +308,6 @@ function Canvas() {
     onMouseMove={handleCanvasMouseMove} 
     onMouseUp={handleCanvasMouseUp}
     >
-       { modalVisible ? <Modal/> : null }
       <canvas
         ref={canvasRef}
         width={window.innerWidth}
@@ -331,8 +330,10 @@ function Canvas() {
                 }}
     
             > 
+       { modalVisible ? <Modal removePicture={removingPic} index= {index} /> : null }
+
               <p className='closingPicture'
-              onClick={(e)=>removingPic(e,  image.index)}
+              onClick={(e)=>closingPic(e,  image.index)}
                   >X</p>
                 
                 <div>
