@@ -25,6 +25,7 @@ function Canvas() {
   const [picToResize, setpicToResize] = useState()
   const [isModalOpen, setIsModalOpen] = useState(false);
   const modalVisible = useSelector((state) => state.drawingMenu.modalVisible)
+  const [modalImageIndex, setModalImageIndex] = useState(null);
 
   
 
@@ -84,8 +85,15 @@ function Canvas() {
             const imageElement = new Image()
             imageElement.src = base64Image
             imageElement.classList = 'picture'
+            let highestPicIndex = 0
+            for(let i=0; i < imagesRef.current.length; i++ ) {
+              if(imagesRef.current[i].index > highestPicIndex ){
+                highestPicIndex = imagesRef.current[i].index 
+              }
+            }
+
       
-            imagesRef.current = [...imagesRef.current, { src: url, x: 100, y: 100, srcPic: base64Image, tab: selectedTabIndex, width:300 , height: 200 , index: imagesRef.current.length-1, isVisible: true}]
+            imagesRef.current = [...imagesRef.current, { src: url, x: 100, y: 100, srcPic: base64Image, tab: selectedTabIndex, width:300 , height: 200 , index: highestPicIndex + 1, isVisible: true}]
             
             currentImagesRef.current = { 
               src: url, 
@@ -95,7 +103,7 @@ function Canvas() {
               tab: selectedTabIndex,  
               width:300, 
               height: 200, 
-              index: imagesRef.current.length-1,
+              index: highestPicIndex + 1,
               isVisible: true
             
             }
@@ -287,6 +295,7 @@ function Canvas() {
   }
   const closingPic = (e, id) => {
     console.log('e en el closingPic PIC', id)
+    setModalImageIndex(id)
     dispatch(drawingMenuActions.showModal(
     ))
     ///poner aqui una propiedad que sea foto visible no visible para que se vea no se vea al darle al click a la x y si se le da a guardar desaparezca
@@ -317,9 +326,10 @@ function Canvas() {
         onMouseDown={!isDrawing ? handleCanvasMouseDown : null}
       />
 
-      { pictures.map((image, index) => (
+      { pictures.map((image) => (
            image.tab  === selectedTabIndex ? ( 
             <div 
+            
                 style={{
                   position: 'absolute',
                   top: image.y,
@@ -330,15 +340,15 @@ function Canvas() {
                 }}
     
             > 
-       { modalVisible ? <Modal removePicture={removingPic} index= {index} /> : null }
+       { modalVisible ? <Modal removePicture={removingPic}  index={modalImageIndex} /> : null }
 
               <p className='closingPicture'
               onClick={(e)=>closingPic(e,  image.index)}
-                  >X</p>
+                  > {image.index} - X</p>
                 
                 <div>
                   <img
-                  key={index}
+                  key={image.index}
                   src={image.srcPic}
                   alt="pasted"
                   className="picture"
@@ -349,7 +359,7 @@ function Canvas() {
                     cursor: isDraggingPic ? 'grabbing' : 'grab',
                   }}
                   onMouseMove={(e) => e.stopPropagation()}
-                  onMouseDown={(e) => handleMouseDownPic(e, index) }
+                  onMouseDown={(e) => handleMouseDownPic(e, image.index) }
                 />
                 </div>
 

@@ -20,6 +20,8 @@ function Modal({ removePicture , index}) {
   }
   const escapeModal = () => {
     console.log('escapeModal----')
+    console.log('closeModal----index', index)
+
     dispatch(drawingMenuActions.closeModal(
       false
     ))    
