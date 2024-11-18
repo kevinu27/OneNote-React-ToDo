@@ -34,10 +34,16 @@ function Canvas() {
     console.log('usedEffect--------------')
     const dataToLoadJSON = localStorage.getItem("tabsText&Lines")
     const dataToLoad = JSON.parse(dataToLoadJSON);
+    const dataToLoadJSONTabs = localStorage.getItem("Tabs")
+    const dataToLoadTabs = JSON.parse(dataToLoadJSONTabs);
     const LinesFromLocalStorage = dataToLoad?.lines ?? []
     const textFromLocalStorage = dataToLoad?.textboxes ?? []
-    const tabsFromLocalStorage = dataToLoad?.tabs ?? []
+    const tabsFromLocalStorage = dataToLoadTabs.tabs?? []
+    // const tabsFromLocalStorage = []
     const picturesFromLocalStorage = dataToLoad?.pictures ?? []
+
+    console.log('dataToLoadJSONTabs', dataToLoadJSONTabs)
+    console.log('dataToLoadTabs', dataToLoadTabs.tabs)
 
     dispatch(drawingMenuActions.loadLocalStorage(
       {
