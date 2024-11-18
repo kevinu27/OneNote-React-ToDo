@@ -38,7 +38,7 @@ function Canvas() {
     const dataToLoadTabs = dataToLoadJSONTabs ? JSON.parse(dataToLoadJSONTabs) : {}
     const LinesFromLocalStorage = dataToLoad?.lines ?? []
     const textFromLocalStorage = dataToLoad?.textboxes ?? []
-    const tabsFromLocalStorage = dataToLoadTabs?.tabs ?? []
+    const tabsFromLocalStorage = dataToLoadTabs?? []
     // const tabsFromLocalStorage = []
     const picturesFromLocalStorage = dataToLoad?.pictures ?? []
 
