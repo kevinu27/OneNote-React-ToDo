@@ -79,7 +79,7 @@ const removingTab = (e, id) => {
           />
           <div className='closingTabX'
           style={{ backgroundColor: tab.tabColor }}
-          onClick={(e)=>removingTab(e,  tab.tabId)}
+          onClick={(e)=>removingTab(e, tab.tabId)}
 
           > 
           <p> +</p>

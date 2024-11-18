@@ -130,7 +130,7 @@ const drawingMenuSlice = createSlice({
             const textboxesNoEmpties = state.textboxes.filter(textbox => textbox.text.length > 0)
             console.log('saveLocalStorage')
             const dataToSave = {
-                tabs: state.tabs,
+                // tabs: state.tabs,
                 textboxes:  textboxesNoEmpties,
                 lines: state.lines,
                 pictures: state.pictures
@@ -148,21 +148,21 @@ const drawingMenuSlice = createSlice({
                 pictures: state.pictures
             }
 
-            const dataToSaveJSON = JSON.stringify(dataToSave);
-            localStorage.setItem("tabsText&Lines", dataToSaveJSON);
+            const dataToSaveJSON = JSON.stringify(dataToSave)
+            localStorage.setItem("tabsText&Lines", dataToSaveJSON)
             // console.log('dataToSaveJSON en el index**********', dataToSaveJSON)
 
-            const TabsToSaveJSON = JSON.stringify(TabsToSave);
-            localStorage.setItem("Tabs",TabsToSaveJSON);
+            const TabsToSaveJSON = JSON.stringify(TabsToSave)
+            localStorage.setItem("Tabs",TabsToSaveJSON)
 
-            const TextBoxesToSaveJSON = JSON.stringify(textboxesToSave);
-            localStorage.setItem("TextBoxes", TextBoxesToSaveJSON);
+            const TextBoxesToSaveJSON = JSON.stringify(textboxesToSave)
+            localStorage.setItem("TextBoxes", TextBoxesToSaveJSON)
 
-            const LinesToSaveJSON = JSON.stringify(linesToSave);
-            localStorage.setItem("Lines", LinesToSaveJSON);
+            const LinesToSaveJSON = JSON.stringify(linesToSave)
+            localStorage.setItem("Lines", LinesToSaveJSON)
 
-            const picturesToSaveJSON = JSON.stringify(picturesToSave);
-            localStorage.setItem("Pictures", picturesToSaveJSON);
+            const picturesToSaveJSON = JSON.stringify(picturesToSave)
+            localStorage.setItem("Pictures", picturesToSaveJSON)
         },
         ////antiguamente tabs state
         setActiveTab(state, action){
@@ -177,10 +177,23 @@ const drawingMenuSlice = createSlice({
             // console.log('action.action', action.payload)
             state.tabs.push(action.payload)
             console.log(' state.tabs',  state.tabs)
+            const TabsToSaveJSON = JSON.stringify(state.tabs)
+            localStorage.setItem("Tabs", TabsToSaveJSON)
         },
         removeTab(state, action){
-            const tabsUpdated = state.tabs.filter(tab => tab.tabId != action.payload)
-            state.tabs = tabsUpdated
+            if(state.tabs.length == 1){
+                const tabsUpdated = []
+                state.tabs = tabsUpdated
+                const TabsToSaveJSON = JSON.stringify(tabsUpdated)
+                localStorage.setItem("Tabs", TabsToSaveJSON)
+            }else {
+                const tabsUpdated = state.tabs.filter(tab => tab.tabId != action.payload)
+                state.tabs = tabsUpdated
+                console.log('tabsUpdated', tabsUpdated)
+                const TabsToSaveJSON = JSON.stringify(tabsUpdated)
+                localStorage.setItem("Tabs", TabsToSaveJSON.tabs)
+            }
+
         },
         updateTabName(state, action){
 
