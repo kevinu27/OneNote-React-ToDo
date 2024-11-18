@@ -182,18 +182,19 @@ const drawingMenuSlice = createSlice({
         },
         removeTab(state, action){
             if(state.tabs.length == 1){
+                console.log('solo una tab que se va a eliminar')
                 const tabsUpdated = []
-                state.tabs = tabsUpdated
+                state.tabs = []
                 const TabsToSaveJSON = JSON.stringify(tabsUpdated)
                 localStorage.setItem("Tabs", TabsToSaveJSON)
             }else {
+                console.log(' action.payload111111',  action.payload)
                 const tabsUpdated = state.tabs.filter(tab => tab.tabId != action.payload)
                 state.tabs = tabsUpdated
                 console.log('tabsUpdated', tabsUpdated)
                 const TabsToSaveJSON = JSON.stringify(tabsUpdated)
-                localStorage.setItem("Tabs", TabsToSaveJSON.tabs)
+                localStorage.setItem("Tabs", TabsToSaveJSON)
             }
-
         },
         updateTabName(state, action){
 
