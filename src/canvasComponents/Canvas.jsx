@@ -35,18 +35,19 @@ function Canvas() {
     const dataToLoadJSON = localStorage.getItem("tabsText&Lines")
     const dataToLoad = JSON.parse(dataToLoadJSON);
     const dataToLoadJSONTabs = localStorage.getItem("Tabs")
+    const dataToLoadJSONPictures = localStorage.getItem("Pictures")
     const dataToLoadTabs = dataToLoadJSONTabs ? JSON.parse(dataToLoadJSONTabs) : []
+    const dataToLoadPcitures = dataToLoadJSONPictures ? JSON.parse(dataToLoadJSONPictures) : []
     const LinesFromLocalStorage = dataToLoad?.lines ?? []
     const textFromLocalStorage = dataToLoad?.textboxes ?? []
     // const tabsFromLocalStorage = dataToLoadTabs?.tabs?? []
-    const tabsFromLocalStorage = dataToLoadTabs?? []
+    const tabsFromLocalStorage = dataToLoadTabs?.tabs?? []
 
     // const tabsFromLocalStorage = []
-    const picturesFromLocalStorage = dataToLoad?.pictures ?? []
+    // const picturesFromLocalStorage = dataToLoad?.pictures ?? []
+    const picturesFromLocalStorage = dataToLoadPcitures ?? []
 
-    console.log('dataToLoadJSONTabs', dataToLoadJSONTabs)
-    console.log('dataToLoadTabs', dataToLoadTabs.tabs)
-    console.log('tabsFromLocalStorage-----', tabsFromLocalStorage)
+    // const dataToLoadJSONTabs = localStorage.getItem("Tabs")
 
     dispatch(drawingMenuActions.loadLocalStorage(
       {
@@ -65,8 +66,8 @@ function Canvas() {
       dispatch(drawingMenuActions.setTextboxes(
         textBoxesRef.current
       ))
-      console.log('textBoxesRef.current', textBoxesRef.current)
 
+      console.log('textBoxesRef.current', textBoxesRef.current)
       const handlePaste = async (event) => {
         const items = event.clipboardData.items
         let base64Image;
@@ -94,6 +95,7 @@ function Canvas() {
             const imageElement = new Image()
             imageElement.src = base64Image
             imageElement.classList = 'picture'
+
             let highestPicIndex = 0
             for(let i=0; i < imagesRef.current.length; i++ ) {
               if(imagesRef.current[i].index > highestPicIndex ){
@@ -101,7 +103,6 @@ function Canvas() {
               }
             }
 
-      
             imagesRef.current = [...imagesRef.current, { src: url, x: 100, y: 100, srcPic: base64Image, tab: selectedTabIndex, width:300 , height: 200 , index: highestPicIndex + 1, isVisible: true}]
             
             currentImagesRef.current = { 
@@ -114,8 +115,10 @@ function Canvas() {
               height: 200, 
               index: highestPicIndex + 1,
               isVisible: true
-            
             }
+            dispatch(drawingMenuActions.addPicture(
+              imagesRef.current
+            ))
             
             console.log('imagesRef.current', imagesRef.current)
             console.log('currentImagesRef.current', currentImagesRef.current)
@@ -130,12 +133,12 @@ function Canvas() {
             break; // Stop after handling the first image item
           }
         }
-      };
+      }
   
       window.addEventListener('paste', handlePaste)
       return () => {
         window.removeEventListener('paste', handlePaste)
-      };
+      }
 
   }, [selectedTabIndex])
 

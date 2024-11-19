@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-// import { tabsActions } from '../store/index'
 import { drawingMenuActions } from '../store/index'
 
 import './Tabs.css'
@@ -72,7 +71,7 @@ const removingTab = (e, id) => {
     <>
     <div className='tabs'>
 
-    {
+    { 
         tabs.map((tab, key) => (
           <div className='tabContainer'
           key={tab.tabId}

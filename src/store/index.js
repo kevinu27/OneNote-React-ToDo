@@ -220,9 +220,10 @@ const drawingMenuSlice = createSlice({
             console.log('removePicture-------action', action.payload)
             console.log('removePicture-------action', state.pictures)
 
-            const dataToLoadJSON = localStorage.getItem("tabsText&Lines")
+            const dataToLoadJSON = localStorage.getItem("Pictures")
             const dataToLoad = JSON.parse(dataToLoadJSON);
-            const picturesFromLocalStorage = dataToLoad?.pictures ?? []
+            const picturesFromLocalStorage = dataToLoad ?? []
+
             const updatedPictures = picturesFromLocalStorage.filter(pic => pic.index != action.payload )
             console.log('updatedPictures---11111----2222', updatedPictures)
             state.pictures = updatedPictures
@@ -245,9 +246,14 @@ const drawingMenuSlice = createSlice({
                 pictures: updatedPictures
             }
 
-            const dataToSaveJSON = JSON.stringify(dataToSave);
-            localStorage.setItem("tabsText&Lines", dataToSaveJSON);
+            const dataToSaveJSON = JSON.stringify(updatedPictures);
+            localStorage.setItem("Pictures", dataToSaveJSON);
 
+        },
+        addPicture(state, action){
+            console.log('action.payload-----', action.payload)
+            const dataToSaveJSON = JSON.stringify(action.payload);
+            localStorage.setItem("Pictures", dataToSaveJSON);
         },
         
     }
