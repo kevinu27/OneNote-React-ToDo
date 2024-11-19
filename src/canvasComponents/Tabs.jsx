@@ -10,7 +10,7 @@ function Tabs() {
   const tabs = useSelector((state) => state.drawingMenu.tabs)
   const selectedTabIndex = useSelector((state) => state.drawingMenu.selectedTabIndex)
   const dispatch = useDispatch();
-  const [tabsLocal, setTabsLocal] = useState(tabs);
+  const [tabsLocal, setTabsLocal] = useState(tabs)
 
   function setActiveTab(tabIndex, tabColor) {
     dispatch(drawingMenuActions.setActiveTab({
@@ -32,7 +32,7 @@ function Tabs() {
       if (index === id) {
         return { ...tab, tabName: newValue }; // Create a new object with updated tabName
       }
-      return tab; // Return the existing tab for all others
+      return tab // Return the existing tab for all others
     });
     dispatch(drawingMenuActions.updateTabName(updatedTabs))
   };
@@ -53,10 +53,7 @@ function Tabs() {
 const removingTab = (e, id) => {
   console.log('e en el removing', id)
   dispatch(drawingMenuActions.removeTab(id))
-
 }
-
-
   
   return (
     <>
